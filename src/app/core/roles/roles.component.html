@@ -1,0 +1,28 @@
+<app-table
+  [elements]="roles$ | async"
+  [displayedColumns]="displayedColumns"
+  [displayedColumnsLabels]="displayedColumnsLabels"
+>
+  <ng-template #actionsButton let-elt>
+    <button
+      mat-flat-button
+      color="primary"
+      [matMenuTriggerFor]="matMenu"
+      aria-label="actions menu"
+    >
+      <span> modification </span>
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #matMenu="matMenu">
+      <button mat-menu-item (click)="edit(elt)">
+        <span>rules</span>
+      </button>
+      <button mat-menu-item (click)="configure(elt)">
+        <span>configure</span>
+      </button>
+      <button mat-menu-item (click)="notice(elt)">
+        <span>notifications</span>
+      </button>
+    </mat-menu>
+  </ng-template>
+</app-table>
