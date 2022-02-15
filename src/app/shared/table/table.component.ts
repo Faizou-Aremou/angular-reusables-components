@@ -25,13 +25,13 @@ export class TableComponent<T> implements OnInit {
   @Input() public displayLimit: number = 10;
   @Input() public displayedColumns: Array<string> = [];
   @Input() public displayedColumnsLabels: Array<string> = [];
-  @Input() public tableConfig: TableConfig<T> | null;
+  @Input() public tableConfig!: TableConfig<T> | null;
   @Output() public editElement: EventEmitter<T> = new EventEmitter();
   @Output() public changePage: EventEmitter<PageEvent> = new EventEmitter();
   @Output() public sortData: EventEmitter<Sort> = new EventEmitter();
   @ContentChild('actionsButton', { static: false })
-  actionsButtonRef: TemplateRef<any>;
-  public tableRows: Array<string>;
+  actionsButtonRef!: TemplateRef<any>;
+  public tableRows!: Array<string>;
 
   @ViewChild('paginator', { static: false }) paginator?: MatPaginator;
 

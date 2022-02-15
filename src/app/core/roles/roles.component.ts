@@ -9,7 +9,7 @@ import { RolesService } from './services/roles.service';
   styleUrls: ['./roles.component.scss'],
 })
 export class RolesComponent implements OnInit {
-  public roles$: Observable<Array<Role>>;
+  public roles$!: Observable<Array<Role>>;
   public totalInBackEnd!: number;
   public displayLimit!: number;
   public displayedColumns!: Array<string>;
