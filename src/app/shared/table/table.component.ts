@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { Router } from '@angular/router';
 import { TableConfig } from '../models/table-config.model';
 
 @Component({
@@ -38,14 +37,13 @@ export class TableComponent<T> implements OnInit {
   // TODO Use role instead ! It's temporary solution until we got Roles.
   public isAdminMenu!: boolean;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.tableRows = [...this.displayedColumns, 'action'];
   }
 
   public onEditElement(elt: T) {
-    console.log(elt);
     this.editElement.emit(elt);
   }
 
