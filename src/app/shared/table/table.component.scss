@@ -1,3 +1,12 @@
-        table {
-            width: 100%;
-        }
+table {
+  width: 100%;
+  th:first-of-type,
+  td:first-of-type {
+    width: 20%;
+  }
+
+  th:last-of-type,
+  td:last-of-type {
+    width: 20%;
+  }
+}
