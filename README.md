@@ -9,3 +9,4 @@ Lists of themes:
 - Authentification
 - Layout
 - forms
+- notifications
