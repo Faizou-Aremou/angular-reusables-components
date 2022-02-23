@@ -10,3 +10,4 @@ Lists of themes:
 - Layout
 - forms
 - notifications
+- errors handlers
