@@ -55,6 +55,9 @@ describe('Mat Table Custom', () => {
         TableComponent
       );
     fixture.detectChanges();
+    const component = fixture.componentInstance;
+    component.elements = expectedElement;
+    component.displayedColumns = ['name', 'id', 'description'];
     const tableElement = fixture.nativeElement.querySelector('.mat-table')!;
     const trs = getElements(tableElement, '.cdk-row,tr');
     console.log(trs.length);

@@ -1,6 +1,6 @@
 <section class="table-content">
-    <div class="cl-content__empty-list" *ngIf="elements && !elements?.length">no result</div>
-    <div class="cl-content__table-container" *ngIf="elements && elements.length > 0 ">
+    <div class="table-content__empty-list" *ngIf="elements && !elements?.length">no result</div>
+    <div class="table-content__table-container" *ngIf="elements && elements.length > 0 ">
         <table mat-table matSort class="mat-elevation-z8" [dataSource]="elements" (matSortChange)="onSortData($event)">
             <ng-container *ngFor="let col of displayedColumns; let i = index" [matColumnDef]="col">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>
