@@ -4,10 +4,12 @@
 
 Lists of themes:
 
-- custom table
+- Custom table
 - Dashboard
 - Authentification
 - Layout
-- forms
-- notifications
-- errors handlers
+- Forms
+- Notifications
+- Errors handlers
+- Mise en stagging, prod
+- State Management
