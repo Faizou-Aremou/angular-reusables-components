@@ -13,3 +13,4 @@ Lists of themes:
 - Errors handlers
 - Mise en stagging, prod
 - State Management
+- mastering in errors handlers
