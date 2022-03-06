@@ -19,7 +19,7 @@ import { TableConfig } from '../models/table-config.model';
 })
 export class TableComponent<T> implements OnInit {
   // @Input() public loading!: boolean;
-  @Input() public elements: Array<T> | null = [];
+  @Input() public dataSource: Array<T> | null = [];
   @Input() public totalInBackEnd: number = 0;
   @Input() public displayLimit: number = 10;
   @Input() public displayedColumns: Array<string> = [];

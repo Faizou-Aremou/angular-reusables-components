@@ -1,32 +1,69 @@
 <section class="table-content">
-    <div class="table-content__empty-list" *ngIf="elements && !elements?.length">no result</div>
-    <div class="table-content__table-container" *ngIf="elements && elements.length > 0 ">
-        <table mat-table matSort class="mat-elevation-z8" [dataSource]="elements" (matSortChange)="onSortData($event)">
-            <ng-container *ngFor="let col of displayedColumns; let i = index" [matColumnDef]="col">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{ displayedColumnsLabels[i] }}
-                </th>
-                <td mat-cell *matCellDef="let elt">{{ elt[col] }}</td>
-            </ng-container>
-            <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let elt" class="actions-button-cell">
-                    <ng-container *ngIf="!actionsButtonRef; else actionsButtonContainer">
-                        <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(elt)">
+  <div class="table-content__empty-list" *ngIf="elements && !elements?.length">
+    no result
+  </div>
+  <div
+    class="table-content__table-container"
+    *ngIf="elements && elements.length > 0"
+  >
+    <table
+      mat-table
+      matSort
+      class="mat-elevation-z8"
+      [dataSource]="dataSource"
+      (matSortChange)="onSortData($event)"
+    >
+      <ng-container
+        *ngFor="let col of displayedColumns; let i = index"
+        [matColumnDef]="col"
+      >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ displayedColumnsLabels[i] }}
+        </th>
+        <td mat-cell *matCellDef="let elt">{{ elt[col] }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let elt" class="actions-button-cell">
+          <ng-container *ngIf="!actionsButtonRef; else actionsButtonContainer">
+            <button
+              id="actions-button"
+              mat-flat-button
+              color="primary"
+              aria-label="informations button"
+              (click)="onEditElement(elt)"
+            >
               <span> informations </span>
             </button>
-                    </ng-container>
-                    <ng-template #actionsButtonContainer>
-                        <ng-container *ngIf="actionsButtonRef" [ngTemplateOutlet]="actionsButtonRef" [ngTemplateOutletContext]="{ $implicit: elt }">
-                        </ng-container>
-                    </ng-template>
-                </td>
+          </ng-container>
+          <ng-template #actionsButtonContainer>
+            <ng-container
+              *ngIf="actionsButtonRef"
+              [ngTemplateOutlet]="actionsButtonRef"
+              [ngTemplateOutletContext]="{ $implicit: elt }"
+            >
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="tableRows"></tr>
-            <tr mat-row *matRowDef="let row; columns: tableRows"></tr>
-        </table>
-        <mat-paginator *ngIf="elements? (elements.length > 0 && totalInBackEnd > 0) || elements.length : null" class="mat-elevation-z8" #paginator [length]="totalInBackEnd > 0 ? totalInBackEnd : elements?.length" [pageSizeOptions]="[10, 20, 50]" [pageSize]="displayLimit"
-            showFirstLastButtons (page)="onChangePage($event)" aria-label="Select page of periodic elements">
-        </mat-paginator>
-    </div>
+          </ng-template>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="tableRows"></tr>
+      <tr mat-row *matRowDef="let row; columns: tableRows"></tr>
+    </table>
+    <mat-paginator
+      *ngIf="
+        elements
+          ? (elements.length > 0 && totalInBackEnd > 0) || elements.length
+          : null
+      "
+      class="mat-elevation-z8"
+      #paginator
+      [length]="totalInBackEnd > 0 ? totalInBackEnd : elements?.length"
+      [pageSizeOptions]="[10, 20, 50]"
+      [pageSize]="displayLimit"
+      showFirstLastButtons
+      (page)="onChangePage($event)"
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
 </section>
