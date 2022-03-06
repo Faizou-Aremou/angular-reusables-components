@@ -1,10 +1,10 @@
 <section class="table-content">
-  <div class="table-content__empty-list" *ngIf="elements && !elements?.length">
+  <div class="table-content__empty-list" *ngIf="dataSource && !dataSource?.length">
     no result
   </div>
   <div
     class="table-content__table-container"
-    *ngIf="elements && elements.length > 0"
+    *ngIf="dataSource && dataSource.length > 0"
   >
     <table
       mat-table
@@ -51,18 +51,18 @@
     </table>
     <mat-paginator
       *ngIf="
-        elements
-          ? (elements.length > 0 && totalInBackEnd > 0) || elements.length
+        dataSource
+          ? (dataSource.length > 0 && totalInBackEnd > 0) || dataSource.length
           : null
       "
       class="mat-elevation-z8"
       #paginator
-      [length]="totalInBackEnd > 0 ? totalInBackEnd : elements?.length"
+      [length]="totalInBackEnd > 0 ? totalInBackEnd : dataSource?.length"
       [pageSizeOptions]="[10, 20, 50]"
       [pageSize]="displayLimit"
       showFirstLastButtons
       (page)="onChangePage($event)"
-      aria-label="Select page of periodic elements"
+      aria-label="Select page of periodic dataSource"
     >
     </mat-paginator>
   </div>
