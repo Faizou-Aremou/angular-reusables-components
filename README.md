@@ -9,7 +9,8 @@ Lists of themes:
 - Authentification
 - Layout
 - Forms
-- Master in routing
+- Mastering in routing
+- feature flipping
 - Notifications
 - Errors handlers
 - Mise en stagging, prod
