@@ -1,51 +1,27 @@
 <ng-container *ngIf="tabGroup">
-  <mat-tab-group [(selectedIndex)]="tabGroup.selectedTab" class="tab-group">
-    <mat-tab
-      class="tab-group__content"
-      [label]="tabGroup.firstTab.label ?? '' | translate"
-    >
-      <div class="tab-group__content__first-content">
-        <app-spinner
-          class="tab-group__content__first-content__spinner"
-          *ngIf="tabGroup.firstTab?.loading || !tabGroup.firstTab?.content"
-        >
-        </app-spinner>
-        <ng-container *ngIf="tabGroup.firstTab?.content; let content">
-          <ng-container
-            [ngTemplateOutlet]="firstTabContentRef"
-            [ngTemplateOutletContext]="{ $implicit: content }"
-          >
-          </ng-container>
-        </ng-container>
-      </div>
-    </mat-tab>
-    <mat-tab
-      class="tab-group__content"
-      *ngFor="let tab of tabGroup.tailTabs; let i = index"
-    >
-      <ng-template mat-tab-label>
-        <div>
-          <span> {{ tab.label }} </span>
-          <button
-            mat-icon-button
-            id="search-claim-summary__tab-close-btn"
-            aria-label="icon-button with cancel icon"
-            (click)="tabGroup.deleteTab(i)"
-          >
+    <mat-tab-group class="tab-group" [(selectedIndex)]="tabGroup.selectedTab">
+        <mat-tab class="tab-group__static-tabs" *ngFor="let tab of tabGroup.staticTabs; let i = index">
+            <ng-template mat-tab-label>
+                <span class="tab-group__static-tabs__label"> {{ tab.label }} </span>
+            </ng-template>
+            <div class=" tab-group__static-tabs__content">
+                <ng-container [ngTemplateOutlet]="firstTabContentRef " [ngTemplateOutletContext]="{ $implicit: tab } ">
+                </ng-container>
+            </div>
+        </mat-tab>
+        <mat-tab class="tab-group__dynamic-tabs " *ngFor="let tab of tabGroup.dynamicTabs; let i=index ">
+            <ng-template mat-tab-label>
+                <div class="tab-group__dynamic-tabs__label">
+                    <span> {{ tab.label }} </span>
+                    <button mat-icon-button id="dynamic__tab-close-btn " aria-label="icon-button with cancel icon " (click)="tabGroup.deleteTab(i)">
             <mat-icon>cancel</mat-icon>
           </button>
-        </div>
-      </ng-template>
-      <ng-template matTabContent>
-        <app-spinner *ngIf="tab.loading || !tab.content"></app-spinner>
-        <ng-container *ngIf="tab.content">
-          <ng-container
-            [ngTemplateOutlet]="tabContentRef"
-            [ngTemplateOutletContext]="{ $implicit: tab.content }"
-          >
-          </ng-container>
-        </ng-container>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+                </div>
+            </ng-template>
+            <ng-template matTabContent>
+                <ng-container [ngTemplateOutlet]="tabContentRef " [ngTemplateOutletContext]="{ $implicit: tab} ">
+                </ng-container>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
 </ng-container>

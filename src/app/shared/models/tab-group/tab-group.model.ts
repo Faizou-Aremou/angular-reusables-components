@@ -5,6 +5,13 @@ const STATIC_TABS_NUMBER = 1;
 export class TabGroup<T> {
   private _staticTabs: Array<StaticTab> = [];
   private _dynamicTabs: Array<DynamicTab<T>> = [];
+  
+  public get staticTabs(): Array<StaticTab> {
+      return this._staticTabs;
+  } 
+  public get dynamicTabs(): Array<DynamicTab<T>> {
+     return this._dynamicTabs;
+  }
 
   constructor(staticTabs: Array<Omit<StaticTab, 'index'>>) {
     this._staticTabs = staticTabs.map((tab, i) => {
@@ -12,41 +19,56 @@ export class TabGroup<T> {
     });
   }
   public selectedTab = STATIC_TABS_NUMBER;
+
   public addTabDynamically(dynamicTab: Omit<DynamicTab<T>, 'index'>): void {
     this._dynamicTabs = [
       ...this._dynamicTabs,
-      { ...dynamicTab, index: this._dynamicTabs.length + STATIC_TABS_NUMBER },
+      { ...dynamicTab, tabNumber: this._dynamicTabs.length + STATIC_TABS_NUMBER },
     ];
     this.selectedTab = this._dynamicTabs.length;
   }
+
   public deleteTab(tabNumber: number): void {
-    if (tabNumber - this._staticTabs.length > 0) {
+    if (this.isDeletable(tabNumber))
+     {
       this._dynamicTabs.filter(
-        (tab, index) => index === tabNumber - this._staticTabs.length - 1
+        (tab, index) => index === this.indexOfDeletingTab(tabNumber)
       );
 
       const tabsUpperDeleteTab = this._dynamicTabs.slice(
-        tabNumber - this._staticTabs.length - 1
+        this.indexOfDeletingTab(tabNumber)
       );
       const tabsUpperDeleteTabNumberTabUpdated = tabsUpperDeleteTab.map(
         (tab) => {
-          return { ...tab, index: tab.index - 1 };
+          return { ...tab, index: tab.tabNumber - 1 };
         }
       );
       this._dynamicTabs = [
-        ...this._dynamicTabs.slice(0, tabNumber - this._staticTabs.length),
+        ...this._dynamicTabs.slice(0, this.tabNumberOnDynamicTabs(tabNumber)),
         ...tabsUpperDeleteTabNumberTabUpdated,
       ];
       this.selectedTab =
-        tabNumber - this._staticTabs.length < this._dynamicTabs.length
+      this.isNotLastTabOnDynamicTabs(tabNumber)
           ? tabNumber
           : tabNumber - 1;
     }
   }
+
+  private tabNumberOnDynamicTabs(tabNumber: number): number{
+      return tabNumber - this._staticTabs.length;
+  }
+
+  private isDeletable(tabNumber: number): boolean{
+     return this.tabNumberOnDynamicTabs(tabNumber) > 0;
+  }
+
+  private indexOfDeletingTab(tabNumber: number): number {
+      return tabNumber - this._staticTabs.length - 1;
+  }
+
+  private isNotLastTabOnDynamicTabs(tabNumber: number): boolean {
+       return this.tabNumberOnDynamicTabs(tabNumber) < this._dynamicTabs.length;
+  }
+ 
 }
 
-export interface UpdateTabInfos<T> {
-  label?: string;
-  content?: T;
-  loading?: boolean;
-}
