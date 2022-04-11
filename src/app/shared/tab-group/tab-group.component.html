@@ -4,10 +4,12 @@
             <ng-template mat-tab-label>
                 <span class="tab-group__static-tabs__label"> {{ tab.label }} </span>
             </ng-template>
-            <div class=" tab-group__static-tabs__content" *ngFor="let ref of staticTabsContentRefs">
-                <ng-container [ngTemplateOutlet]="ref.templateRef" [ngTemplateOutletContext]="{ $implicit: tab } ">
-                </ng-container>
-            </div>
+            <ng-container *ngIf="staticTabsContentRefs; let contentRefs">
+                <div class=" tab-group__static-tabs__content" *ngFor="let ref of contentRefs">
+                    <ng-container [ngTemplateOutlet]="ref.templateRef" [ngTemplateOutletContext]="{ $implicit: tab } ">
+                    </ng-container>
+                </div>
+            </ng-container>
         </mat-tab>
         <mat-tab class="tab-group__dynamic-tabs " *ngFor="let tab of tabGroup.dynamicTabs; let i=index ">
             <ng-template mat-tab-label>
@@ -19,7 +21,7 @@
                 </div>
             </ng-template>
             <ng-template matTabContent>
-                <ng-container [ngTemplateOutlet]="tabContentRef " [ngTemplateOutletContext]="{ $implicit: tab} ">
+                <ng-container *ngIf="dynamicTabsContentRef" [ngTemplateOutlet]="dynamicTabsContentRef" [ngTemplateOutletContext]="{ $implicit: tab} ">
                 </ng-container>
             </ng-template>
         </mat-tab>

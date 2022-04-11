@@ -4,8 +4,10 @@ import {
   ContentChildren,
   Input,
   OnInit,
+  QueryList,
   TemplateRef,
 } from '@angular/core';
+import { StaticTabsContentDirective } from '../directives/static-tabs-contents.directive';
 import { TabGroup } from '../models/tab-group/tab-group.model';
 @Component({
   selector: 'app-tab-group',
@@ -14,10 +16,10 @@ import { TabGroup } from '../models/tab-group/tab-group.model';
 })
 export class TabGroupComponent<T> implements OnInit {
   @Input() public tabGroup: TabGroup<T> | null = null;
-  @ContentChildren(StaticTabsContentsDirective, { static: false })
-  public staticTabsContentRefs!: QueryList<StaticTabsContentsDirective>;
+  @ContentChildren(StaticTabsContentDirective)
+  public staticTabsContentRefs: QueryList<StaticTabsContentDirective>| null = null;
   @ContentChild('tabContent', { static: false })
-  public tabContentRef!: TemplateRef<any>;
+  public dynamicTabsContentRef: TemplateRef<any> | null = null;
   constructor() {}
   ngOnInit(): void {}
 }
