@@ -12,9 +12,10 @@ import { CompaniesComponent } from './core/companies/companies.component';
 import { RolesComponent } from './core/roles/roles.component';
 import { RolesPaneComponent } from './core/roles-pane/roles-pane.component';
 import { CompaniesPaneComponent } from './core/companies-pane/companies-pane.component';
+import { TabGroupComponent } from './shared/tab-group/tab-group.component';
 
 @NgModule({
-  declarations: [AppComponent, TableComponent, CompaniesComponent, RolesComponent, RolesPaneComponent, CompaniesPaneComponent],
+  declarations: [AppComponent, TableComponent, CompaniesComponent, RolesComponent, RolesPaneComponent, CompaniesPaneComponent, TabGroupComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
