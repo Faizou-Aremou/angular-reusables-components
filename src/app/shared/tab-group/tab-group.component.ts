@@ -1,6 +1,7 @@
 import {
   Component,
   ContentChild,
+  ContentChildren,
   Input,
   OnInit,
   TemplateRef,
@@ -13,8 +14,8 @@ import { TabGroup } from '../models/tab-group/tab-group.model';
 })
 export class TabGroupComponent<T> implements OnInit {
   @Input() public tabGroup: TabGroup<T> | null = null;
-  @ContentChild('firstTabContent', { static: false })
-  public firstTabContentRef!: TemplateRef<any>;
+  @ContentChildren(StaticTabsContentsDirective, { static: false })
+  public staticTabsContentRefs!: QueryList<StaticTabsContentsDirective>;
   @ContentChild('tabContent', { static: false })
   public tabContentRef!: TemplateRef<any>;
   constructor() {}

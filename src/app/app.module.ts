@@ -13,9 +13,10 @@ import { RolesComponent } from './core/roles/roles.component';
 import { RolesPaneComponent } from './core/roles-pane/roles-pane.component';
 import { CompaniesPaneComponent } from './core/companies-pane/companies-pane.component';
 import { TabGroupComponent } from './shared/tab-group/tab-group.component';
+import { StaticTabsContentsDirective } from './shared/directives/static-tabs-contents.directive';
 
 @NgModule({
-  declarations: [AppComponent, TableComponent, CompaniesComponent, RolesComponent, RolesPaneComponent, CompaniesPaneComponent, TabGroupComponent],
+  declarations: [AppComponent, TableComponent, CompaniesComponent, RolesComponent, RolesPaneComponent, CompaniesPaneComponent, TabGroupComponent, StaticTabsContentsDirective],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
