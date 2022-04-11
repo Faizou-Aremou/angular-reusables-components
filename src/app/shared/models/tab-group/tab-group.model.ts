@@ -1,7 +1,7 @@
 import { DynamicTab } from './dynamic-tab.model';
-import { StaticTab } from './tab.model';
+import { StaticTab } from './static-tab.model';
 
-const STATIC_TABS_NUMBER = 1;
+const STATIC_TABS_NUMBER = 0;
 export class TabGroup<T> {
   private _staticTabs: Array<StaticTab> = [];
   private _dynamicTabs: Array<DynamicTab<T>> = [];
@@ -13,14 +13,14 @@ export class TabGroup<T> {
      return this._dynamicTabs;
   }
 
-  constructor(staticTabs: Array<Omit<StaticTab, 'index'>>) {
+  constructor(staticTabs: Array<Omit<StaticTab, 'tabNumber'>>) {
     this._staticTabs = staticTabs.map((tab, i) => {
-      return { ...tab, index: i + STATIC_TABS_NUMBER };
+      return { ...tab, tabNumber: i + STATIC_TABS_NUMBER };
     });
   }
   public selectedTab = STATIC_TABS_NUMBER;
 
-  public addTabDynamically(dynamicTab: Omit<DynamicTab<T>, 'index'>): void {
+  public addTabDynamically(dynamicTab: Omit<DynamicTab<T>, 'tabNumber'>): void {
     this._dynamicTabs = [
       ...this._dynamicTabs,
       { ...dynamicTab, tabNumber: this._dynamicTabs.length + STATIC_TABS_NUMBER },
