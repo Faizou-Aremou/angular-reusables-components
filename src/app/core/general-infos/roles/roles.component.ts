@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Role } from './models/role.model';
 import { RolesService } from './services/roles.service';
@@ -14,6 +14,9 @@ export class RolesComponent implements OnInit {
   public displayLimit!: number;
   public displayedColumns!: Array<string>;
   public displayedColumnsLabels!: Array<string>;
+  @Output() onEdit = new EventEmitter<Role>();
+  @Output() onConfigure = new EventEmitter<Role>();
+  @Output() onNotice = new EventEmitter<Role>();
 
   constructor(private roleListService: RolesService) {}
 
@@ -22,15 +25,15 @@ export class RolesComponent implements OnInit {
     this.displayedColumns = ['code', 'name', 'description'];
     this.displayedColumnsLabels = ['Id', 'Name', 'Informations'];
   }
-  public edit(elt: Role) {
-    console.log('elt in edition', elt);
+  public edit(role: Role) {
+     this.onEdit.emit(role);
   }
 
-  public configure(elt: Role) {
-    console.log('elt in configuration', elt);
+  public configure(role: Role) {
+    this.onConfigure.emit(role);
   }
 
-  public notice(elt: Role) {
-    console.log('elt in notification', elt);
+  public notice(role: Role) {
+   this.onNotice.emit(role);
   }
 }

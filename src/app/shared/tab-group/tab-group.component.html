@@ -21,7 +21,7 @@
                 </div>
             </ng-template>
             <ng-template matTabContent>
-                <ng-container *ngIf="dynamicTabsContentRef" [ngTemplateOutlet]="dynamicTabsContentRef" [ngTemplateOutletContext]="{ $implicit: tab} ">
+                <ng-container [ngTemplateOutlet]="dynamicTabsContentRef" [ngTemplateOutletContext]="{ $implicit: tab.contentInfos}">
                 </ng-container>
             </ng-template>
         </mat-tab>

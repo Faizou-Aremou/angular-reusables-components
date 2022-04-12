@@ -19,7 +19,7 @@ export class TabGroupComponent<T> implements OnInit , AfterContentInit {
   @Input() public tabGroup: TabGroup<T> | null = null;
   @ContentChildren(StaticTabsContentDirective)
   public staticTabsContentRefs: QueryList<StaticTabsContentDirective> | null = null;
-  @ContentChild('tabContent', { static: false })
+  @ContentChild('dynamicTabsContent', { static: false })
   public dynamicTabsContentRef: TemplateRef<any> | null = null;
   constructor() {}
   ngOnInit(): void {

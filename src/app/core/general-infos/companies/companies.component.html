@@ -1,6 +1,2 @@
-<app-table
-  [dataSource]="companies$ | async"
-  [displayedColumns]="displayedColumns"
-  [displayedColumnsLabels]="displayedColumnsLabels"
->
+<app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" (editElement)="onEditElement($event)">
 </app-table>

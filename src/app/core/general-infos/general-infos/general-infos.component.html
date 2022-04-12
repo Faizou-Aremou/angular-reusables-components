@@ -1,14 +1,18 @@
 <app-tab-group class="general-infos" [tabGroup]="tabGroup">
     <ng-template appStaticTabsContent>
         <div class="general-infos__static-tabs__first-tab-content">
-            <app-companies>
+            <app-companies (company)="displayCompanyInfosInTabs($event)">
             </app-companies>
         </div>
     </ng-template>
     <ng-template appStaticTabsContent>
         <div class="general-infos__static-tabs__second-tab-content">
-            <app-roles>
+            <app-roles (onEdit)="displayEditRolesInTab($event)" (onConfigure)="displayConfigureRolesInTab($event)" (onNotice)="displayNoticeRolesInTab($event)">
             </app-roles>
         </div>
+    </ng-template>
+    <ng-template #dynamicTabsContent let-infos>
+        <app-informations [infos]=" infos ">
+        </app-informations>
     </ng-template>
 </app-tab-group>

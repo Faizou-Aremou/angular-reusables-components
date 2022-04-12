@@ -1,7 +1,7 @@
 import { DynamicTab } from './dynamic-tab.model';
 import { StaticTab } from './static-tab.model';
 
-const STATIC_TABS_NUMBER = 0;
+
 export class TabGroup<T> {
   private _staticTabs: Array<StaticTab> = [];
   private _dynamicTabs: Array<DynamicTab<T>> = [];
@@ -15,28 +15,31 @@ export class TabGroup<T> {
 
   constructor(staticTabs: Array<Omit<StaticTab, 'tabNumber'>>) {
     this._staticTabs = staticTabs.map((tab, i) => {
-      return { ...tab, tabNumber: i + STATIC_TABS_NUMBER };
+      return { ...tab, tabNumber: i };
     });
   }
-  public selectedTab = STATIC_TABS_NUMBER;
+  public selectedTab = 0;
 
   public addTabDynamically(dynamicTab: Omit<DynamicTab<T>, 'tabNumber'>): void {
+   const existingTab = this._dynamicTabs.find((tab)=> tab.label=== dynamicTab.label)
+   if (existingTab!== undefined) {
+       this.selectedTab = existingTab.tabNumber;
+   } else {
     this._dynamicTabs = [
       ...this._dynamicTabs,
-      { ...dynamicTab, tabNumber: this._dynamicTabs.length + STATIC_TABS_NUMBER },
+      { ...dynamicTab, tabNumber: this.lastTabNumber()},
     ];
-    this.selectedTab = this._dynamicTabs.length;
+    this.selectedTab = this.lastTabNumber();
+   }
   }
 
   public deleteTab(tabNumber: number): void {
-    if (this.isDeletable(tabNumber))
-     {
-      this._dynamicTabs.filter(
-        (tab, index) => index === this.indexOfDeletingTab(tabNumber)
+      this._dynamicTabs = this._dynamicTabs.filter(
+        (tab, index) => index !== tabNumber
       );
 
       const tabsUpperDeleteTab = this._dynamicTabs.slice(
-        this.indexOfDeletingTab(tabNumber)
+        tabNumber
       );
       const tabsUpperDeleteTabNumberTabUpdated = tabsUpperDeleteTab.map(
         (tab) => {
@@ -44,31 +47,25 @@ export class TabGroup<T> {
         }
       );
       this._dynamicTabs = [
-        ...this._dynamicTabs.slice(0, this.tabNumberOnDynamicTabs(tabNumber)),
+        ...this._dynamicTabs.slice(0, tabNumber),
         ...tabsUpperDeleteTabNumberTabUpdated,
       ];
       this.selectedTab =
-      this.isNotLastTabOnDynamicTabs(tabNumber)
-          ? tabNumber
-          : tabNumber - 1;
-    }
+      this.isLastTabOnDynamicTabs(tabNumber)
+          ? this.tabNumber(tabNumber) -1
+          : this.tabNumber(tabNumber)
   }
 
-  private tabNumberOnDynamicTabs(tabNumber: number): number{
-      return tabNumber - this._staticTabs.length;
+  private isLastTabOnDynamicTabs(tabNumber: number): boolean {
+       return tabNumber === this._dynamicTabs.length;
   }
 
-  private isDeletable(tabNumber: number): boolean{
-     return this.tabNumberOnDynamicTabs(tabNumber) > 0;
+  private lastTabNumber():number{
+    return this._staticTabs.length + this._dynamicTabs.length;
   }
 
-  private indexOfDeletingTab(tabNumber: number): number {
-      return tabNumber - this._staticTabs.length - 1;
+  private tabNumber(tabNumber:number): number{
+    return this._staticTabs.length + tabNumber
   }
-
-  private isNotLastTabOnDynamicTabs(tabNumber: number): boolean {
-       return this.tabNumberOnDynamicTabs(tabNumber) < this._dynamicTabs.length;
-  }
- 
 }
 

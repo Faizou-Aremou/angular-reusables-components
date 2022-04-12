@@ -5,9 +5,10 @@ import { GeneralInfosComponent } from './general-infos/general-infos.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CompaniesComponent } from './companies/companies.component';
 import { RolesComponent } from './roles/roles.component';
-import { RolesPaneComponent } from '../roles-pane/roles-pane.component';
+import { RolesPaneComponent } from './roles-pane/roles-pane.component';
 import { CompaniesPaneComponent } from './companies-pane/companies-pane.component';
 import { AngularMaterialModule } from 'src/material.module';
+import { InformationsComponent } from './informations/informations.component';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { AngularMaterialModule } from 'src/material.module';
     CompaniesComponent,
      RolesComponent, 
      RolesPaneComponent, 
-     CompaniesPaneComponent, 
+     CompaniesPaneComponent, InformationsComponent, 
   ],
   imports: [
     CommonModule,
