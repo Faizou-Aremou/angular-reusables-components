@@ -37,6 +37,7 @@
     contentInfos:company
     }
 )`
+- La directive `appStaticTabsContent` permet d'identifer les contenus statiques, et le l'elementRef `dynamicTabsContent` permet d'identifier le contenu utilisé pour les tabs dynamiques.
 
 4. le composant qui utilise Tab-group n'a plus à ce soucier de la suppression des tabs. tout est géré automatiquement par l'objet `TabGroup`
 5. L'implémentation est performante car tab-group est conçu en se souciant de la detection.push
