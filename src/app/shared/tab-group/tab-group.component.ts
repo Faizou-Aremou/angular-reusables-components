@@ -1,5 +1,6 @@
 import {
   AfterContentInit,
+  ChangeDetectionStrategy,
   Component,
   ContentChild,
   ContentChildren,
@@ -14,6 +15,7 @@ import { TabGroup } from '../models/tab-group/tab-group.model';
   selector: 'app-tab-group',
   templateUrl: './tab-group.component.html',
   styleUrls: ['./tab-group.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class TabGroupComponent<T> implements OnInit , AfterContentInit {
   @Input() public tabGroup: TabGroup<T> | null = null;
