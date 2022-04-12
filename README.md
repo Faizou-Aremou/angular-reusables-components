@@ -12,7 +12,7 @@
 
 2. Facilitera la maintenance due à la factorisation du code
 3. Utilisation possible dans d'autres projets de swissRiskcare
-4. Permettra d'avoir un niveau d'abstraction au dessus de angular matérial. Ainsi si on le souhaite ne plus utiliser la Mat-table pour des raison de design par exemple cela sera possible très aisément en modifiant le composant Tab-group
+4. Permettra d'avoir un niveau d'abstraction au dessus de angular matérial. Ainsi si on le souhaite ne plus utiliser la Mat-table pour des raisons de design par exemple cela sera possible très aisément en modifiant le composant Tab-group
 
 
 ## Fonctionnalités
