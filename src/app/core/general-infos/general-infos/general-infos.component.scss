@@ -8,13 +8,11 @@ p {
     &__static-tabs {
         &__first-tab-content,
         &__second-tab-content {
-            height: 100%;
+            // height: 100%;
             display: grid;
             grid-template-columns: 1fr;
             grid-row-gap: 10px;
         }
     }
-    &__dynamic-tabs {
-        height: 100%;
-    }
+    &__dynamic-tabs {}
 }
