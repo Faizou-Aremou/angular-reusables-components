@@ -8,7 +8,7 @@
 
 1. Permettra de factoriser tous les codes de creations de tab sur les cas d'utilisations les plus communes à savoir:
  - creation de tab statics
- - creation d'une tab statiques, puis creation de tab dynamiques à partir de la tab statique
+ - creation d'une tab statiques, puis creation de tab dynamiques à partir d'une tab statique
 
 2. Facilitera la maintenance due à la factorisation du code
 3. Utilisation possible dans d'autres projets de swissRiskcare
@@ -30,7 +30,7 @@
       }
     ]
   )`
-- creation d'une ou plusieurs tab dynamiques complémentaires
+- Creation d'une ou plusieurs tab dynamiques complémentaires
 
   `this.tabGroup.addTabDynamically(
     {
@@ -49,4 +49,3 @@
   styleUrls: ['./tab-group.component.scss'],
   changeDetection:ChangeDetectionStrategy.OnPush
 })`
-

@@ -1,8 +1,7 @@
 import { DebugElement } from '@angular/core';
-import { TableConfig } from '../models/table-config.model';
 import { TableComponent } from './table.component';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TableConfig } from '../../models/table/table-config.model';
 
 export interface qualityControlResult {
   control: string;
@@ -14,11 +13,6 @@ describe('Mat Table Custom', () => {
   let expectedTotalInBackEnd: number;
   let expectedDisplayedColumns: Array<string>;
   let expectedDisplayedColumnsLabels: Array<string>;
-  let tableConfig: TableConfig<string>;
-  let editElement: DebugElement;
-  let editElementEl: HTMLElement;
-  let sortData: DebugElement;
-  let changePage: DebugElement;
 
   beforeEach(
     waitForAsync(() => {
@@ -56,7 +50,7 @@ describe('Mat Table Custom', () => {
       );
     fixture.detectChanges();
     const component = fixture.componentInstance;
-    component.elements = expectedElement;
+    component.dataSource = expectedElement;
     component.displayedColumns = ['name', 'id', 'description'];
     const tableElement = fixture.nativeElement.querySelector('.mat-table')!;
     const trs = getElements(tableElement, '.cdk-row,tr');

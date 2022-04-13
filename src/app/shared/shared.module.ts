@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableComponent } from './table/table.component';
-import { TabGroupComponent } from './tab-group/tab-group.component';
+import { TableComponent } from './components/table/table.component';
+import { TabGroupComponent } from './components/tab-group/tab-group.component';
 import { StaticTabsContentDirective } from './directives/static-tabs-contents.directive';
 import { AngularMaterialModule } from 'src/material.module';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 
 
@@ -11,7 +12,7 @@ import { AngularMaterialModule } from 'src/material.module';
   declarations: [   
      TableComponent,
      TabGroupComponent, 
-     StaticTabsContentDirective 
+     StaticTabsContentDirective, NavBarComponent 
     ],
   imports: [
     CommonModule,

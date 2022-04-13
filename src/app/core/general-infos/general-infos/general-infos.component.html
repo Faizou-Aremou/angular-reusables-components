@@ -12,7 +12,9 @@
         </div>
     </ng-template>
     <ng-template #dynamicTabsContent let-infos>
-        <app-informations [infos]=" infos ">
-        </app-informations>
+        <div class="general-infos__dynamic-tabs">
+            <app-informations [infos]=" infos ">
+            </app-informations>
+        </div>
     </ng-template>
 </app-tab-group>

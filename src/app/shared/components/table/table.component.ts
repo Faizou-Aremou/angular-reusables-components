@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { TableConfig } from '../models/table/table-config.model';
+import { TableConfig } from '../../models/table/table-config.model';
 
 @Component({
   selector: 'app-table',
