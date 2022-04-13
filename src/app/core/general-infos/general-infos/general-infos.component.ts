@@ -11,7 +11,7 @@ import { Role } from '../roles/models/role.model';
 })
 export class GeneralInfosComponent implements OnInit {
 
-  public tabGroup = new TabGroup<Company>(
+  public tabGroup = new TabGroup<Company| Role>(
     [
       {
         label: "Companies list"
