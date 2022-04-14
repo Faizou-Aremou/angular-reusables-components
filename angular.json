@@ -6,7 +6,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "example-app": {
+        "reusables-components": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -23,7 +23,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/example-app",
+                        "outputPath": "dist/reusables-components",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -33,8 +33,7 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "node_modules/@angular/material/prebuilt-themes/purple-green.css",
-                            "src/styles.scss"
+                            "src/app/themes/basic/styles/styles.scss"
                         ],
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules/"]
@@ -60,6 +59,17 @@
                             }],
                             "outputHashing": "all"
                         },
+                        "purple-green": {
+                            "styles": [
+                                "src/app/themes/ssarf/styles/styles.scss"
+                            ],
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        },
                         "development": {
                             "buildOptimizer": false,
                             "optimization": false,
@@ -75,22 +85,25 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "example-app:build:production"
+                            "browserTarget": "reusables-components:build:production"
                         },
                         "development": {
-                            "browserTarget": "example-app:build:development"
+                            "browserTarget": "reusables-components:build:development"
+                        },
+                        "purple-green": {
+                            "browserTarget": "reusables-components:build:purple-green"
                         }
                     },
-                    "defaultConfiguration": "development"
+                    "defaultConfiguration": "purple-green"
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "example-app:build"
+                        "browserTarget": "reusables-components:build"
                     }
                 }
             }
         }
     },
-    "defaultProject": "example-app"
+    "defaultProject": "reusables-components"
 }
