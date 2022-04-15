@@ -1,5 +1,6 @@
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-rvy6w4)
+[demo on StackBlitz ⚡️](https://stackblitz.com/edit/angular-rvy6w4)
+
 
 
 # Tab-group
@@ -8,7 +9,7 @@
 
 1. Permettra de factoriser tous les codes de creations de tab sur les cas d'utilisations les plus communes à savoir:
  - creation de tab statics
- - creation d'une tab statiques, puis creation de tab dynamiques à partir d'une tab statique
+ - creation d'une tab statiques, puis création de tab dynamiques à partir d'une tab statique
 
 2. Facilitera la maintenance due à la factorisation du code
 3. Utilisation possible dans d'autres projets de swissRiskcare
@@ -40,7 +41,7 @@
 )`
 - La directive `appStaticTabsContent` permet d'identifer les contenus statiques, et le l'elementRef `dynamicTabsContent` permet d'identifier le contenu utilisé pour les tabs dynamiques.
 
-4. le composant qui utilise Tab-group n'a plus à ce soucier de la suppression des tabs. tout est géré automatiquement par l'objet `TabGroup`
+4. le composant qui utilise Tab-group n'a plus à se soucier de la suppression des tabs. tout est géré automatiquement par l'objet `TabGroup`
 5. L'implémentation est performante car tab-group est conçu en se souciant de la detection.push
 
 `@Component({
@@ -49,3 +50,10 @@
   styleUrls: ['./tab-group.component.scss'],
   changeDetection:ChangeDetectionStrategy.OnPush
 })`
+
+
+# Theming
+
+deux themes sont disponibles:
+ 1. Le theme purple-green accessible en dev avec la commande `npm start`
+ 2. Le theme basic accessible en dev avec la commande `npm start-basic`
