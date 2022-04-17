@@ -22,8 +22,10 @@ import { TableColumnRefPipe } from './pipes/table/table-column-ref.pipe';
   ],
   exports:[
     TableComponent,
-    TabGroupComponent, 
-    StaticTabsContentDirective
+    TabGroupComponent,
+    NavBarComponent, 
+    StaticTabsContentDirective,
+    TableColumnDirective, TableColumnRefPipe 
   ],
 })
 export class SharedModule { }

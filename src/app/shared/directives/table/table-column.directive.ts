@@ -4,7 +4,7 @@ import { Directive, Input, TemplateRef } from '@angular/core';
   selector: '[tableColumn]'
 })
 export class TableColumnDirective {
-  @Input() tableColumn!: string
+  @Input() tableColumn: string | null= null
   constructor(public templateRef: TemplateRef<any>) { }
 
 }
