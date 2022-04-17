@@ -56,4 +56,4 @@
 
 deux themes sont disponibles:
  1. Le theme purple-green accessible en dev avec la commande `npm start`
- 2. Le theme basic accessible en dev avec la commande `npm start-basic` b
+ 2. Le theme basic accessible en dev avec la commande `npm start-basic` 
