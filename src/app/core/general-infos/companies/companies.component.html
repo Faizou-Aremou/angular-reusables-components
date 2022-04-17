@@ -1,2 +1,7 @@
-<app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" (editElement)="onEditElement($event)">
+<app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" [addActionsColumn]="addActionsColumn">
+    <ng-template #actionsButton let-elt>
+        <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(elt)">
+            <span> details </span>
+        </button>
+    </ng-template>
 </app-table>

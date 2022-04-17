@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TabGroup } from 'src/app/shared/models/tab-group/tab-group.model';
-import { Company } from '../companies/models/company.model';
-import { Role } from '../roles/models/role.model';
+import { Company } from '../../models/general-infos/company.model';
+import { Role } from '../../models/general-infos/role.model';
 
 @Component({
   selector: 'app-general-infos',

@@ -9,7 +9,7 @@ import {
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import { StaticTabsContentDirective } from '../../directives/static-tabs-contents.directive';
+import { StaticTabsContentDirective } from '../../directives/tab-group/static-tabs-contents.directive';
 import { TabGroup } from '../../models/tab-group/tab-group.model';
 @Component({
   selector: 'app-tab-group',
