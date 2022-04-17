@@ -2,24 +2,60 @@
 [demo on StackBlitz ⚡️](https://stackblitz.com/edit/angular-rvy6w4)
 
 
+# Composant table
+## Avantages
+
+1. Factorise du code de creation de table
+2. Simplicité d'utilisation
+
+## Fonctionnalités
+
+- Utilisation basique de `tableComponent`
+` <app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels">
+</app-table> `
+
+- Utilisation en définissant une colonne d'action
+
+`<app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" [addActionsColumn]="addActionsColumn">
+    <ng-template #actionsButton let-element>
+        <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
+            <span> details </span>
+        </button>
+    </ng-template>
+</app-table>`
+
+- Utilisation en redéfinissant l'affichage par défaut d'une colonne  
+
+`<app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" [addActionsColumn]="addActionsColumn">
+    <ng-template [tableColumn]="'name'" let-element>
+        <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
+            <span> details </span>
+        </button>
+    </ng-template>
+    <ng-template #actionsButton let-element>
+        <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
+            <span> details </span>
+        </button>
+    </ng-template>
+</app-table>`
 
 # Tab-group
 
 ## Avantages
 
-1. Permettra de factoriser tous les codes de creations de tab sur les cas d'utilisations les plus communes à savoir:
+1. Permet de factoriser tous les codes de creation de tab sur les cas d'utilisations les plus communes à savoir:
  - creation de tab statics
  - creation d'une tab statiques, puis création de tab dynamiques à partir d'une tab statique
 
-2. Facilitera la maintenance due à la factorisation du code
+2. Facilite la maintenance due à la factorisation du code
 3. Utilisation possible dans d'autres projets de swissRiskcare
-4. Permettra d'avoir un niveau d'abstraction au dessus de angular matérial. Ainsi si on le souhaite ne plus utiliser la Mat-table pour des raisons de design par exemple cela sera possible très aisément en modifiant le composant Tab-group
+4. Permet d'avoir un niveau d'abstraction au dessus de angular matérial. Ainsi si on le souhaite ne plus utiliser la Mat-table pour des raisons de design par exemple cela sera possible très aisément en modifiant le composant Tab-group
 5. Simplicité d'utilisation
 
 
 ## Fonctionnalités
 
-- creation de tab statics (1 ou plusieurs)
+- Creation de tab statics (1 ou plusieurs)
 
 `public tabGroup = new TabGroup<Company>(
     [
