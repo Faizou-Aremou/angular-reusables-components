@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { TableComponent } from './table.component';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { TableConfig } from '../../models/table/table-config.model';
+import { TableConfig } from '../../types/paginated-data-source.model';
 
 export interface qualityControlResult {
   control: string;

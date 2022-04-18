@@ -1,4 +1,6 @@
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ContentChild,
   ContentChildren,
@@ -11,46 +13,46 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Sort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { ACTIONS_BUTTONS_COLUMN } from '../../constants/table.constant';
 import { TableColumnDirective } from '../../directives/table/table-column.directive';
-import { TableConfig } from '../../models/table/table-config.model';
+import { PaginatedDataSource } from '../../types/paginated-data-source.model';
+
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent<T> implements OnInit {
+export class TableComponent<T> implements OnInit, AfterViewInit  {
   public ACTIONS_BUTTONS_COLUMN = ACTIONS_BUTTONS_COLUMN;
-  @Input() public dataSource: Array<T> | null = [];
-  @Input() public totalInBackEnd: number = 0;
-  @Input() public displayLimit: number = 10;
+  /**
+   * we will not be using the built-in MatTableDataSource because its designed for filtering,
+   * sorting and pagination of a client-side data array.
+   * In most real app these are happened on server side.
+   */
+  @Input() public dataSource: PaginatedDataSource<T> | null=null;
   @Input() public displayedColumns: Array<string> = [];
   @Input() public displayedColumnsLabels: Array<string> = [];
   @Input() public addActionsColumn: boolean = false;
-  @Input() public tableConfig!: TableConfig<T> | null;
-  @Output() public changePage: EventEmitter<PageEvent> = new EventEmitter();
-  @Output() public sortData: EventEmitter<Sort> = new EventEmitter();
   @ContentChild('actionsButton', { static: false })
   actionsButtonRef!: TemplateRef<any>;
   @ContentChildren(TableColumnDirective) tableColumnsRef!: QueryList<TableColumnDirective>;
   @ViewChild('paginator', { static: false }) paginator?: MatPaginator;
-
+  @ViewChild(MatSort, { static: false  }) matSort: MatSort| null = null;
   public columns: Array<string>=[];
 
   constructor() {}
 
   ngOnInit(): void {
+    
     this.columns = [...this.displayedColumns, ...this.actionsColumn() ]
   }
-
-  public onSortData(sort: Sort): void {
-    this.sortData.emit(sort);
-  }
-
-  public onChangePage(pageEvent: PageEvent): void {
-    this.changePage.emit(pageEvent);
+  ngAfterViewInit() {
+    if(this.dataSource){
+      this.dataSource.matSort = this.matSort
+    }
   }
 
   private actionsColumn(): Array<string> {

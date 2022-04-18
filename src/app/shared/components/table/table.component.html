@@ -1,9 +1,9 @@
 <section class="table-content">
-    <div class="table-content__empty-list" *ngIf="dataSource && !dataSource?.length">
+    <div class="table-content__empty-list" *ngIf="!dataSource">
         no result
     </div>
-    <div class="table-content__table-container" *ngIf="dataSource && dataSource.length > 0">
-        <table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource" (matSortChange)="onSortData($event)">
+    <div class="table-content__table-container" *ngIf="dataSource">
+        <table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource">
             <ng-container *ngFor="let column of displayedColumns; let i = index" [matColumnDef]="column">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{ displayedColumnsLabels[i] }}
@@ -26,11 +26,8 @@
             <tr mat-header-row *matHeaderRowDef="columns"></tr>
             <tr mat-row *matRowDef="let row; columns: columns"></tr>
         </table>
-        <mat-paginator *ngIf="
-        dataSource
-          ? (dataSource.length > 0 && totalInBackEnd > 0) || dataSource.length
-          : null
-      " class="mat-elevation-z8" #paginator [length]="totalInBackEnd > 0 ? totalInBackEnd : dataSource?.length" [pageSizeOptions]="[10, 20, 50]" [pageSize]="displayLimit" showFirstLastButtons (page)="onChangePage($event)" aria-label="Select page of periodic dataSource">
+        <mat-paginator *ngIf="dataSource.page$ | async as page" class="mat-elevation-z8" #paginator [length]="page.totalElements" [pageSizeOptions]="[10, 20, 50]" [pageSize]="page.size" [pageIndex]="page.number" [hidePageSize]="true" showFirstLastButtons (page)="dataSource.fetch($event.pageIndex)"
+            aria-label="Select page of periodic dataSource">
         </mat-paginator>
     </div>
 </section>

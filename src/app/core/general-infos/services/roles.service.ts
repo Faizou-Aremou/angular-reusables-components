@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { PageRequest } from 'src/app/shared/models/table/page-request.model';
+import { Page } from 'src/app/shared/models/table/page.model';
 import { Role } from '../../models/general-infos/role.model';
 
 @Injectable({
@@ -8,13 +10,22 @@ import { Role } from '../../models/general-infos/role.model';
 export class RolesService {
   constructor() {}
 
-  public getRoles(): Observable<Array<Role>> {
-    return of([
+  public getRoles(request: PageRequest<Role>): Observable<Page<Role>> {
+    return of(
       {
-        code: 'azertt',
-        name: 'user',
-        description: 'alows helpdesk',
+        content: [ {
+          code: 'cadre',
+          name: 'Agnidé',
+          description: 'Front',
+        }, {
+          code: 'cadre',
+          name: 'Faizou',
+          description: 'Programmer',
+        }],
+        totalElements: 15,
+        size:2,
+        number: 0,
       },
-    ]);
+    );
   }
 }

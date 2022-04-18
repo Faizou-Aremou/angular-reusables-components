@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { PageRequest } from 'src/app/shared/models/table/page-request.model';
+import { Page } from 'src/app/shared/models/table/page.model';
 import { Company } from '../../models/general-infos/company.model';
 
 @Injectable({
@@ -8,13 +10,18 @@ import { Company } from '../../models/general-infos/company.model';
 export class CompaniesService {
   constructor() {}
 
-  public getCompanies(): Observable<Array<Company>> {
-    return of([
+  public getCompanies(request: PageRequest<Company>): Observable<Page<Company>> {
+    return of(
       {
-        code: 'earrteyd',
-        name: 'Google',
-        description: 'Google enterprise',
+        content:[ {
+          code: 'earrteyd',
+          name: 'Google',
+          description: 'Google enterprise',
+        }],
+        totalElements: 3,
+        size:1,
+        number: 0,
       },
-    ]);
+    );
   }
 }

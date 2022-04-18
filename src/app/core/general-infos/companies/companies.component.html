@@ -1,4 +1,4 @@
-<app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" [addActionsColumn]="addActionsColumn">
+<app-table [dataSource]="dataSource" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" [addActionsColumn]="addActionsColumn">
     <ng-template #actionsButton let-element>
         <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
             <span> details </span>

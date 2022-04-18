@@ -1,5 +1,4 @@
 import {
-  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
   ContentChild,
@@ -17,7 +16,7 @@ import { TabGroup } from '../../models/tab-group/tab-group.model';
   styleUrls: ['./tab-group.component.scss'],
   changeDetection:ChangeDetectionStrategy.OnPush
 })
-export class TabGroupComponent<T> implements OnInit , AfterContentInit {
+export class TabGroupComponent<T> implements OnInit{
   @Input() public tabGroup: TabGroup<T> | null = null;
   @ContentChildren(StaticTabsContentDirective)
   public staticTabsContentRefs: QueryList<StaticTabsContentDirective> | null = null;
@@ -27,7 +26,4 @@ export class TabGroupComponent<T> implements OnInit , AfterContentInit {
   ngOnInit(): void {
   }
 
-  ngAfterContentInit() {
-    console.log(this.staticTabsContentRefs?.toArray())
-  }
 }
