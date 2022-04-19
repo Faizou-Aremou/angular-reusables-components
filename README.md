@@ -14,8 +14,9 @@
 
 Dans le composant parent
 
-`public initialSort: Sort<Role> = { active: "code", direction:  "desc" };
-  public dataSource = new CustomDataSource<Role>(
+`public initialSort: Sort<Role> = { active: "code", direction:  "desc" };`
+
+  `public dataSource = new CustomDataSource<Role>(
     (request) => this.roleListService.getRoles(request),
     this.initialSort
   );` 
@@ -23,13 +24,13 @@ Dans le composant parent
 Dans la vue du composant parent
 
 `
-<app-table [dataSource]="companies$ | async" [tableColumns]="tableColumns">
+<app-table [dataSource]="dataSource" [tableColumns]="tableColumns">
 </app-table> 
 `
 
 - Utilisation en définissant une colonne d'action supplémentaire
 
-`<app-table [dataSource]="companies$ | async" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
+`<app-table [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
     <ng-template #actionsButton let-element>
         <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
             <span> details </span>
@@ -39,7 +40,7 @@ Dans la vue du composant parent
 
 - Utilisation en redéfinissant l'affichage par défaut d'une colonne: utile dans les cas où on souhaite définir une colonne avec un affichage customisé
 
-`<app-table [dataSource]="companies$ | async" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
+`<app-table [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
     <ng-template [tableColumnDef]="'name'" let-element>
         <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
             <span> details </span>
@@ -88,7 +89,7 @@ Dans la vue du composant parent
     contentInfos:company
     }
 )`
-- La directive `appStaticTabsContent` permet d'identifer les contenus statiques, et le l'elementRef `dynamicTabsContent` permet d'identifier le contenu utilisé pour les tabs dynamiques.
+- La directive `appStaticTabsContent` permet d'identifer les contenus statiques, et l'elementRef `dynamicTabsContent` permettent d'identifier le contenu utilisé pour les tabs dynamiques.
 
 4. le composant qui utilise Tab-group n'a plus à se soucier de la suppression des tabs. tout est géré automatiquement par l'objet `TabGroup`
 5. L'implémentation est performante car tab-group est conçu en se souciant de la detection.push
