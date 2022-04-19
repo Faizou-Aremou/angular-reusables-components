@@ -7,7 +7,7 @@ import { TableColumnDirective } from '../../directives/table/table-column.direct
 export class TableColumnRefPipe implements PipeTransform {
 
   transform(columnId: string, tableColumns: QueryList<TableColumnDirective>): TableColumnDirective | undefined  {
-    return tableColumns.find((column) => column.tableColumn === columnId) ?? undefined;
+    return tableColumns.find((column) => column.tableColumnDef === columnId) ?? undefined;
   }
 
 }

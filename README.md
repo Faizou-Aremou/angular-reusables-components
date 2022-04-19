@@ -5,18 +5,31 @@
 # Composant table
 ## Avantages
 
-1. Factorise du code de creation de table
+1. Mutualise création de table
 2. Simplicité d'utilisation
 
 ## Fonctionnalités
 
 - Utilisation basique de `tableComponent`
-` <app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels">
-</app-table> `
 
-- Utilisation en définissant une colonne d'action
+Dans le composant parent
 
-`<app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" [addActionsColumn]="addActionsColumn">
+`public initialSort: Sort<Role> = { active: "code", direction:  "desc" };
+  public dataSource = new CustomDataSource<Role>(
+    (request) => this.roleListService.getRoles(request),
+    this.initialSort
+  );` 
+
+Dans la vue du composant parent
+
+`
+<app-table [dataSource]="companies$ | async" [tableColumns]="tableColumns">
+</app-table> 
+`
+
+- Utilisation en définissant une colonne d'action supplémentaire
+
+`<app-table [dataSource]="companies$ | async" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
     <ng-template #actionsButton let-element>
         <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
             <span> details </span>
@@ -24,10 +37,10 @@
     </ng-template>
 </app-table>`
 
-- Utilisation en redéfinissant l'affichage par défaut d'une colonne  
+- Utilisation en redéfinissant l'affichage par défaut d'une colonne: utile dans les cas où on souhaite définir une colonne avec un affichage customisé
 
-`<app-table [dataSource]="companies$ | async" [displayedColumns]="displayedColumns" [displayedColumnsLabels]="displayedColumnsLabels" [addActionsColumn]="addActionsColumn">
-    <ng-template [tableColumn]="'name'" let-element>
+`<app-table [dataSource]="companies$ | async" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
+    <ng-template [tableColumnDef]="'name'" let-element>
         <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
             <span> details </span>
         </button>

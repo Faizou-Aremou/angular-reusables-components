@@ -1,10 +1,10 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[tableColumn]'
+  selector: '[tableColumnDef]'
 })
 export class TableColumnDirective {
-  @Input() tableColumn: string | null= null
+  @Input() tableColumnDef: string | null= null
   constructor(public templateRef: TemplateRef<any>) { }
 
 }

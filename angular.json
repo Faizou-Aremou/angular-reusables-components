@@ -61,7 +61,7 @@
                         },
                         "purple-green": {
                             "styles": [
-                                "src/app/themes/ssarf/styles/styles.scss"
+                                "src/app/themes/purple-green/styles/styles.scss"
                             ],
                             "buildOptimizer": false,
                             "optimization": false,
