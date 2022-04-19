@@ -62,7 +62,7 @@ Dans la vue du composant parent
  - creation de tab statics
  - creation de tabs statiques (une ou plusieurs), puis création de tabs dynamiques à partir des tabs statiques
 
-2. Facilite la maintenance, car la création de tab se fait à un seul niveau
+2. Facilite la maintenance, car la création de tab se fait au travers d'un seul et unique composant
 3. Utilisation possible dans d'autres projets de SRC
 4. Permet d'avoir un niveau d'abstraction au dessus de angular matérial. Ainsi si on le souhaite ne plus utiliser la Mat-table pour des raisons de design par exemple, ce sera possible très aisément en modifiant le composant Tab-group
 5. Simplicité d'utilisation
