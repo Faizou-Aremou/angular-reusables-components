@@ -39,7 +39,7 @@ Dans la vue du composant parent
     </ng-template>
 </app-table>`
 
-- Utilisation en redéfinissant l'affichage par défaut d'une colonne: utile dans les cas où on souhaite définir une colonne avec un affichage customisé
+- Utilisation en redéfinissant l'affichage par défaut d'une colonne: utile dans les cas où on souhaite redéfinir une colonne avec un affichage customisé. Dans cet exemple, nous redéfinir la colonne name. 
 
 `<app-table [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
     <ng-template [tableColumnDef]="'name'" let-element>
@@ -58,13 +58,13 @@ Dans la vue du composant parent
 
 ## Avantages
 
-1. Permet de factoriser tous les codes de creation de tab sur les cas d'utilisations les plus communes à savoir:
+1. Permet la creation de tab sur les cas d'utilisations les plus communes à savoir:
  - creation de tab statics
- - creation d'une tab statiques, puis création de tab dynamiques à partir d'une tab statique
+ - creation de tabs statiques (une ou plusieurs), puis création de tabs dynamiques à partir des tabs statiques
 
-2. Facilite la maintenance due à la factorisation du code
-3. Utilisation possible dans d'autres projets de swissRiskcare
-4. Permet d'avoir un niveau d'abstraction au dessus de angular matérial. Ainsi si on le souhaite ne plus utiliser la Mat-table pour des raisons de design par exemple cela sera possible très aisément en modifiant le composant Tab-group
+2. Facilite la maintenance, car la création de tab se fait à un seul niveau
+3. Utilisation possible dans d'autres projets de SRC
+4. Permet d'avoir un niveau d'abstraction au dessus de angular matérial. Ainsi si on le souhaite ne plus utiliser la Mat-table pour des raisons de design par exemple, ce sera possible très aisément en modifiant le composant Tab-group
 5. Simplicité d'utilisation
 
 
