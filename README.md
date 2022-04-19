@@ -5,8 +5,9 @@
 # Composant table
 ## Avantages
 
-1. Mutualise création de table
+1. Mutualise la création de tableau de données
 2. Simplicité d'utilisation
+3. Fonctionne avec un DataSource par défaut
 
 ## Fonctionnalités
 
