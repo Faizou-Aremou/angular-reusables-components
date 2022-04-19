@@ -9,7 +9,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { StaticTabsContentDirective } from '../../directives/tab-group/static-tabs-contents.directive';
-import { TabGroup } from '../../models/tab-group/tab-group.model';
+import { TabGroup } from '../../types/tab-group/tab-group';
 @Component({
   selector: 'app-tab-group',
   templateUrl: './tab-group.component.html',

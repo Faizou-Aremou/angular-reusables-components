@@ -4,10 +4,8 @@ import {
   Component,
   ContentChild,
   ContentChildren,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
   QueryList,
   TemplateRef,
   ViewChild,
@@ -16,7 +14,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { ACTIONS_BUTTONS_COLUMN } from '../../constants/table.constant';
 import { TableColumnDirective } from '../../directives/table/table-column.directive';
-import { PaginatedDataSource } from '../../types/paginated-data-source.model';
+import { TableColumn } from '../../models/table/table-column.model';
+import { CustomDataSource } from '../../types/custom-data-source';
 
 
 @Component({
@@ -32,26 +31,26 @@ export class TableComponent<T> implements OnInit, AfterViewInit  {
    * sorting and pagination of a client-side data array.
    * In most real app these are happened on server side.
    */
-  @Input() public dataSource: PaginatedDataSource<T> | null=null;
-  @Input() public displayedColumns: Array<string> = [];
-  @Input() public displayedColumnsLabels: Array<string> = [];
+  @Input() public dataSource: CustomDataSource<T> | null=null;
+  @Input() public tableColumns: Array<TableColumn> = [];
   @Input() public addActionsColumn: boolean = false;
   @ContentChild('actionsButton', { static: false })
   actionsButtonRef!: TemplateRef<any>;
   @ContentChildren(TableColumnDirective) tableColumnsRef!: QueryList<TableColumnDirective>;
-  @ViewChild('paginator', { static: false }) paginator?: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) matPaginator: MatPaginator| null=null;
   @ViewChild(MatSort, { static: false  }) matSort: MatSort| null = null;
   public columns: Array<string>=[];
-
+  public displayedColumns: Array<string> = [];
   constructor() {}
 
   ngOnInit(): void {
-    
-    this.columns = [...this.displayedColumns, ...this.actionsColumn() ]
+    this.displayedColumns = this.tableColumns.map((column)=> column.columnDef);
+    this.columns = [...this.displayedColumns, ...this.actionsColumn() ];
   }
   ngAfterViewInit() {
     if(this.dataSource){
-      this.dataSource.matSort = this.matSort
+      this.dataSource.matSort = this.matSort;
+      this.dataSource.matPaginator = this.matPaginator;
     }
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TabGroup } from 'src/app/shared/models/tab-group/tab-group.model';
+import { TabGroup } from 'src/app/shared/types/tab-group/tab-group';
 import { Company } from '../../models/general-infos/company.model';
 import { Role } from '../../models/general-infos/role.model';
 

@@ -1,5 +1,5 @@
-import { DynamicTab } from './dynamic-tab.model';
-import { StaticTab } from './static-tab.model';
+import { DynamicTab } from '../../models/tab-group/dynamic-tab.model';
+import { StaticTab } from '../../models/tab-group/static-tab.model';
 
 
 export class TabGroup<T> {
