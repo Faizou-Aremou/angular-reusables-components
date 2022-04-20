@@ -2,4 +2,7 @@ import { Observable } from "rxjs";
 import { PageRequest } from "./page-request.model";
 import { Page } from "./page.model";
 
-export type PaginationEndpoint<T> = (req: PageRequest<T>) => Observable<Page<T>>
+export type PaginationEndpoint<T, Q> = (
+  request: PageRequest<T>,
+  query: Q
+) => Observable<Page<T>>;

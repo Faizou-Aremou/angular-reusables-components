@@ -26,7 +26,7 @@
             <tr mat-header-row *matHeaderRowDef="columns"></tr>
             <tr mat-row *matRowDef="let row; columns: columns"></tr>
         </table>
-        <mat-paginator *ngIf="dataSource.page$ | async as page" class="mat-elevation-z8" [length]="page.totalElements" [pageSizeOptions]="[10, 20, 50]" [pageSize]="page.size" [pageIndex]="page.number" [hidePageSize]="true" showFirstLastButtons aria-label="Select page of periodic dataSource">
+        <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 20, 50]" [hidePageSize]="true" showFirstLastButtons aria-label="Select page of periodic dataSource">
         </mat-paginator>
     </div>
 </section>
