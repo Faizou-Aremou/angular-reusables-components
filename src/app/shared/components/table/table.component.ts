@@ -10,8 +10,8 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ACTIONS_BUTTONS_COLUMN } from '../../constants/table.constant';
 import { TableColumnDirective } from '../../directives/table/table-column.directive';
 import { TableColumn } from '../../models/table/table-column.model';

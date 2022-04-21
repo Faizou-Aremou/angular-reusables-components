@@ -2,14 +2,21 @@ import { DataSource } from "@angular/cdk/collections";
 import {
   BehaviorSubject,
   combineLatest,
+  combineLatestWith,
   from,
   map,
   merge,
   Observable,
+  share,
+  shareReplay,
   startWith,
   Subject,
   Subscription,
   switchMap,
+  tap,
+  withLatestFrom,
+  zip,
+  zipWith,
 } from "rxjs";
 import { PaginationEndpoint } from "../models/pagination-end-point.model";
 import { MatSort, Sort as MatSortInterface } from "@angular/material/sort";
@@ -26,8 +33,8 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   private _matPaginator: MatPaginator | null = null;
   private _matPaginatorSubscription = Subscription.EMPTY;
   private _matSortSubscription = Subscription.EMPTY;
-  private _query: BehaviorSubject<Q>;
-  private _content$: Observable<T[]>;
+  private _query: BehaviorSubject<Q | null>;
+  public data$: Observable<T[]>;
   public pagination$: Observable<Pagination>;
   public get matPaginator(): MatPaginator | null {
     return this._matPaginator;
@@ -40,14 +47,14 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
         this._matPaginator.page,
         this._matPaginator.initialized
       );
-      this._matPaginatorSubscription = combineLatest([
-        pageChange,
-        this.pagination$,
-      ])
-        .pipe()
+      this._matPaginatorSubscription = pageChange
+        .pipe(withLatestFrom(this.pagination$))
         .subscribe(([pageEvent, pagination]) => {
-          this._updateMatPaginator(pagination);
-          pageEvent ? this._pageNumber.next(pageEvent.pageIndex) : null;
+          if (pageEvent) {
+            this._pageNumber.next(pageEvent.pageIndex);
+          } else {
+            this._updateMatPaginator(pagination);
+          }
         });
     }
   }
@@ -70,12 +77,12 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   constructor(
     endPoint: PaginationEndpoint<T, Q>,
     initialSort: Sort<T>,
-    initialQuery: Q,
+    initialQuery: Q | null = null,
     size = 10
   ) {
     super();
     this._sort = new BehaviorSubject<Sort<T> | MatSortInterface>(initialSort);
-    this._query = new BehaviorSubject<Q>(initialQuery);
+    this._query = new BehaviorSubject<Q | null>(initialQuery);
     this._page$ = combineLatest([this._sort, this._query]).pipe(
       switchMap(([sort, query]) =>
         this._pageNumber.pipe(
@@ -91,30 +98,31 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
             )
           )
         )
-      )
+      ),
+      share()
     );
 
-    this._content$ = from(this._page$).pipe(
+    this.data$ = this._page$.pipe(
       map((page) => {
         this._updateMatPaginator(this._paginationFor(page));
         return page.content;
       })
     );
-    //latestWith
-    this.pagination$ = from(this._page$).pipe(
+
+    this.pagination$ = this._page$.pipe(
       map((page) => {
         return this._paginationFor(page);
       })
     );
   }
-  //latestWith
+
   sortBy(sort: Partial<Sort<T>>): void {
     const lastSort = this._sort.getValue();
     const nextSort = { ...lastSort, ...sort } as Sort<T> | MatSortInterface;
     this._sort.next(nextSort);
   }
 
-  queryBy(query: Partial<Q>): void {
+  queryBy(query: Q): void {
     const lastQuery = this._query.getValue();
     const nextQuery = { ...lastQuery, ...query };
     this._query.next(nextQuery);
@@ -146,7 +154,7 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
     return pagination;
   }
   connect(): Observable<T[]> {
-    return this._content$;
+    return this.data$;
   }
 
   disconnect(): void {}

@@ -25,13 +25,10 @@ export class CompaniesComponent implements OnInit {
   public addActionsColumn = true;
 
   public initialSort: Sort<Company> = {active: 'code', direction: 'desc'};
-  public intialQuery: CompanyQuery = {
-    name: 'google'
-}
+
   public dataSource = new CustomDataSource<Company, CompanyQuery>(
-    request => this.companiesService.getCompanies(request),
-    this.initialSort,
-    this.intialQuery
+    (request, query )=> this.companiesService.getCompanies(request, query),
+    this.initialSort
   )
   @Output() company:EventEmitter<Company> = new EventEmitter();
   constructor(private companiesService: CompaniesService) {}

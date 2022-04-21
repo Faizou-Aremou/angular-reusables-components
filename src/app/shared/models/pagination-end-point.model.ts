@@ -4,5 +4,5 @@ import { Page } from "./page.model";
 
 export type PaginationEndpoint<T, Q> = (
   request: PageRequest<T>,
-  query: Q
+  query: Q | null
 ) => Observable<Page<T>>;
