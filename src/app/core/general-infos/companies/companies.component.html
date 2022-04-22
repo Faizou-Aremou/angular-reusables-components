@@ -1,4 +1,26 @@
-<app-table [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
+<form class="companies-table__query-form" [formGroup]="companiesTableQueryForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field hintLabel="Max 10 characters" maxlength="10" placeholder="Ex. 1" appearance="fill">
+        <mat-label> Id: </mat-label>
+        <input formControlName="code" matInput #input>
+        <mat-hint align="end">{{input.value?.length || 0}}
+        </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Max 10 characters" maxlength="10" placeholder="Ex. google" appearance="fill">
+        <mat-label> Name: </mat-label>
+        <input formControlName="name" matInput #input>
+        <mat-hint align="end">{{input.value?.length || 0}}
+        </mat-hint>
+    </mat-form-field>
+
+    <footer class="companies-table__query-form__submit-button">
+        <button type="submit" [disabled]="!companiesTableQueryForm.valid" mat-raised-button color="primary">search</button>
+    </footer>
+
+    <!-- TODO: use ngFor for display Input, create reusable component for search in table -->
+</form>
+<app-table class="companies-table__table" [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
     <ng-template #actionsButton let-element>
         <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
             <span> details </span>

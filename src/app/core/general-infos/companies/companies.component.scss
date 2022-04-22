@@ -1,0 +1,16 @@
+:host {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 20px;
+    .companies-table {
+        &__query-form {
+            display: grid;
+            grid-template-columns: repeat(3, 200px);
+            grid-column-gap: 10px;
+            &__submit-button {
+                grid-column: 3;
+                grid-row: 1;
+            }
+        }
+    }
+}

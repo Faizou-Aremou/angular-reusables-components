@@ -11,117 +11,117 @@ const companies: Company[] = [
   {
     code: "1",
     name: "Apple",
-    revenue: 274.515,
+    revenue: "Google enterprise",
   },
   {
     code: "2",
+    name: "Apple",
+    revenue: "Google enterprise",
+  },
+  {
+    code: "é",
     name: "Samsung Electronics",
-    revenue: 200.734,
+    revenue: "Google enterprise",
   },
   {
-    code: "3",
+    code: "é",
     name: "Alphabet",
-    revenue: 182.527,
+    revenue: "$182.527",
   },
   {
-    code: "4",
+    code: "é",
     name: "Foxconn",
-    revenue: 181.945,
+    revenue: "Google enterprise",
   },
   {
-    code: "5",
-    name: "Dell Technologies",
-    revenue: 92.224,
+    code: "006",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "6",
-    name: "Sony",
-    revenue: 84.893,
+    code: "007",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "7",
-    name: "Hitachi",
-    revenue: 82.345,
+    code: "008",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "8",
-    name: "Intel",
-    revenue: 77.867,
+    code: "009",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "9",
-    name: "IBM",
-    revenue: 73.62,
+    code: "010",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "10",
-    name: "Tencent",
-    revenue: 69.864,
+    code: "011",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "11",
-    name: "Panasonic",
-    revenue: 63.191,
+    code: "012",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "12",
-    name: "Lenovo",
-    revenue: 60.742,
+    code: "013",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "13",
-    name: "HP Inc",
-    revenue: 56.639,
+    code: "014",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "14",
-    name: "LG Electronics",
-    revenue: 53.625,
+    code: "015",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "15",
-    name: "VMware",
-    revenue: 11.8,
+    code: "016",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "16",
-    name: "Global Payments Inc ",
-    revenue: 7.4,
-  },
-  {
-    code: "17",
-    name: "SS&C Technologies",
-    revenue: 4.7,
+    code: "017",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
     code: "018",
-    name: "NetApp",
-    revenue: 5.6,
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "19",
-    name: "ServiceNow",
-    revenue: 4.5,
+    code: "019",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "20",
-    name: "Workday",
-    revenue: 4.3,
+    code: "020",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "21",
-    name: "Palo Alto Networks",
-    revenue: 4.1,
+    code: "021",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "22",
-    name: "Akamai Technologies",
-    revenue: 3.2,
+    code: "022",
+    name: "Google",
+    revenue: "Google enterprise",
   },
   {
-    code: "23",
-    name: "Fortinet",
-    revenue: 2.6,
+    code: "023",
+    name: "Google",
+    revenue: "Google enterprise",
   },
 ];
 @Injectable({
@@ -173,7 +173,7 @@ export class CompaniesService {
     }
 
     return [...companies].sort((company1, company2) => {
-      const company1ActiveSort = company1[sort.active as keyof Company];
+      const company1ActiveSort: string = company1[sort.active as keyof Company];
       const company2ActiveSort = company2[sort.active as keyof Company];
       let result;
       if (typeof company1ActiveSort === "string") {
@@ -196,12 +196,8 @@ export class CompaniesService {
     if (!this.isString(query) || query.length === 0) {
       return [...companies];
     }
-    return companies.filter((company) => {
-      const propertyValue = company[property];
-      return this.isString(propertyValue)
-        ? propertyValue.toLowerCase().includes(query.toLowerCase())
-        : false;
-    });
+    return companies.filter((company) =>  company[property].toLowerCase().includes(query.toLowerCase())
+    );
   }
 
   private isSort(
@@ -210,7 +206,7 @@ export class CompaniesService {
     return sort !== undefined;
   }
 
-  private isString(value: any | undefined): value is string {
-    return typeof value === "string";
+  private isString(value: string | undefined): value is string {
+    return value !== undefined;
   }
 }

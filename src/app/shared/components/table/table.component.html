@@ -1,32 +1,34 @@
-<section class="table-content">
-    <div class="table-content__empty-list" *ngIf="!dataSource">
+<section class="table-content" *ngIf="dataSource">
+    <!-- <div class=" table-content__empty-list " *ngIf="dataSource">
         no result
-    </div>
-    <div class="table-content__table-container" *ngIf="dataSource">
-        <table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource">
-            <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.columnDef">
+    </div> -->
+    <!-- TODO handler when dada is empty in coherent way with matTableDataSource -->
+    <div class="table-content__table-container ">
+        <table mat-table matSort class=" mat-elevation-z8 " [dataSource]="dataSource ">
+            <ng-container *ngFor="let column of tableColumns " [matColumnDef]="column.columnDef ">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{ column.header }}
                 </th>
-                <td mat-cell *matCellDef="let element">
-                    <ng-container *ngIf="(column.columnDef| tableColumnRef:tableColumnsRef) else defaultColumn; let tableColumnDirective" [ngTemplateOutlet]="tableColumnDirective.templateRef" [ngTemplateOutletContext]="{ $implicit: element, column:column }">
+                <td mat-cell *matCellDef="let element ">
+                    <ng-container *ngIf="(column.columnDef| tableColumnRef:tableColumnsRef) else defaultColumn; let tableColumnDirective " [ngTemplateOutlet]="tableColumnDirective.templateRef " [ngTemplateOutletContext]="{ $implicit: element, column:column
+        } ">
                     </ng-container>
                     <ng-template #defaultColumn>
                         {{ element[column.columnDef] }}
                     </ng-template>
                 </td>
             </ng-container>
-            <ng-container *ngIf="addActionsColumn" [matColumnDef]="ACTIONS_BUTTONS_COLUMN">
+            <ng-container *ngIf="addActionsColumn " [matColumnDef]="ACTIONS_BUTTONS_COLUMN ">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element" class="actions-button-cell">
-                    <ng-container [ngTemplateOutlet]="actionsButtonRef" [ngTemplateOutletContext]="{ $implicit: element }">
+                <td mat-cell *matCellDef="let element " class="actions-button-cell ">
+                    <ng-container [ngTemplateOutlet]="actionsButtonRef " [ngTemplateOutletContext]="{ $implicit: element } ">
                     </ng-container>
                 </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columns"></tr>
-            <tr mat-row *matRowDef="let row; columns: columns"></tr>
+            <tr mat-header-row *matHeaderRowDef="columns "></tr>
+            <tr mat-row *matRowDef="let row; columns: columns "></tr>
         </table>
-        <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 20, 50]" [hidePageSize]="true" showFirstLastButtons aria-label="Select page of periodic dataSource">
+        <mat-paginator class="mat-elevation-z8 " [pageSizeOptions]="[10, 20, 50] " [hidePageSize]="true " showFirstLastButtons aria-label="Select page of periodic dataSource ">
         </mat-paginator>
     </div>
 </section>

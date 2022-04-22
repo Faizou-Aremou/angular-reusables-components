@@ -102,6 +102,13 @@ Dans la vue du composant parent
   changeDetection:ChangeDetectionStrategy.OnPush
 })`
 
+# CustomDataSource 
+
+DataSource alternatif à MatTableDataSource, car supportant les filtrages et la pagination coté server. De plus il peut être utilisé pour d'autres composants affichant des données comme:
+
+- Mat tree
+
+- un dashboard affichant des données 
 
 # Theming
 
