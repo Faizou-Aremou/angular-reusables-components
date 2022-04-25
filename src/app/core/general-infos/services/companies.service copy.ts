@@ -152,12 +152,12 @@ export class CompaniesService {
     );
 
     const sortCompanies = this.sortCompanies(sort, filteredCompaniesByName);
-    const start = request.page * request.size;
-    const end = start + request.size;
+    const start = request.pageIndex * request.pageSize;
+    const end = start + request.pageSize;
     const pageCompanies = sortCompanies.slice(start, end);
     const page = {
       content: pageCompanies,
-      number: request.page,
+      number: request.pageIndex,
       size: pageCompanies.length,
       totalElements: sortCompanies.length,
     };

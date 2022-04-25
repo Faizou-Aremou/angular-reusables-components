@@ -11,10 +11,10 @@ export class RolesService {
   constructor() {}
 
   public getRoles(request: PageRequest<Role>): Observable<Page<Role>> {
-    console.log('page request',request);
+    console.log('page role request',request);
     return of(
       {
-        content: [ {
+        data: [ {
           code: '001',
           name: 'Agnidé',
           description: 'Front-end developper',
@@ -23,9 +23,9 @@ export class RolesService {
           name: 'Faizou',
           description: 'Programmer',
         }],
-        totalElements: 2,
-        size:2,
-        number: 0,
+        length: 2,
+        pageSize:2,
+        pageIndex: 0,
       },
     );
   }

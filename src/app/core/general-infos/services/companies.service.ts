@@ -151,15 +151,15 @@ export class CompaniesService {
       filteredCompaniesByCode
     );
 
-    const sortCompanies = this.sortCompanies(sort, filteredCompaniesByName);
-    const start = request.page * request.size;
-    const end = start + request.size;
-    const pageCompanies = sortCompanies.slice(start, end);
+    const sortedCompanies = this.sortCompanies(sort, filteredCompaniesByName);
+    const start = request.pageIndex * request.pageSize;
+    const end = start + request.pageSize;
+    const pageCompanies = sortedCompanies.slice(start, end);
     const page = {
-      content: pageCompanies,
-      number: request.page,
-      size: pageCompanies.length,
-      totalElements: sortCompanies.length,
+      data: pageCompanies,
+      pageIndex: request.pageIndex,
+      pageSize: pageCompanies.length,
+      length: sortedCompanies.length,
     };
     return of(page).pipe(delay(500));
   }

@@ -2,21 +2,15 @@ import { DataSource } from "@angular/cdk/collections";
 import {
   BehaviorSubject,
   combineLatest,
-  combineLatestWith,
-  from,
   map,
   merge,
   Observable,
   share,
-  shareReplay,
   startWith,
   Subject,
   Subscription,
   switchMap,
-  tap,
   withLatestFrom,
-  zip,
-  zipWith,
 } from "rxjs";
 import { PaginationEndpoint } from "../models/pagination-end-point.model";
 import { MatSort, Sort as MatSortInterface } from "@angular/material/sort";
@@ -26,7 +20,7 @@ import { Sort } from "../models/generic-sort.model";
 import { Pagination } from "../models/pagination.model";
 
 export class CustomDataSource<T, Q> extends DataSource<T> {
-  private _pageNumber = new Subject<number>();
+  private _pageIndex = new Subject<number>();
   private _sort: BehaviorSubject<Sort<T> | MatSortInterface>;
   private _page$: Observable<Page<T>>;
   private _matSort: MatSort | null = null;
@@ -34,12 +28,15 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   private _matPaginatorSubscription = Subscription.EMPTY;
   private _matSortSubscription = Subscription.EMPTY;
   private _query: BehaviorSubject<Q | null>;
-  public data$: Observable<T[]>;
-  public pagination$: Observable<Pagination>;
-  public get matPaginator(): MatPaginator | null {
+
+  /** stream that contain displayed page data */
+  private _renderData$: Observable<T[]>;
+
+  pagination$: Observable<Pagination>;
+  get matPaginator(): MatPaginator | null {
     return this._matPaginator;
   }
-  public set matPaginator(value: MatPaginator | null) {
+  set matPaginator(value: MatPaginator | null) {
     this._matPaginator = value;
     if (this._matPaginator !== null) {
       this._matPaginatorSubscription.unsubscribe();
@@ -51,7 +48,7 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
         .pipe(withLatestFrom(this.pagination$))
         .subscribe(([pageEvent, pagination]) => {
           if (pageEvent) {
-            this._pageNumber.next(pageEvent.pageIndex);
+            this._pageIndex.next(pageEvent.pageIndex);
           } else {
             this._updateMatPaginator(pagination);
           }
@@ -59,10 +56,10 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
     }
   }
 
-  public get matSort(): MatSort | null {
+  get matSort(): MatSort | null {
     return this._matSort;
   }
-  public set matSort(value: MatSort | null) {
+  set matSort(value: MatSort | null) {
     this._matSort = value;
     if (this._matSort !== null) {
       this._matSortSubscription.unsubscribe();
@@ -78,21 +75,21 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
     endPoint: PaginationEndpoint<T, Q>,
     initialSort: Sort<T>,
     initialQuery: Q | null = null,
-    size = 10
+    pageSize = 10
   ) {
     super();
     this._sort = new BehaviorSubject<Sort<T> | MatSortInterface>(initialSort);
     this._query = new BehaviorSubject<Q | null>(initialQuery);
     this._page$ = combineLatest([this._sort, this._query]).pipe(
       switchMap(([sort, query]) =>
-        this._pageNumber.pipe(
+        this._pageIndex.pipe(
           startWith(0),
-          switchMap((page) =>
+          switchMap((pageIndex) =>
             endPoint(
               {
-                page,
+                pageIndex,
                 sort,
-                size,
+                pageSize,
               },
               query
             )
@@ -102,10 +99,10 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
       share()
     );
 
-    this.data$ = this._page$.pipe(
+    this._renderData$ = this._page$.pipe(
       map((page) => {
         this._updateMatPaginator(this._paginationFor(page));
-        return page.content;
+        return page.data;
       })
     );
 
@@ -129,14 +126,14 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   }
 
   fetch(pageEvent: PageEvent): void {
-    this._pageNumber.next(pageEvent.pageIndex);
+    this._pageIndex.next(pageEvent.pageIndex);
   }
 
   private _updateMatPaginator(pagination: Pagination): void {
     if (!this.matPaginator) {
       return;
     }
-    this.matPaginator.length = pagination.totalElements;
+    this.matPaginator.length = pagination.length;
     if (this.matPaginator.pageIndex > 0) {
       const lastPageIndex =
         Math.ceil(this.matPaginator.length / this.matPaginator.pageSize) - 1 ||
@@ -150,12 +147,15 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   }
 
   private _paginationFor(page: Page<T>): Pagination {
-    const { content, ...pagination } = page;
+    const { data, ...pagination } = page;
     return pagination;
   }
   connect(): Observable<T[]> {
-    return this.data$;
+    return this._renderData$;
   }
 
-  disconnect(): void {}
+  disconnect(): void {
+    this._matPaginatorSubscription.unsubscribe();
+    this._matSortSubscription.unsubscribe();
+  }
 }
