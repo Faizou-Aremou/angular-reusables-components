@@ -28,43 +28,33 @@ export class GeneralInfosComponent implements OnInit {
   ngOnInit(): void {
   }
 
- public displayCompanyInfosInTabs(company:Company):void{
-  this.tabGroup.addTabDynamically(
-    {
-    label:"Informations",
-    contentInfos:company
-    }
-)
- }
+  public displayCompanyInfosInTabs(company: Company): void {
+    this.tabGroup.addTabDynamically({
+      label: `Informations ${company.name}`,
+      contentInfos: company,
+    });
+  }
 
- public displayEditRolesInTab(role:Role):void{
-  this.tabGroup.addTabDynamically(
-    {
-    label:"Edition Informations",
-    contentInfos:role
-    }
-)
- }
+  public displayEditRolesInTab(role: Role): void {
+    this.tabGroup.addTabDynamically({
+      label: `Edition Informations ${role.name}`,
+      contentInfos: role,
+    });
+  }
 
+  public displayConfigureRolesInTab(role: Role): void {
+    this.tabGroup.addTabDynamically({
+      label: `Configure Informations ${role.name}`,
+      contentInfos: role,
+    });
+  }
 
- public displayConfigureRolesInTab(role:Role):void{
-  this.tabGroup.addTabDynamically(
-    {
-    label:"Configure Informations",
-    contentInfos:role
-    }
-)
- }
-
-
- public displayNoticeRolesInTab(role:Role):void{
-  this.tabGroup.addTabDynamically(
-    {
-    label:"Notice Informations",
-    contentInfos:role
-    }
-)
- }
+  public displayNoticeRolesInTab(role: Role): void {
+    this.tabGroup.addTabDynamically({
+      label: `Notice Informations ${role.name}`,
+      contentInfos: role,
+    });
+  }
 
 
 }
