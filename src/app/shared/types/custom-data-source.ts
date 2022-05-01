@@ -27,12 +27,25 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   private _matPaginator: MatPaginator | null = null;
   private _matPaginatorSubscription = Subscription.EMPTY;
   private _matSortSubscription = Subscription.EMPTY;
-  private _query: BehaviorSubject<Q | null>;
+  /** Stream that emits when filter query is set on the data source */
+  private readonly _filter: BehaviorSubject<Q | null>;
 
-  /** stream that contain displayed page data */
+  /** Stream that contain displayed page data */
   private _renderData$: Observable<T[]>;
 
+  /** Stream that contains data in current page */
+  get data() {
+    return this._renderData$;
+  }
+
+  /** Stream that emit pagination infos */
   pagination$: Observable<Pagination>;
+
+  /**
+   * Instance of the MatPaginator component used by the table to control what page of the data is
+   * displayed. Page changes emitted by the MatPaginator will trigger an update to the
+   * table's rendered data.
+   */
   get matPaginator(): MatPaginator | null {
     return this._matPaginator;
   }
@@ -56,6 +69,10 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
     }
   }
 
+  /**
+   * Instance of the MatSort directive used by the table to control its sorting. Sort changes
+   * emitted by the MatSort will trigger an update to the table's rendered data.
+   */
   get matSort(): MatSort | null {
     return this._matSort;
   }
@@ -79,8 +96,8 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   ) {
     super();
     this._sort = new BehaviorSubject<Sort<T> | MatSortInterface>(initialSort);
-    this._query = new BehaviorSubject<Q | null>(initialQuery);
-    this._page$ = combineLatest([this._sort, this._query]).pipe(
+    this._filter = new BehaviorSubject<Q | null>(initialQuery);
+    this._page$ = combineLatest([this._sort, this._filter]).pipe(
       switchMap(([sort, query]) =>
         this._pageIndex.pipe(
           startWith(0),
@@ -119,10 +136,10 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
     this._sort.next(nextSort);
   }
 
-  queryBy(query: Q): void {
-    const lastQuery = this._query.getValue();
+  filterBy(query: Q): void {
+    const lastQuery = this._filter.getValue();
     const nextQuery = { ...lastQuery, ...query };
-    this._query.next(nextQuery);
+    this._filter.next(nextQuery);
   }
 
   fetch(pageEvent: PageEvent): void {

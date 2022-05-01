@@ -48,7 +48,7 @@ export class CompaniesComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.companiesTableQueryForm.valid) {
-      this.dataSource.queryBy(this.companiesTableQueryForm.value);
+      this.dataSource.filterBy(this.companiesTableQueryForm.value);
     }
   }
 
