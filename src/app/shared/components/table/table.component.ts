@@ -27,8 +27,7 @@ import { CustomDataSource } from '../../types/custom-data-source';
 export class TableComponent<T, Q> implements OnInit, AfterViewInit  {
   public ACTIONS_BUTTONS_COLUMN = ACTIONS_BUTTONS_COLUMN;
   /**
-   * we will not be using the built-in MatTableDataSource because its designed for filtering,
-   * sorting and pagination of a client-side data array.
+   * we will not be using the built-in MatTableDataSource because its designed for filtering, sorting and pagination of a client-side data array.
    * In most real app these are happened on server side.
    */
   @Input() public dataSource: CustomDataSource<T, Q> | null=null;

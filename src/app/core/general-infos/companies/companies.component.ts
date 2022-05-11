@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Sort } from "src/app/shared/models/generic-sort.model";
 import { TableColumn } from "src/app/shared/models/table/table-column.model";
+import { TableRow } from "src/app/shared/models/table/table-row.model";
 import { CustomDataSource } from "src/app/shared/types/custom-data-source";
 import { CompanyQuery } from "../../models/general-infos/company-query.model";
 import { Company } from "../../models/general-infos/company.model";
@@ -24,6 +25,8 @@ export class CompaniesComponent implements OnInit {
       header: "Designation",
     },
   ];
+
+  public tableRows: TableRow[]=[];
   public addActionsColumn = true;
 
   public initialSort: Sort<Company> = { active: "code", direction: "desc" };
