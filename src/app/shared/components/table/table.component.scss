@@ -9,4 +9,11 @@ table {
   td:last-of-type {
     width: 15%;
   }
+  .mat-row.disabled {
+    background-color: rgba(239, 239, 239, 0.3);
+  }
+
+  .mat-row.disabled > .mat-cell {
+    color: rgba(0, 0, 0, 0.38);
+  }
 }
