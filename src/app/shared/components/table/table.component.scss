@@ -1,19 +1,27 @@
-table {
-  width: 100%;
-  th:first-of-type,
-  td:first-of-type {
-    width: 15%;
-  }
+/**
+**table customisation api
+1. customise first column width: --table-first-column-width.
+2. customise last column width: --table-last-column-width.
+*/
 
-  th:last-of-type,
-  td:last-of-type {
-    width: 15%;
-  }
-  .mat-row.disabled {
-    background-color: rgba(239, 239, 239, 0.3);
-  }
-
-  .mat-row.disabled > .mat-cell {
-    color: rgba(0, 0, 0, 0.38);
-  }
+:host {
+    --table-first-column-width-fb: 15%;
+    --table-last-column-width-fb: 15%;
+    table {
+        width: 100%;
+        th:first-of-type,
+        td:first-of-type {
+            width: var(--table-first-column-width, var(--table-first-column-width-fb));
+        }
+        th:last-of-type,
+        td:last-of-type {
+            width: var(--table-last-column-width, var(--table-last-column-width-fb));
+        }
+        .mat-row.disabled {
+            background-color: rgba(239, 239, 239, 0.3);
+        }
+        .mat-row.disabled>.mat-cell {
+            color: rgba(0, 0, 0, 0.38);
+        }
+    }
 }
