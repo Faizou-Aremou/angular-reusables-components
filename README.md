@@ -5,15 +5,14 @@
 # Composant table
 ## Avantages
 
-1. Mutualise la création de tableau de données
-2. Simplicité d'utilisation
-3. Fonctionne avec un DataSource par défaut
-
+1. Mutualize the creation of data tables
+2. Easy to use
+3. Works with a default DataSource
 ## Fonctionnalités
 
-- Utilisation basique de `tableComponent`
+- Basique usage of `tableComponent`
 
-Dans le composant parent
+In the parent component
 
 `public initialSort: Sort<Role> = { active: "code", direction:  "desc" };`
 
@@ -22,7 +21,7 @@ Dans le composant parent
     this.initialSort
   );` 
 
-Dans la vue du composant parent
+In the parent component view
 
 `
 <app-table [dataSource]="dataSource" [tableColumns]="tableColumns">
