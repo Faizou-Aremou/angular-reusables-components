@@ -28,7 +28,7 @@ In the parent component view
 </app-table> 
 `
 
-- Utilisation en définissant une colonne d'action supplémentaire
+- Use by defining an additional action column
 
 `<app-table [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
     <ng-template #actionsButton let-element>
@@ -38,7 +38,7 @@ In the parent component view
     </ng-template>
 </app-table>`
 
-- Utilisation en redéfinissant l'affichage par défaut d'une colonne: utile dans les cas où on souhaite redéfinir une colonne avec un affichage customisé. Dans cet exemple, nous redéfinir la colonne name. 
+- Use when redefining the default display of a column: useful in cases where we want to redefine a column with a custom display. In this example we redefine the column name. 
 
 `<app-table [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
     <ng-template [tableColumnDef]="'name'" let-element>
@@ -57,19 +57,19 @@ In the parent component view
 
 ## Avantages
 
-1. Permet la creation de tab sur les cas d'utilisations les plus communes à savoir:
- - creation de tab statics
- - creation de tabs statiques (une ou plusieurs), puis création de tabs dynamiques à partir des tabs statiques
+1. Allows the creation of tabs on the most common use cases:
+ - creation of tab statics
+ - creation of static tabs (one or more), then creation of dynamic tabs from static tabs
 
-2. Facilite la maintenance, car la création de tab se fait au travers d'un seul et unique composant
-3. Utilisation possible dans d'autres projets de SRC
-4. Permet d'avoir un niveau d'abstraction au dessus de angular matérial. Ainsi si on le souhaite ne plus utiliser la Mat-table pour des raisons de design par exemple, ce sera possible très aisément en modifiant le composant Tab-group
-5. Simplicité d'utilisation
+2. Facilitates maintenance, as tab creation is done through a single component
+3. Possible use in other projects
+4. Allows to have an abstraction level above material angular. So if you don't want to use the Mat-table anymore for design reasons for example, it will be possible very easily by modifying the Tab-group component
+5. Easy to use
 
 
 ## Fonctionnalités
 
-- Creation de tab statics (1 ou plusieurs)
+- Creation of tab statics (1 or more)
 
 `public tabGroup = new TabGroup<Company>(
     [
@@ -81,7 +81,7 @@ In the parent component view
       }
     ]
   )`
-- Creation d'une ou plusieurs tab dynamiques complémentaires
+- Creation of one or more complementary dynamic tabs
 
   `this.tabGroup.addTabDynamically(
     {
@@ -89,10 +89,10 @@ In the parent component view
     contentInfos:company
     }
 )`
-- La directive `appStaticTabsContent` permet d'identifer les contenus statiques, et l'elementRef `dynamicTabsContent` permettent d'identifier le contenu utilisé pour les tabs dynamiques.
+- directive `appStaticTabsContent` allows to identify static contents, and l'elementRef `dynamicTabsContent` allow to identify the content used for the dynamic tabs.
 
-4. le composant qui utilise Tab-group n'a plus à se soucier de la suppression des tabs. tout est géré automatiquement par l'objet `TabGroup`
-5. L'implémentation est performante car tab-group est conçu en se souciant de la detection.push
+4. the component that uses Tab-group doesn't have to worry about deleting tabs anymore. everything is handled automatically by the `TabGroup`
+5. The implementation is efficient because tab-group is designed with the detection.push
 
 `@Component({
   selector: 'app-tab-group',
@@ -103,14 +103,14 @@ In the parent component view
 
 # CustomDataSource 
 
-DataSource alternatif à MatTableDataSource, car supportant les filtrages et la pagination coté server. De plus il peut être utilisé pour d'autres composants affichant des données comme:
+DataSource alternative to MatTableDataSource, as it supports server-side filtering and pagination. Moreover it can be used for other components displaying data like:
 
 - Mat tree
 
-- un dashboard affichant des données 
+- a dashboard displaying data 
 
 # Theming
 
-deux themes sont disponibles:
- 1. Le theme purple-green accessible en dev avec la commande `npm start`
- 2. Le theme basic accessible en dev avec la commande `npm start-basic` 
+two themes are available:
+ 1. The purple-green theme accessible in dev with the command `npm start`
+ 2. The basic theme is accessible in dev with the command `npm start-basic` 
