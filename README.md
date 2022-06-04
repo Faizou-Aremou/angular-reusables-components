@@ -8,7 +8,8 @@
 1. Mutualize the creation of data tables
 2. Easy to use
 3. Works with a default DataSource
-## Fonctionnalités
+
+## Features
 
 - Basique usage of `tableComponent`
 
