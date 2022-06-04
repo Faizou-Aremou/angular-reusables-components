@@ -1,22 +1,26 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UploadFilesParams } from '../../models/upload-files/upload-files-params';
-import { UploadFilesService } from '../../services/upload-files/upload-files.service';
+import { FilesReaderService } from '../../services/files-reader/files-reader.service';
 
 @Component({
   selector: 'app-upload-files',
   templateUrl: './upload-files.component.html',
   styleUrls: ['./upload-files.component.scss'],
-  providers:[UploadFilesService]
+  providers:[FilesReaderService]
 })
 export class UploadFilesComponent implements OnInit {
   @Input() uploadFilesParams: UploadFilesParams | undefined;
-   constructor(public uploadFilesService:UploadFilesService) {
+   constructor(public filesReaderService:FilesReaderService) {
    }
 
   ngOnInit(): void {
     if(this.uploadFilesParams) {
-      this.uploadFilesService.init(this.uploadFilesParams);
+      this.filesReaderService.init(this.uploadFilesParams);
     } 
+  }
+
+  downloadFile(){
+
   }
 
 }

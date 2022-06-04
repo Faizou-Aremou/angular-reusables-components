@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { UploadFilesParams } from '../../models/upload-files/upload-files-params';
 import { FileService } from '../file/file-service.service';
 
+
 @Injectable()
-export class UploadFilesService {
+//TODO: add comments because of void
+export class FilesReaderService {
   public uploadFilesParams:UploadFilesParams | undefined;
   public filesUploaded= false;
 
-  constructor(private fileService:FileService) { }
+  constructor(private fileService:FileService, private changeDetector: ChangeDetectorRef) { }
 
   public init(uploadFilesParams:UploadFilesParams){
-    this.uploadFilesParams = {...uploadFilesParams}
+   this.uploadFilesParams = {...uploadFilesParams}
   }
 
   public addFiles(fileEvent: any): void { //TODO:use Event type here
@@ -42,6 +44,7 @@ export class UploadFilesService {
             this.uploadFilesParams?.maxSizeByFile
           )
         );
+        this.changeDetector.markForCheck()
       };
       reader.readAsDataURL(file);
     }
@@ -64,6 +67,7 @@ export class UploadFilesService {
     reader.readAsDataURL(file);
   }
 
+  
   public removeFile(index: number) {
     this.uploadFilesParams?.filesFormArray.removeAt(index);
   }

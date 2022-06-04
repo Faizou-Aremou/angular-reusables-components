@@ -1,3 +1,9 @@
 :host {
     padding: var(--main-padding);
+    .upload-files {
+        &__files-container {
+            list-style: none;
+            padding-inline-start: calc(var(--main-padding) + 16px);
+        }
+    }
 }

@@ -19,4 +19,10 @@
     </ng-template>
 </app-tab-group>
 
-<app-upload-files></app-upload-files>
+<form [formGroup]="uploadFilesForm" class="general-infos__upload-files-form">
+
+    <app-upload-files [uploadFilesParams]="uploadFilesParams">
+    </app-upload-files>
+
+    <button mat-raised-button (click)="uploadFiles()" color="primary"> Upload files </button>
+</form>
