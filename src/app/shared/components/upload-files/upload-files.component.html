@@ -1,0 +1,11 @@
+<button mat-raised-button class="upload-files__add-files-button" (click)="fileInput.click()">
+    add Files
+</button>
+
+<ul class="upload-files___files-container">
+    <li class="upload-files__file-item" *ngFor="let fileControl of uploadFilesService.uploadFilesParams?.filesFormArray?.controls">
+        <a> {{  fileControl.value  }} </a>
+    </li>
+</ul>
+
+<input type="file" #fileInput hidden (change)="uploadFilesService.addFiles($event)">

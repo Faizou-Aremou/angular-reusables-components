@@ -8,14 +8,17 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { TableColumnDirective } from './directives/table/table-column.directive';
 import { TableColumnRefPipe } from './pipes/table/table-column-ref.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 
-
+const exports = [
+  TableComponent,
+  TabGroupComponent, 
+  StaticTabsContentDirective, NavBarComponent, TableColumnDirective, TableColumnRefPipe, UploadFilesComponent 
+]
 
 @NgModule({
   declarations: [   
-     TableComponent,
-     TabGroupComponent, 
-     StaticTabsContentDirective, NavBarComponent, TableColumnDirective, TableColumnRefPipe 
+     ...exports
     ],
   imports: [
     CommonModule,
@@ -24,11 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports:[
     ReactiveFormsModule,
-    TableComponent,
-    TabGroupComponent,
-    NavBarComponent, 
-    StaticTabsContentDirective,
-    TableColumnDirective, TableColumnRefPipe 
+    ...exports
   ],
 })
 // TODO: put all exported data in array

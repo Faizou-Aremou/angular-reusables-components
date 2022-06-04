@@ -1,7 +1,9 @@
 import { DynamicTab } from '../../models/tab-group/dynamic-tab.model';
 import { StaticTab } from '../../models/tab-group/static-tab.model';
 
-
+/**
+ * TabGroup stands exactly like multi service instance, the same things can be done in multi service instance implementation
+ */
 export class TabGroup<T> {
   private _staticTabs: Array<StaticTab> = [];
   private _dynamicTabs: Array<DynamicTab<T>> = [];
