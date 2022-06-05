@@ -8,7 +8,7 @@ export interface qualityControlResult {
   minValue: number;
   maxValue: number;
 }
-describe('Mat Table Custom', () => {
+describe('TableComponent', () => {
   let expectedElement: Array<qualityControlResult>;
   let expectedTotalInBackEnd: number;
   let expectedDisplayedColumns: Array<string>;
@@ -65,7 +65,7 @@ function getElements(element: Element, query: string): Array<Element> {
 /**
  * base criteria
  *
- * le nombre de lignes doit être égale au nombre d'élément dansle tableau
+ * le nombre de lignes doit être égale au nombre d'élément dans le tableau
  *
  * le nombre de colones doit être égale au nombre de colonnes dans le tableau
  *
