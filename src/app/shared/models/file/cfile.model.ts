@@ -1,5 +1,5 @@
-export interface File {
+export interface CFile {
     fileName:string;
-    fileType: string;
+    fileType?: string;
     fileContentBase64:string;
 }

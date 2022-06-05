@@ -1,76 +1,81 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
-import { UploadFilesParams } from '../../models/upload-files/upload-files-params';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FilesReaderParams } from '../../models/file/files-reader-params';
 import { FileService } from '../file/file-service.service';
 
 
-@Injectable()
-//TODO: add comments because of void
-export class FilesReaderService {
-  public uploadFilesParams:UploadFilesParams | undefined;
+@Injectable()// each user of this service needs to provide his instance
+export class FilesReaderService extends FileService { 
+  public filesReaderParams:FilesReaderParams | undefined;
   public filesUploaded= false;
 
-  constructor(private fileService:FileService, private changeDetector: ChangeDetectorRef) { }
+  constructor(private changeDetector: ChangeDetectorRef, formBuilder:FormBuilder) {
+    super(formBuilder) 
+  }
 
-  public init(uploadFilesParams:UploadFilesParams){
-   this.uploadFilesParams = {...uploadFilesParams}
+  public init(filesReaderParams:FilesReaderParams){
+   this.filesReaderParams = {...filesReaderParams}
   }
 
   public addFiles(fileEvent: any): void { //TODO:use Event type here
     const fileInput = fileEvent.target;
     if (fileInput.files?.length > 0) {
       const files = fileInput.files;
-      this.readFileListAndAddToFileFormArray(files);
+      this.readFilesInFileFormArray(files);
       this.filesUploaded = true;
+      
     }
   }
 
-  public readFileListAndAddToFileFormArray(files: FileList): void {
-    this.uploadFilesParams?.multiple
-      ? this.readMultipleFileAndAddToFileFormArray(files)
-      : this.readUniqueFileAndAddToFileFormArray(files);
+  public readFilesInFileFormArray(files: FileList): void {
+    this.filesReaderParams?.multiple
+      ? this.readMultipleFileInFileFormArray(files)
+      : this.readUniqueFileInFileFormArray(files);
   }
 
-  public readMultipleFileAndAddToFileFormArray(files: FileList): void {
+  public readMultipleFileInFileFormArray(files: FileList): void {
     for (let i = 0; i < files.length; i++) {
-      // inspired from https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications#example_showing_thumbnails_of_user-selected_images
-
       const file = files[i];
       const reader = new FileReader();
       reader.onload = () => {
-        this.uploadFilesParams?.filesFormArray.push(
-          this.fileService.buildFileFormGroup(
+        this.filesReaderParams?.filesFormArray.push(
+          this.buildFileFormGroup(
             file.name,
             reader.result as string,
-            this.uploadFilesParams?.maxSizeByFile
+            this.filesReaderParams?.maxSizeByFile
           )
         );
-        this.changeDetector.markForCheck()
+        this.changeDetector.markForCheck();
       };
       reader.readAsDataURL(file);
     }
   }
 
-  public readUniqueFileAndAddToFileFormArray(files: FileList): void {
+  public readUniqueFileInFileFormArray(files: FileList): void {
     const file = files[0];
     const reader = new FileReader();
 
     reader.onload = () => {
-      this.uploadFilesParams?.filesFormArray.insert(
+      this.filesReaderParams?.filesFormArray.insert(
         0,
-        this.fileService.buildFileFormGroup(
+        this.buildFileFormGroup(
           file.name,
           reader.result as string,
-          this.uploadFilesParams?.maxSizeByFile
+          this.filesReaderParams?.maxSizeByFile
         )
       );
+      this.changeDetector.markForCheck();
     };
     reader.readAsDataURL(file);
   }
 
   
-  public removeFile(index: number) {
-    this.uploadFilesParams?.filesFormArray.removeAt(index);
+  public removeFile(index: number):void {
+    this.filesReaderParams?.filesFormArray.removeAt(index);
   }
 
-
+  public downloadFile( index:number):void{
+    const fileForm = this.filesReaderParams?.filesFormArray.at(index) as FormGroup;
+    this.downloadPDF(fileForm.value);
+  }
 }

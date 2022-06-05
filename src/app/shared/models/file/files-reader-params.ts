@@ -1,8 +1,8 @@
 import { FormArray } from "@angular/forms";
 
-export interface UploadFilesParams {
+export interface FilesReaderParams {
     filesFormArray:FormArray;
-    multiple?:boolean;
+    multiple:boolean;
     maxSizeByFile?:number;
     allowedExtensions:string[];
 }

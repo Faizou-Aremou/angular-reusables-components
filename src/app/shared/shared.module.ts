@@ -1,34 +1,35 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TableComponent } from './components/table/table.component';
-import { TabGroupComponent } from './components/tab-group/tab-group.component';
-import { StaticTabsContentDirective } from './directives/tab-group/static-tabs-contents.directive';
-import { AngularMaterialModule } from 'src/material.module';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { TableColumnDirective } from './directives/table/table-column.directive';
-import { TableColumnRefPipe } from './pipes/table/table-column-ref.pipe';
-import { ReactiveFormsModule } from '@angular/forms';
-import { UploadFilesComponent } from './components/upload-files/upload-files.component';
-
-const exports = [
-  TableComponent,
-  TabGroupComponent, 
-  StaticTabsContentDirective, NavBarComponent, TableColumnDirective, TableColumnRefPipe, UploadFilesComponent 
-]
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TableComponent } from "./components/table/table.component";
+import { TabGroupComponent } from "./components/tab-group/tab-group.component";
+import { StaticTabsContentDirective } from "./directives/tab-group/static-tabs-contents.directive";
+import { AngularMaterialModule } from "src/material.module";
+import { NavBarComponent } from "./components/nav-bar/nav-bar.component";
+import { TableColumnDirective } from "./directives/table/table-column.directive";
+import { TableColumnRefPipe } from "./pipes/table/table-column-ref.pipe";
+import { ReactiveFormsModule } from "@angular/forms";
+import { UploadFilesComponent } from "./components/upload-files/upload-files.component";
 
 @NgModule({
-  declarations: [   
-     ...exports
-    ],
-  imports: [
-    CommonModule,
-    AngularMaterialModule,
-    ReactiveFormsModule
+  declarations: [
+    TableComponent,
+    TabGroupComponent,
+    StaticTabsContentDirective,
+    NavBarComponent,
+    TableColumnDirective,
+    TableColumnRefPipe,
+    UploadFilesComponent,
   ],
-  exports:[
+  imports: [CommonModule, AngularMaterialModule, ReactiveFormsModule],
+  exports: [
     ReactiveFormsModule,
-    ...exports
+    TableComponent,
+    TabGroupComponent,
+    StaticTabsContentDirective,
+    NavBarComponent,
+    TableColumnDirective,
+    TableColumnRefPipe,
+    UploadFilesComponent,
   ],
 })
-// TODO: put all exported data in array
-export class SharedModule { }
+export class SharedModule {}
