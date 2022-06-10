@@ -5,8 +5,8 @@ export const fileUnicityValidator: ValidatorFn = (filesFormArray: AbstractContro
       (fileFormGroup, index, array) =>
         array.filter(
           (element) =>
-            element.get('fileName')?.value ===
-            fileFormGroup.get('fileName')?.value
+            element.get('name')?.value ===
+            fileFormGroup.get('name')?.value
         ).length > 1
     );
   

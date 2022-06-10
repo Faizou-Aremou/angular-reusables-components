@@ -9,6 +9,7 @@ import { TableColumnDirective } from "./directives/table/table-column.directive"
 import { TableColumnRefPipe } from "./pipes/table/table-column-ref.pipe";
 import { ReactiveFormsModule } from "@angular/forms";
 import { UploadFilesComponent } from "./components/upload-files/upload-files.component";
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { UploadFilesComponent } from "./components/upload-files/upload-files.com
     TableColumnDirective,
     TableColumnRefPipe,
     UploadFilesComponent,
+    SafeUrlPipe,
   ],
   imports: [CommonModule, AngularMaterialModule, ReactiveFormsModule],
   exports: [

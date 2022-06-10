@@ -2,9 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { Sort } from "src/app/shared/models/generic-sort.model";
 import { TableColumn } from "src/app/shared/models/table/table-column.model";
 import { CustomDataSource } from "src/app/shared/types/custom-data-source";
-import { RoleQuery } from "../../models/general-infos/role-query.model";
-import { Role } from "../../models/general-infos/role.model";
-import { RolesService } from "../services/roles.service";
+import { RoleQuery } from "../../../models/general-infos/role-query.model";
+import { Role } from "../../../models/general-infos/role.model";
+import { RolesService } from "../../services/roles.service";
 
 @Component({
   selector: "app-roles",

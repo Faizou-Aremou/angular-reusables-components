@@ -12,8 +12,8 @@ export const isFileFormArrayValidator: ValidatorFn = (
   const isNotFileFormArray = (formArray as FormArray).controls.some(
     (abstractControl) =>
       !(abstractControl instanceof FormGroup) ||
-      abstractControl.get("fileName") === null ||
-      abstractControl.get("fileContentBase64") === null
+      abstractControl.get("name") === null ||
+      abstractControl.get("contentBase64") === null
   );
   return isNotFileFormArray ? { invalidFileFormArray: true } : null;
 };

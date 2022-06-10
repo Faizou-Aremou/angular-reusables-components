@@ -1,5 +1,6 @@
 export interface CFile {
-    fileName:string;
-    fileType?: string;
+    name:string;
+    type?: string;
     fileContentBase64:string;
+    file?:File
 }

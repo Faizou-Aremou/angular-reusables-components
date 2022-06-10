@@ -2,11 +2,11 @@
     Add files
 </button>
 <ul class="upload-files__files-container">
-    <li class="upload-files__file-item" *ngFor="let fileControl of filesReaderService.filesReaderParams?.filesFormArray?.controls; let index=index">
-        <span> {{  fileControl.get('fileName')?.value  }} </span>
-        <button mat-icon-button (click)="filesReaderService.downloadFile(index)"> <mat-icon>download</mat-icon></button>
-        <button mat-icon-button (click)="filesReaderService.removeFile(index)"> <mat-icon>delete</mat-icon></button>
+    <li class="upload-files__file-item" *ngFor="let fileControl of filesReaderParams?.filesFormArray?.controls; let index=index">
+        <span> {{  fileControl.get('name')?.value  }} </span>
+        <button mat-icon-button (click)="downloadFile(index)"> <mat-icon>download</mat-icon></button>
+        <button mat-icon-button (click)="removeFile(index)"> <mat-icon>delete</mat-icon></button>
     </li>
 </ul>
 
-<input type="file" #fileInput hidden (change)="filesReaderService.addFiles($event)" [multiple]="filesReaderService.filesReaderParams?.multiple">
+<input type="file" #fileInput hidden (change)="selectFiles($event)" [multiple]="filesReaderParams?.multiple">
