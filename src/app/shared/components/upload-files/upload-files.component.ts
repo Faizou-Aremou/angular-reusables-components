@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FilesReaderParams } from "../../models/file/files-reader-params";
-import { FileService } from "../../services/file/file-service.service";
+import { FileService } from "../../services/file/file.service";
 import { uploadFilesService } from "../../services/files-reader/upload-files.service";
 
 @Component({
