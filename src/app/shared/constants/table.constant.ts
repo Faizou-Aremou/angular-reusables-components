@@ -1,1 +1,0 @@
-export const ACTIONS_BUTTONS_COLUMN = 'action';

@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ACTIONS_BUTTONS_COLUMN } from '../../constants/table.constant';
+import { ACTIONS_BUTTON_COLUMN } from '../../consts/table/actions-button-column.const';
 import { TableColumnDirective } from '../../directives/table/table-column.directive';
 import { TableColumn } from '../../models/table/table-column.model';
 import { CustomDataSource } from '../../types/custom-data-source';
@@ -25,7 +25,7 @@ import { CustomDataSource } from '../../types/custom-data-source';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent<T, Q> implements OnInit, AfterViewInit  {
-  public ACTIONS_BUTTONS_COLUMN = ACTIONS_BUTTONS_COLUMN;
+  public ACTIONS_BUTTONS_COLUMN = ACTIONS_BUTTON_COLUMN;
   /**
    * we will not be using the built-in MatTableDataSource because its designed for filtering, sorting and pagination of a client-side data array.
    * In most real app these are happened on server side.
@@ -54,6 +54,6 @@ export class TableComponent<T, Q> implements OnInit, AfterViewInit  {
   }
 
   private actionsColumn(): Array<string> {
-    return this.addActionsColumn?[ACTIONS_BUTTONS_COLUMN]: []
+    return this.addActionsColumn?[ACTIONS_BUTTON_COLUMN]: []
   }
 }

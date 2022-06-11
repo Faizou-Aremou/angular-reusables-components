@@ -1,7 +1,8 @@
 import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { FILES_MAX_SIZE } from "../consts/files/files-max-size.const";
 import { calculateFilesSize } from "../helpers/file";
 
-export function filesSizeValidator(size: number = 10): ValidatorFn {
+export function filesSizeValidator(size: number = FILES_MAX_SIZE): ValidatorFn {
     const maxAllowedSize = size * 1024*1024
     return (filesFormArray: AbstractControl): ValidationErrors | null => {
       const hasInvalidFileSizeError =

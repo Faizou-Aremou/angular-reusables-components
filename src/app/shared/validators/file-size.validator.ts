@@ -1,7 +1,8 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { FILE_MAX_SIZE } from "../consts/files/file-max-size.const";
 import { calculateFileSize } from "../helpers/file";
 
-export function fileSizeValidator(size: number): ValidatorFn {
+export function fileSizeValidator(size: number=FILE_MAX_SIZE): ValidatorFn {
   const maxAllowedSize = size * 1024 * 1024; // size in Mo
 
   return (formGroup: AbstractControl): ValidationErrors | null => {
