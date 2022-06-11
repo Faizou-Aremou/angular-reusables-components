@@ -7,7 +7,7 @@ import { fileSizeValidator } from '../../validators/file-size.validator';
 @Injectable({
   providedIn:'root'
 })
-export class uploadFilesService  { 
+export class UploadFilesService  { 
   public filesReaderParams:FilesReaderParams | undefined;
   public filesUploaded= false;
 

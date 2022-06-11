@@ -2,7 +2,8 @@ import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FilesReaderParams } from "../../models/file/files-reader-params";
 import { FileService } from "../../services/file/file.service";
-import { uploadFilesService } from "../../services/files-reader/upload-files.service";
+import { UploadFilesService } from "../../services/upload-files/upload-files.service";
+
 
 @Component({
   selector: "app-upload-files",
@@ -12,7 +13,7 @@ import { uploadFilesService } from "../../services/files-reader/upload-files.ser
 export class UploadFilesComponent implements OnInit {
   @Input() filesReaderParams: FilesReaderParams | undefined;
   constructor(
-    public uploadFilesService: uploadFilesService,
+    private uploadFilesService: UploadFilesService,
     private fileService: FileService,
     private changeDetector: ChangeDetectorRef
   ) {}
@@ -49,10 +50,6 @@ export class UploadFilesComponent implements OnInit {
     const fileGroup = this.filesReaderParams?.filesFormArray.at(
       index
     ) as FormGroup;
-    // this.fileService.downloadFileFromDataUrl(
-    //   fileGroup.value.contentBase64,
-    //   fileGroup.value.name
-    // );
     this.fileService.downloadFileFromObjectUrl(
       this.fileService.convertFileToObjectUrl(fileGroup.value.file),
       fileGroup.value.name
