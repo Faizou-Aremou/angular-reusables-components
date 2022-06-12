@@ -24,13 +24,13 @@ import { CustomDataSource } from '../../types/custom-data-source';
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent<T, Q> implements OnInit, AfterViewInit  {
+export class TableComponent<T> implements OnInit, AfterViewInit  {
   public ACTIONS_BUTTONS_COLUMN = ACTIONS_BUTTON_COLUMN;
   /**
    * we will not be using the built-in MatTableDataSource because its designed for filtering, sorting and pagination of a client-side data array.
    * In most real app these are happened on server side.
    */
-  @Input() public dataSource: CustomDataSource<T, Q> | null=null;
+  @Input() public dataSource: CustomDataSource<T> | null=null;
   @Input() public tableColumns: Array<TableColumn> = [];
   @Input() public addActionsColumn: boolean = false;
   @ContentChild('actionsButton', { static: false })

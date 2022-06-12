@@ -1,3 +1,3 @@
-export interface Deactivatable {
+export interface CanBeDisabled {
   disabled: boolean;
 }

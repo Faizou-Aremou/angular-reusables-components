@@ -6,6 +6,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from "@angular/common/http/testing";
+import { FileUnit } from "../../models/file/file-unit";
 
 describe("FileService", () => {
   let service: FileService;
@@ -26,17 +27,49 @@ describe("FileService", () => {
   });
 
   beforeEach(() => {
-   inputElement = document.createElement("input");
-   inputElement.setAttribute('type', "file");
+    inputElement = document.createElement("input");
+    inputElement.setAttribute("type", "file");
   });
-  it("should be created", () => {
-    expect(service).toBeTruthy();
+  test("should be created", () => {
+    expect(service).toBeDefined();
   });
 
-  it("filesSizeInByte", () => {
-    const file = new File(["foo"], "foo.txt", {
+  test("Should be return files size in Byte", () => {
+    const file1 = new File(["foo"], "foo.txt", {
       type: "text/plain",
     });
-    expect(service.filesSizeInByte( [file])).toBe(file.size);
+    const file2 = new File(["foo2"], "foo.txt", {
+      type: "text/plain",
+    });
+
+    expect(service.filesSizeInByte([file1, file2])).toBe(7);
   });
+
+  test("Should convert file to DataUrl (Base64 string)", async () => {
+    const file = new File(["Each foo is human"], "foo-human", {
+      type: "text/plain",
+    });
+    const data = await service.convertFileToDataUrl(file);
+    expect(data).toBe("data:text/plain;base64,RWFjaCBmb28gaXMgaHVtYW4=");
+  });
+
+  test("Should convert file to appropriate unit", () => {
+    expect(service.reduceOctetToAppropriateUnit(2048)).toEqual({
+      size: "2",
+      unit: FileUnit.KiB,
+    });
+  });
+
+  test("Should convert file to appropriate unit by recursion", () => {
+    expect(
+      service.recursionReduceOctetToAppropriateUnit(
+        2048,
+        Object.values(FileUnit)
+      )
+    ).toEqual({
+      size: "2",
+      unit: FileUnit.KiB,
+    });
+  });
+
 });

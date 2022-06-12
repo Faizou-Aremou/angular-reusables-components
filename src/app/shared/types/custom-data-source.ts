@@ -19,7 +19,7 @@ import { Page } from "../models/page.model";
 import { Sort } from "../models/generic-sort.model";
 import { Pagination } from "../models/pagination.model";
 
-export class CustomDataSource<T, Q> extends DataSource<T> {
+export class CustomDataSource<T> extends DataSource<T> {
   private _pageIndex = new Subject<number>();
   private _sort: BehaviorSubject<Sort<T> | MatSortInterface>;
   private _page$: Observable<Page<T>>;
@@ -28,7 +28,7 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   private _matPaginatorSubscription = Subscription.EMPTY;
   private _matSortSubscription = Subscription.EMPTY;
   /** Stream that emits when filter query is set on the data source */
-  private readonly _filter: BehaviorSubject<Q | null>;
+  private readonly _filter: BehaviorSubject< Partial<T> | null>;
 
   /** Stream that contain displayed page data */
   private _renderData$: Observable<T[]>;
@@ -89,14 +89,14 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
   }
 
   constructor(
-    endPoint: PaginationEndpoint<T, Q>,
+    endPoint: PaginationEndpoint<T>,
     initialSort: Sort<T>,
-    initialQuery: Q | null = null,
+    initialQuery: Partial<T> | null = null,
     pageSize = 10
   ) {
     super();
     this._sort = new BehaviorSubject<Sort<T> | MatSortInterface>(initialSort);
-    this._filter = new BehaviorSubject<Q | null>(initialQuery);
+    this._filter = new BehaviorSubject<Partial<T>| null>(initialQuery);
     this._page$ = combineLatest([this._sort, this._filter]).pipe(
       switchMap(([sort, query]) =>
         this._pageIndex.pipe(
@@ -136,7 +136,7 @@ export class CustomDataSource<T, Q> extends DataSource<T> {
     this._sort.next(nextSort);
   }
 
-  filterBy(query: Q): void {
+  filterBy(query: Partial<T>): void {
     const lastQuery = this._filter.getValue();
     const nextQuery = { ...lastQuery, ...query };
     this._filter.next(nextQuery);

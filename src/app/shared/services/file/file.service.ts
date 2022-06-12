@@ -1,9 +1,13 @@
-import { HttpClient, HttpEvent, HttpEventType, HttpRequest } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpEvent,
+  HttpEventType,
+  HttpRequest,
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { FileSize } from "../../models/file/file-size.model";
 import { FileUnit } from "../../models/file/file-unit";
-
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +17,7 @@ export class FileService {
 
   selectFile(event: Event): File[] {
     const fileList = (event.target as HTMLInputElement).files as FileList;
-    let fileArray:File[] = [];
+    let fileArray: File[] = [];
     for (let index = 0; index < fileList.length; index++) {
       fileArray = [...fileArray, fileList[index]];
     }
@@ -44,7 +48,7 @@ export class FileService {
     URL.revokeObjectURL(url);
   }
 
-  convertOctetToAppropriateUnit(size: number): FileSize {
+  reduceOctetToAppropriateUnit(size: number): FileSize {
     let reductionNumber = size;
     let index = 0;
     while (reductionNumber > 1 && index < Object.values(FileUnit).length) {
@@ -53,33 +57,33 @@ export class FileService {
     }
     return {
       size: reductionNumber.toFixed(3),
-      unit: Object.values(FileUnit)[index]
+      unit: Object.values(FileUnit)[index],
     };
   }
 
-  recursionConvertOctetToAppropriateUnit(
+  recursionReduceOctetToAppropriateUnit(
     size: number,
-    fileUnit: FileUnit[]
+    fileUnitList: FileUnit[]
   ): FileSize {
-    const [element, ...rest] = fileUnit;
-    if (size === 0 && fileUnit.length === 1) {
+    const [element, ...rest] = fileUnitList;
+    if (size === 0 && fileUnitList.length === 1) {
       return {
         size: size.toFixed(3),
         unit: element,
       };
-    } else if (size === 0 && fileUnit.length > 0) {
+    } else if (size === 0 && fileUnitList.length > 0) {
       return {
         size: size.toFixed(3),
         unit: element,
       };
-    } else if (size > 0 && fileUnit.length === 1) {
+    } else if (size > 0 && fileUnitList.length === 1) {
       return {
         size: size.toFixed(3),
         unit: element,
       };
     } else {
       if (size > 1) {
-        return this.recursionConvertOctetToAppropriateUnit(size / 1024, rest);
+        return this.recursionReduceOctetToAppropriateUnit(size / 1024, rest);
       } else {
         return {
           size: size.toFixed(3),
@@ -90,7 +94,7 @@ export class FileService {
   }
 
   downloadFileFromObjectUrl(url: string, fileName: string): void {
-    const downloadLink = document.createElement('a');
+    const downloadLink = document.createElement("a");
     downloadLink.href = url;
     downloadLink.download = fileName;
     downloadLink.click();
@@ -98,7 +102,7 @@ export class FileService {
   }
 
   downloadFileFromDataUrl(dataUrl: string, fileName: string): void {
-    const downloadLink = document.createElement('a');
+    const downloadLink = document.createElement("a");
     downloadLink.href = dataUrl;
     downloadLink.download = fileName;
     downloadLink.click();
@@ -108,7 +112,7 @@ export class FileService {
     fileData: File | File[],
     url: string
   ): Observable<any> {
-    const req = new HttpRequest('POST', url, fileData, {
+    const req = new HttpRequest("POST", url, fileData, {
       reportProgress: true,
     });
 
@@ -135,5 +139,4 @@ export class FileService {
         return 0;
     }
   }
-
 }

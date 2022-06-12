@@ -35,7 +35,7 @@ export class RolesComponent implements OnInit {
     name: 'front-end'
 };
 
-  public dataSource = new CustomDataSource<Role, RoleQuery>(
+  public dataSource = new CustomDataSource<Role>(
     (request) => this.roleListService.getRoles(request),
     this.initialSort,
     this.initialQuery
