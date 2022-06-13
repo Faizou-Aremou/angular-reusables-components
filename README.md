@@ -156,3 +156,9 @@ it is set of functions that help to work with files in web applications
 two themes are available:
  1. The purple-green theme accessible in dev with the command `npm start`
  2. The basic theme is accessible in dev with the command `npm start-basic`
+
+# Roadmap
+- Upload files componant, that support tree form of upload: drop files, upload form buttom, upload from link, upload from label
+- Right side overlay component
+- Http service, that support in easy way common http requests and actions
+
