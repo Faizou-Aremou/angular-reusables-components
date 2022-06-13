@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
@@ -13,7 +14,8 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ACTIONS_BUTTON_COLUMN } from '../../consts/table/actions-button-column.const';
-import { TableColumnDirective } from '../../directives/table/table-column.directive';
+import { ActionsButtonDirective } from '../../directives/actions-button/actions-button.directive';
+import { OverrideTableColumnDirective } from '../../directives/override-table-column/override-table-column.directive';
 import { TableColumn } from '../../models/table/table-column.model';
 import { CustomDataSource } from '../../types/custom-data-source';
 
@@ -24,27 +26,28 @@ import { CustomDataSource } from '../../types/custom-data-source';
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent<T> implements OnInit, AfterViewInit  {
+export class TableComponent<T> implements OnInit, AfterViewInit, AfterContentInit  {
   public ACTIONS_BUTTONS_COLUMN = ACTIONS_BUTTON_COLUMN;
   /**
    * we will not be using the built-in MatTableDataSource because its designed for filtering, sorting and pagination of a client-side data array.
    * In most real app these are happened on server side.
    */
   @Input() public dataSource: CustomDataSource<T> | null=null;
-  @Input() public tableColumns: Array<TableColumn> = [];
-  @Input() public addActionsColumn: boolean = false;
-  @ContentChild('actionsButton', { static: false })
+  @Input() public tableColumns: Array<TableColumn> = []; //TODO: dataSource and table column in the same object
+  @ContentChild(ActionsButtonDirective) actionsButton?: ActionsButtonDirective;
   actionsButtonRef!: TemplateRef<any>;
-  @ContentChildren(TableColumnDirective) tableColumnsRef!: QueryList<TableColumnDirective>;
+  @ContentChildren(OverrideTableColumnDirective) OverrideTableColumns?: QueryList<OverrideTableColumnDirective>;
   @ViewChild(MatPaginator, { static: false }) matPaginator: MatPaginator| null=null;
   @ViewChild(MatSort, { static: false  }) matSort: MatSort| null = null;
   public columns: Array<string>=[];
   public displayedColumns: Array<string> = [];
   constructor() {}
-
-  ngOnInit(): void {
+  ngAfterContentInit(): void {
     this.displayedColumns = this.tableColumns.map((column)=> column.columnDef);
     this.columns = [...this.displayedColumns, ...this.actionsColumn() ];
+  }
+
+  ngOnInit(): void {
   }
   ngAfterViewInit() {
     if(this.dataSource){
@@ -54,6 +57,6 @@ export class TableComponent<T> implements OnInit, AfterViewInit  {
   }
 
   private actionsColumn(): Array<string> {
-    return this.addActionsColumn?[ACTIONS_BUTTON_COLUMN]: []
+    return this.actionsButton?[ACTIONS_BUTTON_COLUMN]: []
   }
 }

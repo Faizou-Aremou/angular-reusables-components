@@ -19,10 +19,11 @@
     </ng-template>
 </app-tab-group>
 
-<form [formGroup]="uploadFilesForm" class="general-infos__upload-files-form">
+<div class="general-infos__upload-files">
 
-    <app-upload-files [filesReaderParams]="filesReaderParams">
+    <app-upload-files class="general-infos__upload-files__cmp" [multiple]="true" (uploadedFile)="cacheUploadedFile($event)">
+        <!-- <ng-template labelFileInputTrigger> <label for="fileInput">Select some files</label> </ng-template> -->
     </app-upload-files>
 
-    <button mat-raised-button (click)="uploadFiles()" color="primary"> Upload files </button>
-</form>
+    <button id="general-infos__upload-files-form__upload-btn" class="general-infos__upload-files-form__upload-btn" mat-raised-button (click)="uploadFiles()" color="primary"> Upload files </button>
+</div>

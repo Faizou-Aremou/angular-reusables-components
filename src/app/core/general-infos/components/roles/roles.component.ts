@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { Sort } from "src/app/shared/models/generic-sort.model";
 import { TableColumn } from "src/app/shared/models/table/table-column.model";
 import { CustomDataSource } from "src/app/shared/types/custom-data-source";
-import { RoleQuery } from "../../../models/general-infos/role-query.model";
 import { Role } from "../../../models/general-infos/role.model";
 import { RolesService } from "../../services/roles.service";
 
@@ -29,16 +28,11 @@ export class RolesComponent implements OnInit {
       header: "Information",
     },
   ];
-  public addActionsColumn = true;
   public initialSort: Sort<Role> = { active: "code", direction: "desc" };
-  public initialQuery: RoleQuery = {
-    name: 'front-end'
-};
 
   public dataSource = new CustomDataSource<Role>(
-    (request) => this.roleListService.getRoles(request),
+    (request, query) => this.roleListService.getRoles(request, query),
     this.initialSort,
-    this.initialQuery
   );
   constructor(private roleListService: RolesService) {}
 

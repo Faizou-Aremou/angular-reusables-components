@@ -5,11 +5,13 @@ import { TabGroupComponent } from "./components/tab-group/tab-group.component";
 import { StaticTabsContentDirective } from "./directives/tab-group/static-tabs-contents.directive";
 import { AngularMaterialModule } from "src/material.module";
 import { NavBarComponent } from "./components/nav-bar/nav-bar.component";
-import { TableColumnDirective } from "./directives/table/table-column.directive";
-import { TableColumnRefPipe } from "./pipes/table/table-column-ref.pipe";
+import { OverrideTableColumnDirective } from "./directives/override-table-column/override-table-column.directive";
+import { TableColumnPipe } from "./pipes/table-column/table-column.pipe";
 import { ReactiveFormsModule } from "@angular/forms";
 import { UploadFilesComponent } from "./components/upload-files/upload-files.component";
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { LabelFileInputTriggerDirective } from './directives/label-file-input-trigger/label-file-input-trigger.directive';
+import { ActionsButtonDirective } from './directives/actions-button/actions-button.directive';
 
 @NgModule({
   declarations: [
@@ -17,10 +19,12 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     TabGroupComponent,
     StaticTabsContentDirective,
     NavBarComponent,
-    TableColumnDirective,
-    TableColumnRefPipe,
+    OverrideTableColumnDirective,
+    TableColumnPipe,
     UploadFilesComponent,
     SafeUrlPipe,
+    LabelFileInputTriggerDirective,
+    ActionsButtonDirective,
   ],
   imports: [CommonModule, AngularMaterialModule, ReactiveFormsModule],
   exports: [
@@ -29,9 +33,11 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     TabGroupComponent,
     StaticTabsContentDirective,
     NavBarComponent,
-    TableColumnDirective,
-    TableColumnRefPipe,
+    OverrideTableColumnDirective,
+    TableColumnPipe,
     UploadFilesComponent,
+    LabelFileInputTriggerDirective,
+    ActionsButtonDirective
   ],
 })
 export class SharedModule {}

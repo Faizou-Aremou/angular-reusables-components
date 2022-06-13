@@ -20,8 +20,8 @@
 
     <!-- TODO: use ngFor for display Input, create reusable component for search in table -->
 </form>
-<app-table class="companies-table__table" [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
-    <ng-template #actionsButton let-element>
+<app-table class="companies-table__table" [dataSource]="dataSource" [tableColumns]="tableColumns">
+    <ng-template actionsButton let-element>
         <button id="actions-button" mat-flat-button color="primary" aria-label="informations button" (click)="onEditElement(element)">
             <span> details </span>
         </button>

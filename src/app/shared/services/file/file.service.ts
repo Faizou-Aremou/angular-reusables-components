@@ -5,15 +5,19 @@ import {
   HttpRequest,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { AbstractControlOptions, FormBuilder, FormGroup } from "@angular/forms";
 import { map, Observable } from "rxjs";
 import { FileSize } from "../../models/file/file-size.model";
 import { FileUnit } from "../../models/file/file-unit";
+import { fileSizeValidator } from "../../validators/file-size.validator";
+import { fileUnicityValidator } from "../../validators/file-unicity.validator";
+import { filesSizeValidator } from "../../validators/files-size.validator";
 
 @Injectable({
   providedIn: "root",
 })
 export class FileService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private formBuilder: FormBuilder) {}
 
   selectFile(event: Event): File[] {
     const fileList = (event.target as HTMLInputElement).files as FileList;
@@ -138,5 +142,33 @@ export class FileService {
       default:
         return 0;
     }
+  }
+
+
+  public buildFileFormGroup(
+    name: string,
+    contentBase64: string,
+    maxSizeByFile: number | undefined = 3,
+    file: File
+  ): FormGroup {
+    return this.formBuilder.group(
+      {
+        name: [name],
+        contentBase64: [contentBase64],
+        file: [file],
+      },
+      {
+        validators: fileSizeValidator(maxSizeByFile),
+      } as AbstractControlOptions
+    );
+  }
+
+  public buildUploadFileForm(): FormGroup {
+    return this.formBuilder.group({
+      files: this.formBuilder.array(
+        [],
+        [filesSizeValidator(), fileUnicityValidator]
+      ),
+    });
   }
 }

@@ -19,7 +19,7 @@ In the parent component
 public initialSort: Sort<Role> = { active: "code", direction:  "desc" };
 
   public dataSource = new CustomDataSource<Role>(
-    (request) => this.roleListService.getRoles(request),
+    (request, query) => this.roleListService.getRoles(request, query),
     this.initialSort
   );
 ```
@@ -38,7 +38,7 @@ In the parent component template
   [tableColumns]="tableColumns"
   [addActionsColumn]="addActionsColumn"
 >
-  <ng-template #actionsButton let-element>
+  <ng-template actionsButton let-element>
     <button
       id="actions-button"
       mat-flat-button
@@ -60,7 +60,7 @@ In the parent component template
   [tableColumns]="tableColumns"
   [addActionsColumn]="addActionsColumn"
 >
-  <ng-template [tableColumnDef]="'name'" let-element>
+  <ng-template [overrideTableColumn]="'name'" let-element>
     <button
       id="actions-button"
       mat-flat-button
@@ -71,7 +71,7 @@ In the parent component template
       <span> details </span>
     </button>
   </ng-template>
-  <ng-template #actionsButton let-element>
+  <ng-template actionsButton let-element>
     <button
       id="actions-button"
       mat-flat-button

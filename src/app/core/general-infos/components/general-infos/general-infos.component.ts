@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Observable } from "rxjs";
-import { FilesReaderParams } from "src/app/shared/models/file/files-reader-params";
+import { CFile } from "src/app/shared/models/file/c-file.model";
 import { TabGroup } from "src/app/shared/types/tab-group/tab-group";
 import { fileUnicityValidator } from "src/app/shared/validators/file-unicity.validator";
 import { filesSizeValidator } from "src/app/shared/validators/files-size.validator";
@@ -15,7 +15,7 @@ import { UploadFilesService } from "../../../services/upload-files.service";
   styleUrls: ["./general-infos.component.scss"],
 })
 export class GeneralInfosComponent implements OnInit {
-  public tabGroup = new TabGroup<Company | Role>([
+  tabGroup = new TabGroup<Company | Role>([
     {
       label: "Companies list",
     },
@@ -23,58 +23,53 @@ export class GeneralInfosComponent implements OnInit {
       label: "Roles list",
     },
   ]);
-  public companiesList$: Observable<any> | null = null;
-  public rolesList$: Observable<any> | null = null;
+  companiesList$: Observable<any> | null = null;
+  rolesList$: Observable<any> | null = null;
+  cFiles: CFile[] = [];
 
-   //TODO build array form in accord on file Model
-  public uploadFilesForm: FormGroup = this.formBuilder.group({
-    files: this.formBuilder.array([],[filesSizeValidator(), fileUnicityValidator ])
-  });
-
-  public filesReaderParams: FilesReaderParams = {
-    filesFormArray: this.uploadFilesForm.get('files') as FormArray,
-    multiple: true,
-    allowedExtensions: ["pdf"],
-  };
+  //TODO build array form in accord on file Model
 
   constructor(
-    private formBuilder: FormBuilder,
     public uploadFilesService: UploadFilesService
   ) {}
 
   ngOnInit(): void {}
 
-  public displayCompanyInfosInTabs(company: Company): void {
+  displayCompanyInfosInTabs(company: Company): void {
     this.tabGroup.addTabDynamically({
       label: `Informations ${company.name}`,
       contentInfos: company,
     });
   }
 
-  public displayEditRolesInTab(role: Role): void {
+  displayEditRolesInTab(role: Role): void {
     this.tabGroup.addTabDynamically({
       label: `Edition Informations ${role.name}`,
       contentInfos: role,
     });
   }
 
-  public displayConfigureRolesInTab(role: Role): void {
+  displayConfigureRolesInTab(role: Role): void {
     this.tabGroup.addTabDynamically({
       label: `Configure Informations ${role.name}`,
       contentInfos: role,
     });
   }
 
-  public displayNoticeRolesInTab(role: Role): void {
+  displayNoticeRolesInTab(role: Role): void {
     this.tabGroup.addTabDynamically({
       label: `Notice Informations ${role.name}`,
       contentInfos: role,
     });
   }
 
-  public uploadFiles(): void {
-    if (this.uploadFilesForm.valid) {
-      this.uploadFilesService.uploadFiles(this.uploadFilesForm.value.files);
+  cacheUploadedFile(cFiles: CFile[]) {
+    this.cFiles =  [...cFiles]
+    console.log("uploaded files",cFiles);
+  }
+  uploadFiles(): void {
+    if (this.cFiles.length > 0) {
+      this.uploadFilesService.uploadFiles(this.cFiles);
     }
   }
 }

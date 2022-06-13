@@ -26,8 +26,6 @@ export class CompaniesComponent implements OnInit {
   ];
 
   public tableRows: TableRow[]=[];
-  public addActionsColumn = true;
-
   public initialSort: Sort<Company> = { active: "code", direction: "desc" };
 
   public dataSource = new CustomDataSource<Company>(

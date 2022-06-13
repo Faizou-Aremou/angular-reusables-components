@@ -1,17 +1,17 @@
-<app-table [dataSource]="dataSource" [tableColumns]="tableColumns" [addActionsColumn]="addActionsColumn">
-    <ng-template #actionsButton let-elt>
+<app-table [dataSource]="dataSource" [tableColumns]="tableColumns">
+    <ng-template actionsButton let-element>
         <button mat-flat-button color="primary" [matMenuTriggerFor]="matMenu" aria-label="actions menu">
       <span> modification </span>
       <mat-icon>arrow_drop_down</mat-icon>
     </button>
         <mat-menu #matMenu="matMenu">
-            <button mat-menu-item (click)="edit(elt)">
+            <button mat-menu-item (click)="edit(element)">
         <span>rules</span>
       </button>
-            <button mat-menu-item (click)="configure(elt)">
+            <button mat-menu-item (click)="configure(element)">
         <span>configure</span>
       </button>
-            <button mat-menu-item (click)="notice(elt)">
+            <button mat-menu-item (click)="notice(element)">
         <span>notifications</span>
       </button>
         </mat-menu>

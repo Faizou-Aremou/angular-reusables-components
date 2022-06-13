@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { CFile } from "src/app/shared/models/file/c-file.model";
 
 @Injectable({
   providedIn: "root",
@@ -6,7 +7,7 @@ import { Injectable } from "@angular/core";
 export class UploadFilesService {
   constructor() {}
 
-  public uploadFiles(files: File[]):void {
+  public uploadFiles(files: CFile[]):void {
     console.log("files upload", files);
   }
 }

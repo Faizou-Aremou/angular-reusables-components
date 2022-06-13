@@ -1,8 +1,8 @@
-import { TableColumnRefPipe } from './table-column-ref.pipe';
+import { TableColumnPipe } from './table-column.pipe';
 
 describe('TableColumnRefPipe', () => {
   it('create an instance', () => {
-    const pipe = new TableColumnRefPipe();
+    const pipe = new TableColumnPipe();
     expect(pipe).toBeTruthy();
   });
 });

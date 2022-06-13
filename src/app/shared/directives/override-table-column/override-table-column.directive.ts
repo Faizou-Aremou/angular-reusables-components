@@ -1,10 +1,10 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[tableColumnDef]'
+  selector: '[overrideTableColumn]'
 })
-export class TableColumnDirective {
-  @Input() tableColumnDef: string | null= null
+export class OverrideTableColumnDirective {
+  @Input() overrideTableColumn: string | null= null
   constructor(public templateRef: TemplateRef<any>) { }
 
 }

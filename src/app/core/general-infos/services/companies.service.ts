@@ -4,7 +4,6 @@ import { delay, Observable, of } from "rxjs";
 import { PageRequest } from "src/app/shared/models/page-request.model";
 import { Page } from "src/app/shared/models/page.model";
 import { Sort } from "../../../shared/models/generic-sort.model";
-import { CompanyQuery } from "../../models/general-infos/company-query.model";
 import { Company } from "../../models/general-infos/company.model";
 
 const companies: Company[] = [
@@ -132,9 +131,9 @@ export class CompaniesService {
 
   public getCompanies(
     request: PageRequest<Company>,
-    query: CompanyQuery | null
+    query: Partial<Company> | null
   ): Observable<Page<Company>> {
-    console.log("page request query", request, query);
+    console.log("page company request query", request, query);
     const queryCode = query?.code;
     const queryName = query?.name;
     const sort = request.sort;
