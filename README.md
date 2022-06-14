@@ -158,7 +158,8 @@ two themes are available:
  2. The basic theme is accessible in dev with the command `npm start-basic`
 
 # Roadmap
-- Upload files componant, that support tree form of upload: drop files, upload form buttom, upload from link, upload from label
+- Upload files componant, that support two form of upload: upload form buttom, upload from label. add optionnal upload progression bar.
+- update table by support of seach criteria
 - Right side overlay component
 - Http service, that support in easy way common http requests and actions
 
