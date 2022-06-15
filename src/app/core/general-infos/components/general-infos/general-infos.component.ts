@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { Observable } from "rxjs";
-import { CFile } from "src/app/shared/models/file/c-file.model";
 import { TabGroup } from "src/app/shared/types/tab-group/tab-group";
-import { fileUnicityValidator } from "src/app/shared/validators/file-unicity.validator";
 import { filesSizeValidator } from "src/app/shared/validators/files-size.validator";
 import { Company } from "../../../models/general-infos/company.model";
 import { Role } from "../../../models/general-infos/role.model";
@@ -25,16 +23,26 @@ export class GeneralInfosComponent implements OnInit {
   ]);
   companiesList$: Observable<any> | null = null;
   rolesList$: Observable<any> | null = null;
-  cFiles: CFile[] = [];
+  files: File[] = [];
+  fileForm!: FormGroup;
 
   //TODO build array form in accord on file Model
 
   constructor(
-    public uploadFilesService: UploadFilesService
+    public readonly uploadFilesService: UploadFilesService,
+    public readonly formBuilder:FormBuilder
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fileForm=this.buildUploadFileForm();
+  }
 
+  public buildUploadFileForm(): FormGroup {
+    return this.formBuilder.group({
+      files: [
+        [],filesSizeValidator(6)]
+    });
+  }
   displayCompanyInfosInTabs(company: Company): void {
     this.tabGroup.addTabDynamically({
       label: `Informations ${company.name}`,
@@ -63,13 +71,13 @@ export class GeneralInfosComponent implements OnInit {
     });
   }
 
-  cacheUploadedFile(cFiles: CFile[]) {
-    this.cFiles =  [...cFiles]
-    console.log("uploaded files",cFiles);
+  cacheUploadedFile(files: File[]) {
+    this.files =  [...files]
+    console.log("uploaded files",files);
   }
   uploadFiles(): void {
-    if (this.cFiles.length > 0) {
-      this.uploadFilesService.uploadFiles(this.cFiles);
+    if (this.fileForm.valid) {
+      this.uploadFilesService.uploadFiles(this.fileForm.value);
     }
   }
 }

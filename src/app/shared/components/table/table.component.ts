@@ -14,7 +14,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ACTIONS_BUTTON_COLUMN } from '../../consts/table/actions-button-column.const';
-import { ActionsButtonDirective } from '../../directives/actions-button/actions-button.directive';
+import { TableColumnDirective } from '../../directives/table-column/table-column.directive';
 import { OverrideTableColumnDirective } from '../../directives/override-table-column/override-table-column.directive';
 import { TableColumn } from '../../models/table/table-column.model';
 import { CustomDataSource } from '../../types/custom-data-source';
@@ -34,9 +34,8 @@ export class TableComponent<T> implements OnInit, AfterViewInit, AfterContentIni
    */
   @Input() public dataSource: CustomDataSource<T> | null=null;
   @Input() public tableColumns: Array<TableColumn> = []; //TODO: dataSource and table column in the same object
-  @ContentChild(ActionsButtonDirective) actionsButton?: ActionsButtonDirective;
-  actionsButtonRef!: TemplateRef<any>;
-  @ContentChildren(OverrideTableColumnDirective) OverrideTableColumns?: QueryList<OverrideTableColumnDirective>;
+  @ContentChildren(TableColumnDirective) additionalTableColumnDirs?:QueryList<TableColumnDirective>;
+  @ContentChildren(OverrideTableColumnDirective) OverrideTableColumnsDirs?: QueryList<OverrideTableColumnDirective>;
   @ViewChild(MatPaginator, { static: false }) matPaginator: MatPaginator| null=null;
   @ViewChild(MatSort, { static: false  }) matSort: MatSort| null = null;
   public columns: Array<string>=[];
@@ -57,6 +56,6 @@ export class TableComponent<T> implements OnInit, AfterViewInit, AfterContentIni
   }
 
   private actionsColumn(): Array<string> {
-    return this.actionsButton?[ACTIONS_BUTTON_COLUMN]: []
+    return this.additionalTableColumnDirs?this.additionalTableColumnDirs.map((TableColumnDir)=> TableColumnDir.tableColumn): []
   }
 }

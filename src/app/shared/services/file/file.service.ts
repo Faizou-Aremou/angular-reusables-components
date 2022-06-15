@@ -5,27 +5,27 @@ import {
   HttpRequest,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AbstractControlOptions, FormBuilder, FormGroup } from "@angular/forms";
 import { map, Observable } from "rxjs";
+import { FILE_MAX_SIZE } from "../../consts/files/file-max-size.const";
 import { FileSize } from "../../models/file/file-size.model";
 import { FileUnit } from "../../models/file/file-unit";
-import { fileSizeValidator } from "../../validators/file-size.validator";
-import { fileUnicityValidator } from "../../validators/file-unicity.validator";
-import { filesSizeValidator } from "../../validators/files-size.validator";
 
 @Injectable({
   providedIn: "root",
 })
 export class FileService {
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) {}
 
-  selectFile(event: Event): File[] {
+  constructor(private http: HttpClient) {}
+
+  selectFile(event: Event, maxSizeByFile:number=FILE_MAX_SIZE): File[] {//maxSizeByFile in MB
     const fileList = (event.target as HTMLInputElement).files as FileList;
-    let fileArray: File[] = [];
+    let fileSequence: File[] = [];
     for (let index = 0; index < fileList.length; index++) {
-      fileArray = [...fileArray, fileList[index]];
+      if(fileList[index].size <= maxSizeByFile*1024*1024){
+        fileSequence = [...fileSequence, fileList[index]];
+      }
     }
-    return fileArray;
+    return fileSequence;
   }
 
   filesSizeInByte(files: File[]): number {
@@ -112,8 +112,8 @@ export class FileService {
     downloadLink.click();
   }
 
-  uploadFilesWithTrackingProgress(
-    fileData: File | File[],
+  uploadDataWithTrackingProgress<T>(
+    fileData:T,
     url: string
   ): Observable<any> {
     const req = new HttpRequest("POST", url, fileData, {
@@ -145,30 +145,4 @@ export class FileService {
   }
 
 
-  public buildFileFormGroup(
-    name: string,
-    contentBase64: string,
-    maxSizeByFile: number | undefined = 3,
-    file: File
-  ): FormGroup {
-    return this.formBuilder.group(
-      {
-        name: [name],
-        contentBase64: [contentBase64],
-        file: [file],
-      },
-      {
-        validators: fileSizeValidator(maxSizeByFile),
-      } as AbstractControlOptions
-    );
-  }
-
-  public buildUploadFileForm(): FormGroup {
-    return this.formBuilder.group({
-      files: this.formBuilder.array(
-        [],
-        [filesSizeValidator(), fileUnicityValidator]
-      ),
-    });
-  }
 }

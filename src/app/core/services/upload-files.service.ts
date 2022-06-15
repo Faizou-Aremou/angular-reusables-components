@@ -7,7 +7,7 @@ import { CFile } from "src/app/shared/models/file/c-file.model";
 export class UploadFilesService {
   constructor() {}
 
-  public uploadFiles(files: CFile[]):void {
+  public uploadFiles(files: File[]):void {
     console.log("files upload", files);
   }
 }

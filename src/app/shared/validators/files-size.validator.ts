@@ -1,13 +1,13 @@
 import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { FILES_MAX_SIZE } from "../consts/files/files-max-size.const";
-import { calculateFilesSize } from "../helpers/file";
+import { calculateSequenceSize } from "../helpers/helpers";
 
 export function filesSizeValidator(size: number = FILES_MAX_SIZE): ValidatorFn {
     const maxAllowedSize = size * 1024*1024
-    return (filesFormArray: AbstractControl): ValidationErrors | null => {
+    return (filesControl: AbstractControl): ValidationErrors | null => {
       const hasInvalidFileSizeError =
-       (filesFormArray as FormArray).length===0 &&
-       calculateFilesSize((filesFormArray as FormArray ).controls) > maxAllowedSize;
+       (filesControl as FormArray).value.length > 0 &&
+       calculateSequenceSize(filesControl.value) > maxAllowedSize;
       return hasInvalidFileSizeError ? { invalidFileSize: true } : null;
     };
   }

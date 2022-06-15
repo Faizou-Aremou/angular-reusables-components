@@ -1,8 +1,8 @@
-import { ActionsButtonDirective } from './actions-button.directive';
+import { TableColumnDirective } from './table-column.directive';
 
 describe('ActionsButtonDirectiveDirective', () => {
   it('should create an instance', () => {
-    const directive = new ActionsButtonDirective();
+    const directive = new TableColumnDirective();
     expect(directive).toBeTruthy();
   });
 });

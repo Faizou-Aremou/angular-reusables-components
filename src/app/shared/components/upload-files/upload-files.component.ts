@@ -5,12 +5,14 @@ import {
   EventEmitter,
   Input,
   OnInit,
+  Optional,
   Output,
+  Self,
 } from "@angular/core";
-import { FormArray, FormGroup } from "@angular/forms";
+import { ControlValueAccessor, NgControl } from "@angular/forms";
+import { uniqBy } from "ramda";
 import { ALLOWED_EXTENSIONS } from "../../consts/files/allowed-extensions";
 import { LabelFileInputTriggerDirective } from "../../directives/label-file-input-trigger/label-file-input-trigger.directive";
-import { CFile } from "../../models/file/c-file.model";
 import { FileService } from "../../services/file/file.service";
 
 @Component({
@@ -18,67 +20,78 @@ import { FileService } from "../../services/file/file.service";
   templateUrl: "./upload-files.component.html",
   styleUrls: ["./upload-files.component.scss"],
 })
-export class UploadFilesComponent implements OnInit {
+export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   @Input() multiple = false;
   @Input() maxSizeByFile?: number;
   @Input() allowedExtensions: string[] = ALLOWED_EXTENSIONS;
 
-  @Output() uploadedFile = new EventEmitter<CFile[]>();
+  @Output() uploadedFiles = new EventEmitter<File[]>();
 
   @ContentChild(LabelFileInputTriggerDirective)
   labelFileInputTrigger?: LabelFileInputTriggerDirective;
-
-  public uploadFilesForm: FormGroup;
+  files: File[] = [];
+  onChange = (files: File[]) => {};
+  onTouched = (files: File[]) => {};
+  isDisabled: boolean = false;
 
   constructor(
-    private fileService: FileService,
-    private changeDetector: ChangeDetectorRef
+    @Self() @Optional() public controlDir: NgControl,
+    private fileService: FileService
   ) {
-    this.uploadFilesForm = fileService.buildUploadFileForm();
+    if (controlDir) {
+      controlDir.valueAccessor = this;
+    }
   }
 
-  ngOnInit(): void {}
-  get files() {
-    return this.uploadFilesForm.get("files") as FormArray;
+  ngOnInit(): void {
+    const control = this.controlDir?.control;
+    let validators = control?.validator;
+    if (validators !== undefined) {
+      control?.setValidators(validators);
+    }
+    control?.updateValueAndValidity();
+  }
+  writeValue(files: File[]): void {
+    this.files = [...new Set(files)];
+  }
+  registerOnChange(fn: (files: File[]) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: (files: File[]) => void): void {
+    this.onTouched = fn;
   }
   selectFiles(event: Event) {
-    this.fileService.selectFile(event).forEach(async (file) => {
-      const base64 = await this.fileService.convertFileToDataUrl(file);
-      this.changeDetector.markForCheck();
-      if (this.multiple) {
-        this.files?.push(
-          this.fileService.buildFileFormGroup(
-            file.name,
-            base64,
-            this.maxSizeByFile,
-            file
-          )
+    this.files = this.maxSizeByFile
+      ? uniqBy(
+          (file) => file.name,
+          [
+            ...this.files,
+            ...this.fileService.selectFile(event, this.maxSizeByFile),
+          ]
+        )
+      : uniqBy(
+          (file) => file.name,
+          [...this.files, ...this.fileService.selectFile(event)]
         );
-      } else {
-        this.files?.insert(
-          0,
-          this.fileService.buildFileFormGroup(
-            file.name,
-            base64,
-            this.maxSizeByFile,
-            file
-          )
-        );
-      }
-      if (this.uploadFilesForm.valid) {
-        this.uploadedFile.emit(this.files.value as CFile[]);
-      }
-    });
+    if (this.files.length > 0) {
+      this.uploadedFiles.emit(this.files);
+      this.onChange(this.files);
+    }
   }
+
   downloadFile(index: number): void {
-    const fileGroup = this.files?.at(index) as FormGroup;
+    //TODO: use case composition
     this.fileService.downloadFileFromObjectUrl(
-      this.fileService.convertFileToObjectUrl(fileGroup.value.file),
-      fileGroup.value.name
+      this.fileService.convertFileToObjectUrl(this.files[index]),
+      this.files[index].name
     );
   }
 
   removeFile(index: number): void {
-    this.files?.removeAt(index);
+    this.files = this.files.filter((file, i) => i !== index);
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
   }
 }

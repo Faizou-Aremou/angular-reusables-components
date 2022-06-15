@@ -1,5 +1,5 @@
 <app-table [dataSource]="dataSource" [tableColumns]="tableColumns">
-    <ng-template actionsButton let-element>
+    <ng-template [tableColumn]="'actionsButton'" let-element>
         <button mat-flat-button color="primary" [matMenuTriggerFor]="matMenu" aria-label="actions menu">
       <span> modification </span>
       <mat-icon>arrow_drop_down</mat-icon>
