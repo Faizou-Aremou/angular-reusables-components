@@ -12,6 +12,8 @@ import { UploadFilesComponent } from "./components/upload-files/upload-files.com
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { LabelFileInputTriggerDirective } from './directives/label-file-input-trigger/label-file-input-trigger.directive';
 import { TableColumnDirective } from './directives/table-column/table-column.directive';
+import { ButtonComponent } from './components/button/button.component';
+import { InPipe } from './pipes/in/in.pipe';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { TableColumnDirective } from './directives/table-column/table-column.dir
     SafeUrlPipe,
     LabelFileInputTriggerDirective,
     TableColumnDirective,
+    ButtonComponent,
+    InPipe,
   ],
   imports: [CommonModule, AngularMaterialModule, ReactiveFormsModule],
   exports: [
@@ -37,7 +41,9 @@ import { TableColumnDirective } from './directives/table-column/table-column.dir
     TableColumnPipe,
     UploadFilesComponent,
     LabelFileInputTriggerDirective,
-    TableColumnDirective
+    TableColumnDirective,
+    ButtonComponent,
+    InPipe
   ],
 })
 export class SharedModule {}

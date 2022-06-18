@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, VERSION } from '@angular/core';
+import { ChangeDetectionStrategy, Component} from '@angular/core';
+import { Navbar } from './shared/models/navbar/navbar.model';
 
 @Component({
   selector: 'my-app',
@@ -7,7 +8,7 @@ import { ChangeDetectionStrategy, Component, VERSION } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  name = 'Angular ' + VERSION.major;
+  navbar: Navbar = new Navbar([{label:'test', href:'#', target:"test-target"}])
 }
 
 /**  Copyright 2022 Google LLC. All Rights Reserved.

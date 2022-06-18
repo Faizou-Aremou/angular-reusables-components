@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+:host {
+    .navbar {
+        display: flex;
+        justify-content: flex-start;
+        background-color: var(--primary-color);
+        &__button-container {
+            padding-left: 0px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            display: flex;
+            list-style: none;
+        }
+    }
+    @media(min-width:700px) {
+        .navbar {
+            height: 100%;
+            flex-direction: column;
+            &__button-container {
+                display: flex;
+                flex-direction: column;
+                list-style: none;
+            }
+        }
+    }
+}

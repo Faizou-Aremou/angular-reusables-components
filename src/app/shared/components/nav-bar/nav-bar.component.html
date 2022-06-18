@@ -1,1 +1,11 @@
-<p>nav-bar works!</p>
+<ng-container *ngIf="navbar">
+    <nav class="navbar">
+        <ul class="navbar__button-container">
+            <li class="navbar__button-container__list" *ngFor="let node of navbar.nodeLinks">
+                <a mat-button class="navbar__container__list__button" [href]="node.href">
+                    {{node.label}}
+                </a>
+            </li>
+        </ul>
+    </nav>
+</ng-container>
