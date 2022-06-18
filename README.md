@@ -30,7 +30,7 @@ In the parent component template
 <app-table [dataSource]="dataSource" [tableColumns]="tableColumns"> </app-table>
 ```
 
-- Usage by defining an additional action column
+- Usage by defining an additional one or more column
 
 ```html
 <app-table
@@ -38,7 +38,7 @@ In the parent component template
   [tableColumns]="tableColumns"
   [addActionsColumn]="addActionsColumn"
 >
-  <ng-template actionsButton let-element>
+  <ng-template [tableColumn]="'actionsButton'" let-element>
     <button
       id="actions-button"
       mat-flat-button
@@ -148,9 +148,12 @@ DataSource is an alternative to MatTableDataSource, as it supports server-side f
 
 # Upload files component
 
+- select files for upluod, can be used in formGroup because it implement ControlValueAccessor. 
+- perform delete or download file actions
+
 # Upload files service
 
-it is set of functions that help to work with files in web applications
+very usefull set of functions that help to work with files in web applications
 # Theming
 
 two themes are available:
@@ -158,8 +161,7 @@ two themes are available:
  2. The basic theme is accessible in dev with the command `npm start-basic`
 
 # Roadmap
-- Upload files componant, that support two form of upload: upload form buttom, upload from label. add optionnal upload progression bar.
-- update table by support of seach criteria
-- Right side overlay component
+- update table with supporting of seach criteria
+- create right side overlay component
 - Http service, that support in easy way common http requests and actions
 
