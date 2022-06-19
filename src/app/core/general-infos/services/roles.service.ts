@@ -10,7 +10,7 @@ import { Role } from '../../models/general-infos/role.model';
 export class RolesService {
   constructor() {}
 
-  public getRoles(request: PageRequest<Role>, query: Partial<Role> | null): Observable<Page<Role>> {
+  public getRoles(request: PageRequest<Role>, query: Partial<Role> | undefined): Observable<Page<Role>> {
     console.log('page role request',request);
     return of(
       {

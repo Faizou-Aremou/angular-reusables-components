@@ -1,4 +1,4 @@
-import { DataSource } from "@angular/cdk/collections";
+import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import {
   BehaviorSubject,
   combineLatest,
@@ -12,23 +12,23 @@ import {
   switchMap,
   withLatestFrom,
 } from "rxjs";
-import { PaginationEndpoint } from "../models/pagination-end-point.model";
+import { PaginationEndpoint } from "../../models/pagination-end-point.model";
 import { MatSort, Sort as MatSortInterface } from "@angular/material/sort";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { Page } from "../models/page.model";
-import { Sort } from "../models/generic-sort.model";
-import { Pagination } from "../models/pagination.model";
+import { Page } from "../../models/page.model";
+import { Sort } from "../../models/generic-sort.model";
+import { Pagination } from "../../models/pagination.model";
 
-export class CustomDataSource<T> extends DataSource<T> {
+export class PaginatedDataSource<T> extends DataSource<T> {
   private _pageIndex = new Subject<number>();
-  private _sort: BehaviorSubject<Sort<T> | MatSortInterface>;
+  private _sort: BehaviorSubject<Sort<T> | MatSortInterface| undefined>;
   private _page$: Observable<Page<T>>;
   private _matSort: MatSort | null = null;
   private _matPaginator: MatPaginator | null = null;
   private _matPaginatorSubscription = Subscription.EMPTY;
   private _matSortSubscription = Subscription.EMPTY;
   /** Stream that emits when filter query is set on the data source */
-  private readonly _filter: BehaviorSubject< Partial<T> | null>;
+  private readonly _filter: BehaviorSubject<Partial<T> | undefined>;
 
   /** Stream that contain displayed page data */
   private _renderData$: Observable<T[]>;
@@ -90,13 +90,13 @@ export class CustomDataSource<T> extends DataSource<T> {
 
   constructor(
     endPoint: PaginationEndpoint<T>,
-    initialSort: Sort<T>,
-    initialQuery: Partial<T> | null = null,
+    initialSort: Sort<T> | undefined = undefined,
+    initialQuery: Partial<T> | undefined = undefined,
     pageSize = 10
   ) {
     super();
-    this._sort = new BehaviorSubject<Sort<T> | MatSortInterface>(initialSort);
-    this._filter = new BehaviorSubject<Partial<T>| null>(initialQuery);
+    this._sort = new BehaviorSubject<Sort<T> | MatSortInterface | undefined>(initialSort);
+    this._filter = new BehaviorSubject<Partial<T> | undefined>(initialQuery);
     this._page$ = combineLatest([this._sort, this._filter]).pipe(
       switchMap(([sort, query]) =>
         this._pageIndex.pipe(
@@ -167,8 +167,14 @@ export class CustomDataSource<T> extends DataSource<T> {
     const { data, ...pagination } = page;
     return pagination;
   }
-  connect(): Observable<T[]> {
-    return this._renderData$;
+  connect(collectionViewer?: CollectionViewer): Observable<T[]> {
+    if (collectionViewer) {
+      return collectionViewer.viewChange.pipe(
+        switchMap(() => this._renderData$)
+      );
+    } else {
+      return this._renderData$;
+    }
   }
 
   disconnect(): void {

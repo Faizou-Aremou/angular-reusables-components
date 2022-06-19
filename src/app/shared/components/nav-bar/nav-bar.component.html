@@ -1,11 +1,24 @@
-<ng-container *ngIf="navbar">
-    <nav class="navbar">
-        <ul class="navbar__button-container">
-            <li class="navbar__button-container__list" *ngFor="let node of navbar.nodeLinks">
-                <a mat-button class="navbar__container__list__button" [href]="node.href">
-                    {{node.label}}
+<nav class="navbar" *ngIf="dataSource && treeControl">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="navbar__tree-links">
+        <mat-tree-node *matTreeNodeDef="let node" class="navbar__tree-links__leaf-node" matTreeNodeToggle>
+            <a mat-button class="navbar__tree-links__leaf-node__element__link" [href]="node.element.href">
+                <span> {{node.element.label}} </span>
+            </a>
+        </mat-tree-node>
+
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" class="navbar__tree-links__recursion-node">
+            <div class="navbar__tree-links__recursion-node__element">
+                <a mat-button matTreeNodeToggle class="navbar__tree-links__recursion-node__element__link" [attr.aria-label]="'Toggle ' + node.name">
+                    <span class="navbar__tree-links__recursion-node__element__link__label"> {{node.element.label}} </span>
+                    <mat-icon class="navbar__tree-links__recursion-node__element__link__icon">
+                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
                 </a>
-            </li>
-        </ul>
-    </nav>
-</ng-container>
+            </div>
+
+            <div class="navbar__tree-links__recursion-node__children" [class.navbar__tree-links__recursion-node__children-invisible]="!treeControl.isExpanded(node)" role="group">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+        </mat-nested-tree-node>
+    </mat-tree>
+</nav>

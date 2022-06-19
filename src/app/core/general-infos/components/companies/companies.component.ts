@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Sort } from "src/app/shared/models/generic-sort.model";
 import { TableColumn } from "src/app/shared/models/table/table-column.model";
 import { TableRow } from "src/app/shared/models/table/table-row.model";
-import { CustomDataSource } from "src/app/shared/types/custom-data-source";
+import { PaginatedDataSource } from "src/app/shared/types/data-source/paginated-data-source";
 import { Company } from "../../../models/general-infos/company.model";
 import { CompaniesService } from "../../services/companies.service";
 
@@ -28,7 +28,7 @@ export class CompaniesComponent implements OnInit {
   public tableRows: TableRow[]=[];
   public initialSort: Sort<Company> = { active: "code", direction: "desc" };
 
-  public dataSource = new CustomDataSource<Company>(
+  public dataSource = new PaginatedDataSource<Company>(
     (request, query) => this.companiesService.getCompanies(request, query),
     this.initialSort
   );

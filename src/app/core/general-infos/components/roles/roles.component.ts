@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { Sort } from "src/app/shared/models/generic-sort.model";
 import { TableColumn } from "src/app/shared/models/table/table-column.model";
-import { CustomDataSource } from "src/app/shared/types/custom-data-source";
+import { PaginatedDataSource } from "src/app/shared/types/data-source/paginated-data-source";
 import { Role } from "../../../models/general-infos/role.model";
 import { RolesService } from "../../services/roles.service";
 
@@ -30,7 +30,7 @@ export class RolesComponent implements OnInit {
   ];
   public initialSort: Sort<Role> = { active: "code", direction: "desc" };
 
-  public dataSource = new CustomDataSource<Role>(
+  public dataSource = new PaginatedDataSource<Role>(
     (request, query) => this.roleListService.getRoles(request, query),
     this.initialSort,
   );

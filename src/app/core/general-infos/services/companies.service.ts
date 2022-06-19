@@ -131,7 +131,7 @@ export class CompaniesService {
 
   public getCompanies(
     request: PageRequest<Company>,
-    query: Partial<Company> | null
+    query: Partial<Company> | undefined
   ): Observable<Page<Company>> {
     console.log("page company request query", request, query);
     const queryCode = query?.code;

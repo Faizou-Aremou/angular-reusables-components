@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Navbar } from '../../models/navbar/navbar.model';
+import { Link } from '../../models/link/link.model';
+import { DataNode } from '../../models/node.model';
+import { ExtendedNestedTreeControl } from '../../types/control/extended-nested-tree-control';
+import { PaginatedDataSource } from '../../types/data-source/paginated-data-source';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,10 +11,11 @@ import { Navbar } from '../../models/navbar/navbar.model';
 })
 export class NavBarComponent implements OnInit {
 
-  @Input() navbar: Navbar | undefined;
+  @Input() dataSource?: PaginatedDataSource<DataNode<Link>>;
+  @Input() treeControl?: ExtendedNestedTreeControl<DataNode<Link>>;
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  hasChild = (_: number, node: DataNode<Link>) => !!node.children && node.children.length > 0;
 }

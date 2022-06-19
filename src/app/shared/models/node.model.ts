@@ -1,5 +1,5 @@
-export interface Node<T> {
-    root: T;
-    children?: T[];
+export interface DataNode<T> {
+    element: T;
+    children?:DataNode<T>[];
   }
   

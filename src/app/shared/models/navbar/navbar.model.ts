@@ -1,12 +1,13 @@
 import { Link } from "../link/link.model";
+import {DataNode} from "../node.model"
 
 export class Navbar {
-  private _nodeLinks: Link[];
-  public get nodeLinks(): Link[] {
+  private _nodeLinks: DataNode<Link>[];
+  public get nodeLinks(): DataNode<Link>[] {
     return this._nodeLinks;
   }
-  public set nodeLinks(value: Link[]) {
-    this._nodeLinks = value;
+  public set nodeLinks(value: DataNode<Link>[]) {
+    this._nodeLinks = [...value];
   }
   private _infos?: string | undefined;
   public get infos(): string | undefined {
@@ -29,7 +30,7 @@ export class Navbar {
   public set color(value: string | undefined) {
     this._color = value;
   }
-  constructor(nodeLinks: Link[], infos?: string, icon?: string, color?: string) {
+  constructor(nodeLinks: DataNode<Link>[], infos?: string, icon?: string, color?: string) {
     this._infos = infos;
     this._icon = icon;
     this._color = color;

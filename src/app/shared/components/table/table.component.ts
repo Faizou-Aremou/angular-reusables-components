@@ -3,21 +3,18 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   ContentChildren,
   Input,
   OnInit,
   QueryList,
-  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ACTIONS_BUTTON_COLUMN } from '../../consts/table/actions-button-column.const';
 import { TableColumnDirective } from '../../directives/table-column/table-column.directive';
 import { OverrideTableColumnDirective } from '../../directives/override-table-column/override-table-column.directive';
 import { TableColumn } from '../../models/table/table-column.model';
-import { CustomDataSource } from '../../types/custom-data-source';
+import { PaginatedDataSource } from '../../types/data-source/paginated-data-source';
 
 
 @Component({
@@ -27,19 +24,18 @@ import { CustomDataSource } from '../../types/custom-data-source';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent<T> implements OnInit, AfterViewInit, AfterContentInit  {
-  public ACTIONS_BUTTONS_COLUMN = ACTIONS_BUTTON_COLUMN;
   /**
    * we will not be using the built-in MatTableDataSource because its designed for filtering, sorting and pagination of a client-side data array.
    * In most real app these are happened on server side.
    */
-  @Input() public dataSource: CustomDataSource<T> | null=null;
-  @Input() public tableColumns: Array<TableColumn> = []; //TODO: dataSource and table column in the same object
+  @Input() dataSource?: PaginatedDataSource<T>;
+  @Input() tableColumns: Array<TableColumn> = []; //TODO: dataSource and table column in the same object
   @ContentChildren(TableColumnDirective) additionalTableColumnDirs?:QueryList<TableColumnDirective>;
   @ContentChildren(OverrideTableColumnDirective) OverrideTableColumnsDirs?: QueryList<OverrideTableColumnDirective>;
   @ViewChild(MatPaginator, { static: false }) matPaginator: MatPaginator| null=null;
   @ViewChild(MatSort, { static: false  }) matSort: MatSort| null = null;
-  public columns: Array<string>=[];
-  public displayedColumns: Array<string> = [];
+  columns: Array<string>=[];
+  displayedColumns: Array<string> = [];
   constructor() {}
   ngAfterContentInit(): void {
     this.displayedColumns = this.tableColumns.map((column)=> column.columnDef);
