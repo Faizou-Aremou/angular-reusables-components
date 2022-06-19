@@ -14,7 +14,7 @@ export class NavigationService {
   getLinkTree(
     request: PageRequest<DataNode<Link>>,
     query: Partial<DataNode<Link>> | undefined
-  ): Observable<Page<DataNode<Link>>> {
+  ): Observable<Page<DataNode<Link>>> { // TODO: construct the tree from router
     return of({
       data: [
         {
