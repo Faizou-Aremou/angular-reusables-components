@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { ControlValueAccessor, NgControl } from "@angular/forms";
 import { uniqBy } from "ramda";
-import { ALLOWED_EXTENSIONS } from "../../consts/files/allowed-extensions";
+import { ALLOWED_EXTENSIONS } from "../../cons/files/allowed-extensions";
 import { LabelFileInputTriggerDirective } from "../../directives/label-file-input-trigger/label-file-input-trigger.directive";
 import { FileService } from "../../services/file/file.service";
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component} from '@angular/core';
-import { NavigationService } from './services/navigation-service';
+import { NavigationService } from './services/navigation.service';
 import { Sort } from './shared/models/generic-sort.model';
 import { Link } from './shared/models/link/link.model';
 import { Navbar } from './shared/models/navbar/navbar.model';

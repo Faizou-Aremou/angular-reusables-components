@@ -6,7 +6,7 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { FILE_MAX_SIZE } from "../../consts/files/file-max-size.const";
+import { FILE_MAX_SIZE } from "../../cons/files/file-max-size.const";
 import { FileSize } from "../../models/file/file-size.model";
 import { FileUnit } from "../../models/file/file-unit";
 
