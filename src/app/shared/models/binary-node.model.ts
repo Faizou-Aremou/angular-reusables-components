@@ -1,5 +1,5 @@
-export interface BinaryNode<T> {
+export interface BinaryDataNode<T> {
     element: T;
-    childrenLeft?:BinaryNode<T>;
-    childrenRight?:BinaryNode<T>;
+    childLeft?:BinaryDataNode<T>;
+    childRight?:BinaryDataNode<T>;
 }
