@@ -1,5 +1,6 @@
 <nav class="navbar" *ngIf="dataSource && treeControl">
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="navbar__tree-links">
+
         <mat-tree-node *matTreeNodeDef="let node" class="navbar__tree-links__leaf-node" matTreeNodeToggle>
             <a mat-button class="navbar__tree-links__leaf-node__element__link" [href]="node.element.href">
                 <span> {{node.element.label}} </span>

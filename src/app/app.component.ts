@@ -18,7 +18,7 @@ export class AppComponent {
     (request, query) => this.navigationService.getLinkTree(request, query),
   );
 
-  treeControl = new ExtendedNestedTreeControl<DataNode<Link>>(node => node.children);
+  treeControl = new ExtendedNestedTreeControl<DataNode<Link>>( this.dataSource.data  ,node => node.children);
   constructor(
     private navigationService: NavigationService
   ){
