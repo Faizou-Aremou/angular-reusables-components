@@ -154,6 +154,7 @@ DataSource is an alternative to MatTableDataSource, as it supports server-side f
 # Upload files service
 
 very usefull set of functions that help to work with files in web applications
+
 # Theming
 
 two themes are available:
@@ -161,7 +162,11 @@ two themes are available:
  2. The basic theme is accessible in dev with the command `npm start-basic`
 
 # Roadmap
+- create complete base web component (angular, natif, etc. )
+  - programmatically click support
+  - unsubscription 
+  - etc...
 - update table with supporting of seach criteria
 - create right side overlay component
-- Http service, that support in easy way common http requests and actions
+- http service, that support in easy way common http requests and actions
 
