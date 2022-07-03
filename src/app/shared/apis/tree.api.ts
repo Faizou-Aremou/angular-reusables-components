@@ -11,24 +11,24 @@ export function binaryTreeLevelFor<T>(node: BinaryDataNode<T>, treeNode: BinaryD
   if (treeNode === undefined || treeNode === null) {
     return null;
   } else if (isBinaryTreeSingle<T>(treeNode)) {
-    equals(treeNode.element, node.element) ? 1 : null;
+    return equals(treeNode.element, node.element) ? 1 : null;
   } else if (isUnaryLeftTree(treeNode)) {
     if (equals(treeNode.element, node.element)) {
-      return 1
+      return 1;
     } else {
       const result = binaryTreeLevelFor<T>(node, node.childLeft);
-      return result === null ? result : 1 + result
+      return result === null ? result : 1 + result;
     }
   } else if (isUnaryRightTree(treeNode)) {
     if (equals(treeNode.element, node.element)) {
-      return 1
+      return 1;
     } else {
       const result = binaryTreeLevelFor<T>(node, node.childRight);
-      return result === null ? result : 1 + result
+      return result === null ? result : 1 + result;
     }
   } else {
     if (equals(treeNode.element, node.element)) {
-      return 1
+      return 1;
     } else {
       const result = binaryTreeLevelFor<T>(node, node.childLeft);
       if (result === null) {
@@ -39,6 +39,7 @@ export function binaryTreeLevelFor<T>(node: BinaryDataNode<T>, treeNode: BinaryD
       }
     }
   }
+
 }
 
 export function depthFor<T>(node: DataNode<T>): number {
