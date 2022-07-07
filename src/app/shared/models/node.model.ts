@@ -1,5 +1,5 @@
-export interface DataNode<T> {
+export interface NaryNode<T> {
     element: T;
-    children?:DataNode<T>[];
+    children?:NaryNode<T>[];
   }
   
