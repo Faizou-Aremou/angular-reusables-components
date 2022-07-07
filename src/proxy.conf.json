@@ -1,0 +1,6 @@
+{
+    "/v1": {
+        "target": "https://www.googleapis.com/books",
+        "secure": false
+    }
+}

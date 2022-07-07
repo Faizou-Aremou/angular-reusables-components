@@ -94,7 +94,11 @@
                             "browserTarget": "reusables-components:build:purple-green"
                         }
                     },
-                    "defaultConfiguration": "purple-green"
+                    "defaultConfiguration": "purple-green",
+                    "options": {
+                        "browserTarget": "reusables-components:build",
+                        "proxyConfig": "src/proxy.conf.json"
+                    }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
