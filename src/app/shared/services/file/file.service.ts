@@ -7,26 +7,27 @@ import {
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { FILE_MAX_SIZE } from "../../cons/files/file-max-size.const";
+import { FileInterface } from "../../interfaces/file.interface";
 import { FileSize } from "../../models/file/file-size.model";
 import { FileUnit } from "../../models/file/file-unit";
 
 @Injectable({
   providedIn: "root",
 })
-export class FileService {
+export class FileService implements FileInterface {
 
   constructor(private http: HttpClient) {}
 
-  selectFile(event: Event, maxSizeByFile:number=FILE_MAX_SIZE): File[] {//maxSizeByFile in MB
+  selectFiles(event: Event, maxSizeByFile:number=FILE_MAX_SIZE): File[] {//maxSizeByFile in MB
     const fileList = (event.target as HTMLInputElement).files as FileList;
     let fileSequence: File[] = [];
     for (let index = 0; index < fileList.length; index++) {
-      if(fileList[index].size <= maxSizeByFile*1024*1024){
-        fileSequence = [...fileSequence, fileList[index]];
-      }
+      fileSequence = this.filterInvalidFileSize(fileList, index, maxSizeByFile, fileSequence);
     }
     return fileSequence;
   }
+
+
 
   filesSizeInByte(files: File[]): number {
     return files.reduce((sizeInByte, file) => {
@@ -144,5 +145,11 @@ export class FileService {
     }
   }
 
+  private filterInvalidFileSize(fileList: FileList, index: number, maxSizeByFile: number, fileSequence: File[]) {
+    if (fileList[index].size <= maxSizeByFile * 1024 * 1024) {
+      fileSequence = [...fileSequence, fileList[index]];
+    }
+    return fileSequence;
+  }
 
 }

@@ -13,6 +13,7 @@ import { ControlValueAccessor, NgControl } from "@angular/forms";
 import { uniqBy } from "ramda";
 import { ALLOWED_EXTENSIONS } from "../../cons/files/allowed-extensions";
 import { LabelFileInputTriggerDirective } from "../../directives/label-file-input-trigger/label-file-input-trigger.directive";
+import { FileInterface } from "../../interfaces/file.interface";
 import { FileService } from "../../services/file/file.service";
 
 @Component({
@@ -36,7 +37,7 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
 
   constructor(
     @Self() @Optional() public controlDir: NgControl,
-    private fileService: FileService
+    private fileService: FileInterface
   ) {
     if (controlDir) {
       controlDir.valueAccessor = this;
@@ -66,12 +67,12 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
           (file) => file.name,
           [
             ...this.files,
-            ...this.fileService.selectFile(event, this.maxSizeByFile),
+            ...this.fileService.selectFiles(event, this.maxSizeByFile),
           ]
         )
       : uniqBy(
           (file) => file.name,
-          [...this.files, ...this.fileService.selectFile(event)]
+          [...this.files, ...this.fileService.selectFiles(event)]
         );
     if (this.files.length > 0) {
       this.uploadedFiles.emit(this.files);

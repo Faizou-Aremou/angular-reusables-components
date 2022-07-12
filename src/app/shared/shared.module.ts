@@ -14,6 +14,8 @@ import { LabelFileInputTriggerDirective } from './directives/label-file-input-tr
 import { TableColumnDirective } from './directives/table-column/table-column.directive';
 import { ButtonComponent } from './components/button/button.component';
 import { InPipe } from './pipes/in/in.pipe';
+import { FileService } from "./services/file/file.service";
+import { FileInterface } from "./interfaces/file.interface";
 
 @NgModule({
   declarations: [
@@ -45,5 +47,6 @@ import { InPipe } from './pipes/in/in.pipe';
     ButtonComponent,
     InPipe
   ],
+  providers:[{provide:FileInterface, useClass:FileService}]
 })
 export class SharedModule {}
