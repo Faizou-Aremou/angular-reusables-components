@@ -1,11 +1,7 @@
-import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { FileSize } from "../models/file/file-size.model";
 import { FileUnit } from "../models/file/file-unit";
 
-@Injectable({
-  providedIn: "root",
-})
 export abstract class FileInterface {
   abstract selectFiles(event: Event, maxSizeByFile?: number): File[];
 
