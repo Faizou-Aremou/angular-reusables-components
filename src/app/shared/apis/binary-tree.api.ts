@@ -1,9 +1,8 @@
 import { BinaryNode } from "../models/binary-node.model";
-import { equals, min } from "ramda";
+import { compose, equals, min } from "ramda";
+import { removeOne } from "./general.api";
 
-export function numberOfNodes<T>(
-  node: BinaryNode<T> | undefined
-): number {
+export function numberOfNodes<T>(node: BinaryNode<T> | undefined): number {
   if (isEmpty(node)) {
     return 0;
   } else if (isSingleton<T>(node)) {
@@ -13,14 +12,10 @@ export function numberOfNodes<T>(
   } else if (isUnaryRight(node)) {
     return 1 + numberOfNodes(node.childRight);
   }
-  return (
-    numberOfNodes(node.childLeft) + 1 + numberOfNodes(node.childRight)
-  );
+  return numberOfNodes(node.childLeft) + 1 + numberOfNodes(node.childRight);
 }
 
-export function numberOfLeaves<T>(
-  node: BinaryNode<T> | undefined
-): number {
+export function numberOfLeaves<T>(node: BinaryNode<T> | undefined): number {
   if (isEmpty(node)) {
     return 0;
   } else if (isSingleton<T>(node)) {
@@ -30,11 +25,43 @@ export function numberOfLeaves<T>(
   } else if (isUnaryRight(node)) {
     return numberOfLeaves(node.childRight);
   }
-  return (
-    numberOfLeaves(node.childLeft) + numberOfLeaves(node.childRight)
-  );
+  return numberOfLeaves(node.childLeft) + numberOfLeaves(node.childRight);
 }
+/**
+ * :: element -> BinaryNode -> number
+ * @param node Binary tree
+ * @param element a element in the tree
+ * @returns -1, if element is not in the tree
+ */
+export const numberOfDescendantsOf = compose(removeOne,numberOfNodes,subTreeOf);
+/**
+ * :: element -> BinaryNode -> BinaryNode
+ * @param element
+ * @param node
+ * @returns undefined if element is not in the tree
+ */
+export function subTreeOf<T>(
+  element: T,
+  node: BinaryNode<T>
+): BinaryNode<T> | undefined {
+  if (isEmpty(node)) {
+    return undefined;
+  } else if (isSingleton<T>(node)) {
+    return undefined;
+  } else if (isUnaryLeft(node)) {
+    return subTreeOf<T>(element, node.childLeft as BinaryNode<T>);
+  } else if (isUnaryRight(node)) {
+    return subTreeOf<T>(element, node.childRight as BinaryNode<T>);
+  }
 
+  if (equals(node.root, element)) {
+    return {...node};
+  }
+  const subTree = subTreeOf(element, node.childLeft as BinaryNode<T>);
+  return isEmpty(subTree)
+    ? subTreeOf(element, node.childRight as BinaryNode<T>)
+    : subTree;
+}
 export function minimumLevelOfLeaves<T>(node: BinaryNode<T>): number {
   if (isSingleton<T>(node)) {
     return 1;
@@ -43,9 +70,12 @@ export function minimumLevelOfLeaves<T>(node: BinaryNode<T>): number {
   } else if (isUnaryRight(node)) {
     return 1 + minimumLevelOfLeaves(node.childRight as BinaryNode<T>);
   }
-  return 1 + min(
-    minimumLevelOfLeaves(node.childLeft as BinaryNode<T>),
-    minimumLevelOfLeaves(node.childRight as BinaryNode<T>)
+  return (
+    1 +
+    min(
+      minimumLevelOfLeaves(node.childLeft as BinaryNode<T>),
+      minimumLevelOfLeaves(node.childRight as BinaryNode<T>)
+    )
   );
 }
 
@@ -56,23 +86,23 @@ export function level<T>(
   if (isEmpty(treeNode)) {
     return null;
   } else if (isSingleton<T>(treeNode)) {
-    return equals(treeNode.element, node.element) ? 1 : null;
+    return equals(treeNode.root, node.root) ? 1 : null;
   } else if (isUnaryLeft(treeNode)) {
-    if (equals(treeNode.element, node.element)) {
+    if (equals(treeNode.root, node.root)) {
       return 1;
     } else {
       const result = level<T>(node, node.childLeft);
       return result === null ? result : 1 + result;
     }
   } else if (isUnaryRight(treeNode)) {
-    if (equals(treeNode.element, node.element)) {
+    if (equals(treeNode.root, node.root)) {
       return 1;
     } else {
       const result = level<T>(node, node.childRight);
       return result === null ? result : 1 + result;
     }
   } else {
-    if (equals(treeNode.element, node.element)) {
+    if (equals(treeNode.root, node.root)) {
       return 1;
     } else {
       const result = level<T>(node, node.childLeft);
@@ -85,8 +115,6 @@ export function level<T>(
     }
   }
 }
-
-
 
 export function isEmpty<T>(
   node: BinaryNode<T> | null | undefined
@@ -115,8 +143,6 @@ export function existRight<T>(node: BinaryNode<T>): boolean {
   return node.childRight !== undefined;
 }
 
-
-
 export function leftChild<T>(
   node: BinaryNode<T> | null | undefined
 ): BinaryNode<T> | undefined {
@@ -125,7 +151,7 @@ export function leftChild<T>(
   } else if (!node.childLeft) {
     return undefined;
   }
-  return node.childLeft;
+  return {...node.childLeft};
 }
 
 export function rightChild<T>(
@@ -136,15 +162,13 @@ export function rightChild<T>(
   } else if (!node.childRight) {
     return undefined;
   }
-  return node.childRight;
+  return {...node.childRight};
 }
 
-export function root<T>(
-  node: BinaryNode<T> | null | undefined
-): T | undefined {
+export function root<T>(node: BinaryNode<T> | null | undefined): T | undefined {
   if (isEmpty(node)) {
     return undefined;
   }
 
-  return node.element;
+  return node.root; // TODO: type generic immutable
 }

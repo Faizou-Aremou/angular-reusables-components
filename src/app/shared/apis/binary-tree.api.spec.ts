@@ -1,24 +1,24 @@
 import { BinaryNode } from "../models/binary-node.model";
-import { minimumLevelOfLeaves, numberOfLeaves, numberOfNodes } from "./binary-tree.api";
+import { minimumLevelOfLeaves, numberOfDescendantsOf, numberOfLeaves, numberOfNodes } from "./binary-tree.api";
 
 const numberTree: BinaryNode<number> = {
-  element: 1,
+  root: 1,
   childLeft: {
-    element: 2,
+    root: 2,
     childLeft: {
-      element: 1,
+      root: 3,
     },
     childRight: {
-      element: 1,
+      root: 4,
     },
   },
   childRight: {
-    element: 3,
+    root: 5,
     childLeft: {
-      element: 1,
+      root: 6,
     },
     childRight: {
-      element: 1,
+      root: 7,
     },
   },
 };
@@ -37,4 +37,7 @@ test("number of leaves",()=> {
 
 test("minimum Level Of Leaves",()=> {
   expect(minimumLevelOfLeaves(numberTree)).toBe(3);
+})
+test("number of descendants of element in tree",()=> {
+  expect(numberOfDescendantsOf(5, numberTree)).toBe(2);
 })

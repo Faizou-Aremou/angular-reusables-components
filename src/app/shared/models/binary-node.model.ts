@@ -1,5 +1,5 @@
 export interface BinaryNode<T> {
-    element: T;
+    root: T;
     childLeft?:BinaryNode<T>;
     childRight?:BinaryNode<T>;
 }
