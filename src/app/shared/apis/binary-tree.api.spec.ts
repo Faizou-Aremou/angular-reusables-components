@@ -1,70 +1,109 @@
 import { BinaryNode } from "../models/binary-node.model";
-import { binaryNodeFrom, minimumLevelOfLeaves, numberOfDescendantsOf, numberOfLeaves, numberOfNodes } from "./binary-tree.api";
+import { binaryNodeFrom, infixedLinearization, levelLinearization, minimumLevelOfLeaves, numberOfDescendantsOf, numberOfLeaves, numberOfNodes, postfixedLinearization } from "./binary-tree.api";
 
 const numberTree: BinaryNode<number> = {
   root: 1,
-  childLeft: {
+  leftChild: {
     root: 2,
-    childLeft: {
+    leftChild: {
       root: 3,
     },
-    childRight: {
+    rightChild: {
       root: 4,
     },
   },
-  childRight: {
+  rightChild: {
     root: 5,
-    childLeft: {
+    leftChild: {
       root: 6,
     },
-    childRight: {
+    rightChild: {
       root: 7,
     },
   },
 };
 const alphabetTree: BinaryNode<string> = {
   root: "A",
-  childLeft: {
+  leftChild: {
     root: "B",
-    childLeft: {
+    leftChild: {
       root: "C",
     }
   },
-  childRight: {
+  rightChild: {
     root: "D",
-    childLeft: {
+    leftChild: {
       root: "E",
     },
-    childRight: {
+    rightChild: {
       root: "F",
-      childLeft: {
+      leftChild: {
         root: "G"
       }
     },
   },
 };
 
+const lowcaseAlphabetTree: BinaryNode<string> = {
+  root: "a",
+  leftChild: {
+    root: "b",
+    leftChild: {
+      root: "d",
+      rightChild: {
+        root: "h",
+      },
+    },
+    rightChild: {
+      root: "e",
+      rightChild: {
+        root: "i",
+      },
+    }
+  },
+  rightChild: {
+    root: "c",
+    leftChild: {
+      root: "f",
+      leftChild: {
+        root: "j"
+      },
+      rightChild: {
+        root: "k"
+      }
+    },
+    rightChild: {
+      root: "g"
+    },
+  },
+};
 const prefixedLinerizedAlphabetTree = ["A","B", "C", "D", "E", "F", "G"];
 const infixedLinerizedAlphabetTree = ["C", "B", "A", "E", "D", "G", "F"];
+const postfixedLinerizedlowercaseAlphabetTree = ["h","d","i","e","b", "j", "k", "f","g","c", "a"];
 
-test("number Of Node", () => {
+test("binaryNodeFrom", () => {
+  expect(binaryNodeFrom(prefixedLinerizedAlphabetTree, infixedLinerizedAlphabetTree )).toEqual(alphabetTree);
+})
+test("infixedLinearization", () => {
+  expect(infixedLinearization(alphabetTree)).toEqual(infixedLinerizedAlphabetTree);
+})
+
+test("numberOfNodes", () => {
   expect(numberOfNodes(numberTree)).toBe(7);
-});
-
-test("number Of Node, empty tree", () => {
   expect(numberOfNodes(undefined)).toBe(0);
 });
-
-test("number of leaves", () => {
-  expect(numberOfLeaves(numberTree)).toBe(4);
-})
-
-test("minimum Level Of Leaves", () => {
-  expect(minimumLevelOfLeaves(numberTree)).toBe(3);
-})
-test("number of descendants of element in tree", () => {
+test("numberOfDescendantsOf", () => {
   expect(numberOfDescendantsOf(5, numberTree)).toBe(2);
 })
-test("binary tree from prefixed and infixed linerized tree", () => {
-  expect(binaryNodeFrom(prefixedLinerizedAlphabetTree, infixedLinerizedAlphabetTree )).toEqual(alphabetTree);
+test("numberOfLeaves", () => {
+  expect(numberOfLeaves(numberTree)).toBe(4);
+})
+test("minimumLevelOfLeaves", () => {
+  expect(minimumLevelOfLeaves(numberTree)).toBe(3);
+})
+test("postfixedLinearization", () => {
+  expect(postfixedLinearization(lowcaseAlphabetTree)).toEqual(postfixedLinerizedlowercaseAlphabetTree);
+})
+test("levelLinearization", () => {
+  expect(levelLinearization(lowcaseAlphabetTree)).toEqual(["a","b","c","d","e","f", "g", "h", "i", "j", "k"]);
 })

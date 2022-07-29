@@ -1,5 +1,7 @@
 
 import { append, curry, equals, head, isEmpty, prepend, tail } from 'ramda';
+import { BinaryNode } from '../models/binary-node.model';
+import { isSingleton, isUnaryLeft, isUnaryRight, leftChildOf, rightChildOf, rootOf } from './binary-tree.api';
 
 
 /**
@@ -93,7 +95,7 @@ export function embelishSlipInTwo<T>(sequence: Array<T>): {
 export function InterClassement<T>(
   isInf: (element1: T, element2: T) => boolean,
   sequence1: Array<T>,
-   sequence2: Array<T>): Array<T> {
+  sequence2: Array<T>): Array<T> {
   if (sequence1.length === 0 && sequence2.length === 0) {
     return [];
   }
@@ -104,7 +106,7 @@ export function InterClassement<T>(
     return [...sequence2];
   }
   if (sequence1.length === 1 && sequence2.length === 1) {
-    return isInf(sequence1[0],sequence2[0] ) ? [...sequence1, ...sequence2] : [...sequence2, ...sequence1];
+    return isInf(sequence1[0], sequence2[0]) ? [...sequence1, ...sequence2] : [...sequence2, ...sequence1];
   }
 
   return (head(sequence1) as T) <= (head(sequence2) as T)
@@ -141,7 +143,7 @@ export function hasSameElements<T>(sequence1: Array<T>, sequence2: Array<T>): bo
   return bool && hasSameElements(tail(sequence1), seq);
 }
 
-export function interClassementSort<T>( isInf: (element1: T, element2: T) => boolean, sequence: Array<T>): Array<T> {
+export function interClassementSort<T>(isInf: (element1: T, element2: T) => boolean, sequence: Array<T>): Array<T> {
   switch (sequence.length) {
     case 0:
       return [];
@@ -160,7 +162,7 @@ export function interClassementSort<T>( isInf: (element1: T, element2: T) => boo
 /**
  *insertion:: [T], T, fn -> [T]
  */
- export function insertion<T>(
+export function insertion<T>(
   isSup: (element1: T, element2: T) => boolean,
   list: T[],
   element: T
@@ -218,7 +220,53 @@ export function quickSort<T>(
       ];
   }
 }
+/**
+ * 
+ * @param nodeArray 
+ * @returns 
+ */
+export function levelLinearizationByQueue<T>(nodeArray: Array<BinaryNode<T>>): Array<T> {
+  if (nodeArray.length === 0) {
+    return []
+  } else if (isSingleton(head(nodeArray) as BinaryNode<T>)) {
+    return prepend(rootOf(head(nodeArray) as BinaryNode<T>) as T, levelLinearizationByQueue(tail(nodeArray)))
+  } else if (isUnaryLeft(head(nodeArray) as BinaryNode<T>)) {
+    return prepend(
+      rootOf(
+        head(nodeArray) as BinaryNode<T>
+      ) as T,
+      levelLinearizationByQueue(
+        append(
+          leftChildOf(head(nodeArray) as BinaryNode<T>) as BinaryNode<T>, tail(nodeArray)
+        )
+      )
+    )
+  } else if (isUnaryRight(head(nodeArray) as BinaryNode<T>)) {
+    return prepend(
+      rootOf(
+        head(nodeArray) as BinaryNode<T>
+      ) as T,
+      levelLinearizationByQueue(
+        append(
+          rightChildOf(head(nodeArray) as BinaryNode<T>) as BinaryNode<T>, tail(nodeArray)
+        )
+      )
+    )
+  }
+  return prepend(
+    rootOf(
+      head(nodeArray) as BinaryNode<T>
+    ) as T,
+    levelLinearizationByQueue(
+      append(
+        rightChildOf(head(nodeArray) as BinaryNode<T>) as BinaryNode<T>,
+        append(
+          leftChildOf(head(nodeArray) as BinaryNode<T>) as BinaryNode<T>, tail(nodeArray)
+        ))
+    )
+  )
 
+}
 /**
  * [a] -> [a]
  * @param sequence 
