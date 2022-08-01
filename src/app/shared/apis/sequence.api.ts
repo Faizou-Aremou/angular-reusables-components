@@ -341,3 +341,12 @@ export function slipInTwoPart<T>(sequence: Array<T>): [Array<T>, Array<T>] {
   const { sequencePart1, sequencePart2, halfOfSequenceSize, sequenceSize } = embelishSlipInTwo(sequence);
   return [sequencePart1, sequencePart2];
 }
+
+
+//-------------------------------------------------------------------------------------------String Sequences functions----------------------------------------------------------------------------------------
+export function trimSequence(sequence: Array<string>): Array<string> {
+  if (sequence.length === 0) {
+    return []
+  }
+  return prepend((head(sequence) as string).trim(), trimSequence(tail(sequence)))
+}

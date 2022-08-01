@@ -1,5 +1,5 @@
 import { isInfNumber, isSupNumber } from "./general.api";
-import { embelishSlipInTwo, embelishIncludes, embelishMaxOfSequence, hasSameElements, hasSameSise, sliceUntil, InterClassement, interClassementSort, insertionSort, insertion } from "./sequence.api"
+import { embelishSlipInTwo, embelishIncludes, embelishMaxOfSequence, hasSameElements, hasSameSise, sliceUntil, InterClassement, interClassementSort, insertionSort, insertion, trimSequence } from "./sequence.api"
 
 const numberList = [12, 13, 20, 8, 3, 4, 0, 5, 3];
 const words = ['spray', 'limit', 'elite', 'ola'];
@@ -89,11 +89,10 @@ test("interClassementSort", () => {
 
 
 test("insertion", () => {
-    console.log(insertion(isSupNumber, [12, 13, 20, 8, 3, 4, 0, 5], 3))
-    expect(insertion(isSupNumber, [12, 13, 20, 8, 3, 4, 0, 5], 3)).toEqual( [
+    expect(insertion(isSupNumber, [12, 13, 20, 8, 3, 4, 0, 5], 3)).toEqual([
         3, 12, 13, 20, 8,
-        3,  4,  0,  5
-      ]);
+        3, 4, 0, 5
+    ]);
 })
 
 
@@ -107,4 +106,7 @@ test("sliceUntil: slice list until 0", () => {
     expect(sliceUntil(1, words)).toEqual(['spray']);
     expect(sliceUntil(2, words)).toEqual(['spray', 'limit']);
     expect(sliceUntil(3, words)).toEqual(['spray', 'limit', 'elite']);
+})
+test("trimSequence", () => {
+    expect(trimSequence(["nganou", " curtis blades ", " tai tuvasa ", "gane"])).toEqual(["nganou", "curtis blades", "tai tuvasa", "gane"]);
 })
