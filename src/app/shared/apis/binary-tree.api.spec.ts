@@ -82,6 +82,10 @@ const infixedLinerizedAlphabetTree = ["C", "B", "A", "E", "D", "G", "F"];
 const postfixedLinerizedlowercaseAlphabetTree = ["h","d","i","e","b", "j", "k", "f","g","c", "a"];
 
 test("binaryNodeFrom", () => {
+  const t0 = performance.now();
+  binaryNodeFrom(prefixedLinerizedAlphabetTree, infixedLinerizedAlphabetTree );
+  const t1 = performance.now();
+  console.log('binaryNodeFrom ' + (t1 - t0), 'milliseconds');
   expect(binaryNodeFrom(prefixedLinerizedAlphabetTree, infixedLinerizedAlphabetTree )).toEqual(alphabetTree);
 })
 test("infixedLinearization", () => {

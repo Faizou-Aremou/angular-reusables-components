@@ -11,13 +11,13 @@ import { hasSameElements, hasSameSise, levelLinearizationByQueue } from "./seque
  */
 export function binaryNodeFrom<T>(prefixedSequence: Array<T>, infixedSequence: Array<T>): BinaryNode<T> | undefined {
   if (!hasSameSise(prefixedSequence, infixedSequence)) {
-    throw new Error("arguments doesn't have same size")
+    throw new Error("arguments doesn't have same size");
   } else if (prefixedSequence.length === 0 && infixedSequence.length === 0) {
     return undefined;
   }
   const { root, leftChildOfInfixedSequence, rightChildOfInfixedSequence, leftChildOfInfixedSequenceSize } = infixedBinaryNodeSequences(head(prefixedSequence) as T, infixedSequence);
   if (root === null) {
-    throw new Error("arguments seems doesn't have same value")
+    throw new Error("arguments seems doesn't have same value");
   }
 
   const { leftChildOfPrefixedSequence, rightChildOfPrefixedSequence } = prefixedBinaryNodeSequences(leftChildOfInfixedSequenceSize, tail(prefixedSequence));
