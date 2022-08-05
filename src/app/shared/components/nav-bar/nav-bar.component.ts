@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Link } from '../../models/link/link.model';
-import { DataNode } from '../../models/node.model';
+import { NaryNode } from '../../models/node.model';
 import { ExtendedNestedTreeControl } from '../../types/control/extended-nested-tree-control';
 import { PaginatedDataSource } from '../../types/data-source/paginated-data-source';
 
@@ -11,11 +11,11 @@ import { PaginatedDataSource } from '../../types/data-source/paginated-data-sour
 })
 export class NavBarComponent implements OnInit {
 
-  @Input() dataSource?: PaginatedDataSource<DataNode<Link>>;
-  @Input() treeControl?: ExtendedNestedTreeControl<DataNode<Link>>;
+  @Input() dataSource?: PaginatedDataSource<NaryNode<Link>>;
+  @Input() treeControl?: ExtendedNestedTreeControl<NaryNode<Link>>;
   constructor() { }
 
   ngOnInit(): void {
   }
-  hasChild = (_: number, node: DataNode<Link>) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: NaryNode<Link>) => !!node.children && node.children.length > 0;
 }
