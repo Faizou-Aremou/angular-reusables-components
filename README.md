@@ -1,5 +1,5 @@
 [demo on StackBlitz ⚡️](https://stackblitz.com/edit/angular-rvy6w4)
-
+[demo on line](https://taupe-kelpie-fbd3a8.netlify.app/)
 this project presents some components and services that can be reuse in real life projects.
 # Generic composant table
 
