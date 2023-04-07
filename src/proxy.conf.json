@@ -2,5 +2,9 @@
     "/v1": {
         "target": "https://www.googleapis.com/books",
         "secure": false
+    },
+    "/sound-file": {
+        "target": "https://myserver.com/song.mp3",
+        "secure": false
     }
 }

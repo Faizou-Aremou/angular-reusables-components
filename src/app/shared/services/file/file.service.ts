@@ -2,12 +2,15 @@ import {
   HttpClient,
   HttpEvent,
   HttpEventType,
+  HttpProgressEvent,
   HttpRequest,
+  HttpResponse,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { FILE_MAX_SIZE } from "../../cons/files/file-max-size.const";
 import { FileInterface } from "../../interfaces/file.interface";
+import { Download } from "../../models/file/dowload";
 import { FileSize } from "../../models/file/file-size.model";
 import { FileUnit } from "../../models/file/file-unit";
 
@@ -16,9 +19,11 @@ import { FileUnit } from "../../models/file/file-unit";
 })
 export class FileService implements FileInterface {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  selectFiles(event: Event, maxSizeByFile:number=FILE_MAX_SIZE): File[] {//maxSizeByFile in MB
+  response: any; // TODO: delete this attribute;
+
+  selectFiles(event: Event, maxSizeByFile: number = FILE_MAX_SIZE): File[] {//maxSizeByFile in MB
     const fileList = (event.target as HTMLInputElement).files as FileList;
     let fileSequence: File[] = [];
     for (let index = 0; index < fileList.length; index++) {
@@ -26,7 +31,6 @@ export class FileService implements FileInterface {
     }
     return fileSequence;
   }
-
 
 
   filesSizeInByte(files: File[]): number {
@@ -113,20 +117,56 @@ export class FileService implements FileInterface {
     downloadLink.click();
   }
 
-  uploadDataWithTrackingProgress<T>(
-    fileData:T,
-    url: string
-  ): Observable<any> {
-    const req = new HttpRequest("POST", url, fileData, {
-      reportProgress: true,
-    });
+  getFileWithTrakingProcessInHttpNative<T>(url: string) {
+    const request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.responseType = 'arraybuffer';
+    request.onload = (event: ProgressEvent<EventTarget>) => {
+      this.response = request.response;
+    }
+    request.onerror = function (e) {
+      console.log("error downloading file");
+    }
+  } // TODO: improve this function to return observable
 
-    return this.http
-      .request(req)
-      .pipe(map((event) => this.getEventPercent(event)));
+  getFileWithTrakingProcess<Blob>(url: string) {
+    return this.http.get(url, {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'blob'
+    }).pipe(map((event) => this.transfertDownloadData(event)))
   }
 
-  private getEventPercent(event: HttpEvent<any>): number {
+  uploadDataWithTrackingProgress<T>(
+    fileData: T,
+    url: string
+  ): Observable<any> {
+    const req = new HttpRequest<T>("POST", url, fileData, {
+      reportProgress: true,
+    });
+    return this.http
+      .request<any>(req)
+      .pipe(map((event) => this.getUploadEventPercent(event)));
+  }
+
+  private transfertDownloadData<T>(event: HttpEvent<T>): Download<T> {
+    if (this.isHttpDownloadProgressEvent(event)) {
+      return {
+        progress: this.getDowloadEventPercent(event),
+        state: 'IN_PROGRESS',
+        content: null
+      }
+    } else if (this.isHttpResponse(event)) {
+      return {
+        progress: 100,
+        state: 'DONE',
+        content: event.body
+      }
+    }
+    throw new Error("Get File Error")
+  }
+
+  private getUploadEventPercent(event: HttpEvent<any>): number {
     switch (event.type) {
       case HttpEventType.Sent:
         return 0;
@@ -145,11 +185,44 @@ export class FileService implements FileInterface {
     }
   }
 
+  private getDowloadEventPercent(event: HttpEvent<any>): number {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        return 0;
+      case HttpEventType.DownloadProgress:
+        // Compute and show the % done:
+        const percentDone = event.total
+          ? Math.round((100 * event.loaded) / event.total)
+          : 0;
+        return percentDone;
+      case HttpEventType.Response:
+        return 100;
+      default:
+        return 0;
+    }
+  }
+
   private filterInvalidFileSize(fileList: FileList, index: number, maxSizeByFile: number, fileSequence: File[]) {
     if (fileList[index].size <= maxSizeByFile * 1024 * 1024) {
       fileSequence = [...fileSequence, fileList[index]];
     }
     return fileSequence;
+  }
+
+  private isHttpResponse<T>(event: HttpEvent<T>): event is HttpResponse<T> {
+    return event.type === HttpEventType.Response
+  }
+
+  private isHttpProgressEvent(event: HttpEvent<unknown>): event is HttpProgressEvent {
+    return event.type === HttpEventType.DownloadProgress
+      || event.type === HttpEventType.UploadProgress
+  }
+  private isHttpUploadProgressEvent(event: HttpEvent<unknown>): event is HttpProgressEvent {
+    return event.type === HttpEventType.DownloadProgress
+      || event.type === HttpEventType.UploadProgress
+  }
+  private isHttpDownloadProgressEvent(event: HttpEvent<unknown>): event is HttpProgressEvent {
+    return event.type === HttpEventType.DownloadProgress;
   }
 
 }
