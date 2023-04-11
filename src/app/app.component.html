@@ -1,14 +1,15 @@
 <div class="wrapper">
-    <header class="header">
-    </header>
-    <app-nav-bar class="navbar" [dataSource]="dataSource" [treeControl]="treeControl"> </app-nav-bar>
-    <aside class=" sidebar ">
-    </aside>
-    <main class="content ">
-        <app-general-infos>
-        </app-general-infos>
-    </main>
+  <header class="header"></header>
+  <app-nav-bar
+    class="navbar"
+    [dataSource]="dataSource"
+    [treeControl]="treeControl"
+  >
+  </app-nav-bar>
+  <aside class="sidebar"></aside>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
 
-    <footer class="footer ">
-    </footer>
+  <footer class="footer"></footer>
 </div>

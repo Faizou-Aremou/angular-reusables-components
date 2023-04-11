@@ -9,10 +9,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GeneralInfosModule } from './core/general-infos/general-infos.module';
 import { SharedModule } from './shared/shared.module';
+import { DragDropComponent } from './core/drag-drop/drag-drop.component';
+import { BasicDragDropComponent } from './core/basic-drag-drop/basic-drag-drop.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DragDropComponent,
+    BasicDragDropComponent
     ],
   imports: [
     BrowserAnimationsModule,

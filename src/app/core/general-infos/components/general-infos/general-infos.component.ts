@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { TabGroup } from "src/app/shared/types/tab-group/tab-group";
 import { filesSizeValidator } from "src/app/shared/validators/files-size.validator";
@@ -30,17 +31,17 @@ export class GeneralInfosComponent implements OnInit {
 
   constructor(
     public readonly uploadFilesService: UploadFilesService,
-    public readonly formBuilder:FormBuilder
+    public readonly formBuilder: FormBuilder,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
-    this.fileForm=this.buildUploadFileForm();
+    this.fileForm = this.buildUploadFileForm();
   }
 
   public buildUploadFileForm(): FormGroup {
     return this.formBuilder.group({
-      files: [
-        [],filesSizeValidator(6)]
+      files: [[], filesSizeValidator(6)],
     });
   }
   displayCompanyInfosInTabs(company: Company): void {
@@ -72,12 +73,15 @@ export class GeneralInfosComponent implements OnInit {
   }
 
   cacheUploadedFile(files: File[]) {
-    this.files =  [...files]
-    console.log("uploaded files",files);
+    this.files = [...files];
+    console.log("uploaded files", files);
   }
   uploadFiles(): void {
     if (this.fileForm.valid) {
       this.uploadFilesService.uploadFiles(this.fileForm.value);
     }
+  }
+  goToDragDropPage(): void {
+    this.router.navigate(["drag-drop"]);
   }
 }
