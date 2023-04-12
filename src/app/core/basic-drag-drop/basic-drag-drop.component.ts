@@ -10,15 +10,23 @@ export class BasicDragDropComponent implements OnInit {
   ngOnInit(): void {}
   dragStartHandler(event: DragEvent): void {
     const eventTarget = event.target;
-    if (
-      this.isHTMLLiElement(eventTarget) &&
-      eventTarget.dataset.fruit !== undefined
-    ) {
-      event.dataTransfer?.setData("Fruit", eventTarget.dataset.fruit);
+    if (this.isHTMLLiElement(eventTarget)) {
+      if (eventTarget.dataset.fruit !== undefined) {
+        event.dataTransfer?.setData("Fruit", eventTarget.dataset.fruit);
+      }
+      eventTarget.style.opacity = "0.4";
+      eventTarget.classList.add("dragged");
+    }
+  }
+  dragEndHandler(event: DragEvent): void {
+    const eventTarget = event.target;
+    if (this.isHTMLLiElement(eventTarget)) {
+      eventTarget.style.opacity = "1";
+      eventTarget.classList.remove("dragged");
     }
   }
 
-  stopDragOverPropagation(event: DragEvent): void {
+  dragHoverHandler(event: DragEvent): void {
     event.stopPropagation();
     event.preventDefault();
   }
@@ -26,9 +34,11 @@ export class BasicDragDropComponent implements OnInit {
   dropHandler(event: DragEvent) {
     const fruitName = event.dataTransfer?.getData("Fruit");
     const liElement = document.createElement("li");
+    const eventTarget = event.target;
     if (this.isFruitName(fruitName)) {
       this.setLiInnerHTMLWithFruitName(fruitName, liElement);
       document.querySelector(".drop-fruit-zone")?.appendChild(liElement);
+      this.resetDropZoneLookToDefault(eventTarget);
     }
   }
   private isFruitName(fruitName: string | undefined): fruitName is string {
@@ -50,6 +60,30 @@ export class BasicDragDropComponent implements OnInit {
         break;
       default:
         liElement.textContent = "Unknown Fruit";
+    }
+  }
+
+  dragEnterHandler(event: DragEvent): void {
+    const eventTarget = event.target;
+    if (this.isHTMLOListElement(eventTarget)) {
+      eventTarget.classList.add("dragged-enter");
+    }
+  }
+  isHTMLOListElement(
+    eventTarget: EventTarget | null
+  ): eventTarget is HTMLOListElement {
+    return (
+      (eventTarget as HTMLOListElement) !== null &&
+      (eventTarget as HTMLOListElement).nodeName === "OL"
+    );
+  }
+  dragLeaveHandler(event: DragEvent): void {
+    const eventTarget = event.target;
+    this.resetDropZoneLookToDefault(eventTarget);
+  }
+  private resetDropZoneLookToDefault(eventTarget: EventTarget | null) {
+    if (this.isHTMLOListElement(eventTarget)) {
+      eventTarget.classList.remove("dragged-enter");
     }
   }
 

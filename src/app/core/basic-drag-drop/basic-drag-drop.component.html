@@ -1,9 +1,13 @@
-<ol class="draggable-fruits" (dragstart)="dragStartHandler($event)">
+<ol class="draggable-fruits" (dragstart)="dragStartHandler($event)" (dragend)="dragEndHandler($event)">
   <li draggable="true" data-fruit="apple">Apples</li>
   <li draggable="true" data-fruit="orange">Oranges</li>
   <li draggable="true" data-fruit="pear">Pears</li>
 </ol>
 
-<ol class="drop-fruit-zone" (dragover)="stopDragOverPropagation($event)" (drop)="dropHandler($event)">
-
-</ol>
+<ol
+  class="drop-fruit-zone"
+  (dragover)="dragHoverHandler($event)"
+  (drop)="dropHandler($event)"
+  (dragenter)="dragEnterHandler($event)"
+  (dragleave)="dragLeaveHandler($event)"
+></ol>

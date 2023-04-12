@@ -128,24 +128,24 @@ export class FileService implements FileInterface {
       console.log("error downloading file");
     }
   } // TODO: improve this function to return observable
-
-  getFileWithTrakingProcess<Blob>(url: string) {
+  
+  getFileWithTrakingProcess(url: string):Observable<Download<Blob>> {
     return this.http.get(url, {
       reportProgress: true,
       observe: 'events',
       responseType: 'blob'
-    }).pipe(map((event) => this.transfertDownloadData(event)))
+    }).pipe(map((event) => this.transfertDownloadData<Blob>(event)))
   }
 
   uploadDataWithTrackingProgress<T>(
     fileData: T,
     url: string
-  ): Observable<any> {
+  ): Observable<number> {
     const req = new HttpRequest<T>("POST", url, fileData, {
       reportProgress: true,
     });
     return this.http
-      .request<any>(req)
+      .request<number>(req)
       .pipe(map((event) => this.getUploadEventPercent(event)));
   }
 
