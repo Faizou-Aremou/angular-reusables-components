@@ -11,11 +11,19 @@ export class BasicDragDropComponent implements OnInit {
   dragStartHandler(event: DragEvent): void {
     const eventTarget = event.target;
     if (this.isHTMLLiElement(eventTarget)) {
-      if (eventTarget.dataset.fruit !== undefined) {
-        event.dataTransfer?.setData("Fruit", eventTarget.dataset.fruit);
+      if (eventTarget.textContent !== null) {
+        event.dataTransfer?.setData("Fruit", eventTarget.textContent);
       }
       eventTarget.style.opacity = "0.4";
       eventTarget.classList.add("dragged");
+    }
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = "copy";
+      const dragIcon = document.createElement("img");
+      dragIcon.src =
+        "http://th03.deviantart.net/fs71/150/i/2011/335/0/6/free_html5_3d_logo_icon__10_icons__by_anonsphere-d4h763w.jpg";
+      dragIcon.width = 100;
+      event.dataTransfer.setDragImage(dragIcon, -10, -10);
     }
   }
   dragEndHandler(event: DragEvent): void {
@@ -31,7 +39,7 @@ export class BasicDragDropComponent implements OnInit {
     event.preventDefault();
   }
 
-  dropHandler(event: DragEvent) {
+  dropEventHandler(event: DragEvent) {
     const fruitName = event.dataTransfer?.getData("Fruit");
     const liElement = document.createElement("li");
     const eventTarget = event.target;
@@ -48,23 +56,14 @@ export class BasicDragDropComponent implements OnInit {
     fruitName: string,
     liElement: HTMLLIElement
   ): void {
-    switch (fruitName) {
-      case "apple":
-        liElement.textContent = "Apples";
-        break;
-      case "orange":
-        liElement.textContent = "Oranges";
-        break;
-      case "pear":
-        liElement.textContent = "Pears";
-        break;
-      default:
-        liElement.textContent = "Unknown Fruit";
-    }
+    liElement.textContent = fruitName;
   }
 
   dragEnterHandler(event: DragEvent): void {
     const eventTarget = event.target;
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = "copy";
+    }
     if (this.isHTMLOListElement(eventTarget)) {
       eventTarget.classList.add("dragged-enter");
     }

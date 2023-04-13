@@ -1,0 +1,28 @@
+<p>image-drag-drop works!</p>
+<p id="text">Drag and drop browser images in a zone:</p>
+<br />
+
+<ul>
+  <li *ngFor="let logo of browserLogos">
+    <img
+      [src]="logo.src"
+      [id]="logo.id"
+      (dragstart)="dragStartHandler($event)"
+      [alt]="logo.alt"
+    />
+  </li>
+</ul>
+<div
+  class="browser-box"
+  (dragover)="dragOverHandler($event)"
+  (drop)="dropHandler($event)"
+>
+  <header><h3>Cool Web browsers</h3></header>
+</div>
+<section
+  class="browser-box"
+  (dragover)="dragOverHandler($event)"
+  (drop)="dropHandler($event)"
+>
+  <header><h3>Web browsers from the 90's</h3></header>
+</section>
