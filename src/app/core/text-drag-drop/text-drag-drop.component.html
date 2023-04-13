@@ -1,0 +1,20 @@
+<p id="text">
+  <b>Drag and drop a text selection from this paragraph</b>. Drag and drop any
+  part of this text to the drop zone. Notice in the code: there is no need for a
+  dragstart handler in case of text selection: the text is added to the
+  clipboard when dragged with a key/name equal to "text/plain". Just write a
+  drop handler that will do an event.dataTransfert.getData("text/plain") and you
+  are done!
+</p>
+
+<p class="notDraggable">
+  This paragraph is not selectable, however. Look at the CSS in the source code.
+</p>
+
+<div
+  class="box"
+  (dragover)="dragOverHandler($event)"
+  (drop)="dropHandler($event)"
+>
+  <header><h3>Drop some text selection here.</h3></header>
+</div>

@@ -12,13 +12,15 @@ import { SharedModule } from './shared/shared.module';
 import { DragDropComponent } from './core/drag-drop/drag-drop.component';
 import { BasicDragDropComponent } from './core/basic-drag-drop/basic-drag-drop.component';
 import { ImageDragDropComponent } from './core/image-drag-drop/image-drag-drop.component';
+import { TextDragDropComponent } from './core/text-drag-drop/text-drag-drop.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DragDropComponent,
     BasicDragDropComponent,
-    ImageDragDropComponent
+    ImageDragDropComponent,
+    TextDragDropComponent
     ],
   imports: [
     BrowserAnimationsModule,
