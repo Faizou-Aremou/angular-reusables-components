@@ -3,14 +3,14 @@
     <mat-form-field hintLabel="Max 10 characters" maxlength="10" placeholder="Ex. 1" appearance="fill">
         <mat-label> Id: </mat-label>
         <input formControlName="code" matInput #input>
-        <mat-hint align="end">{{input.value?.length || 0}}
+        <mat-hint align="end">{{input.value.length}}
         </mat-hint>
     </mat-form-field>
 
     <mat-form-field hintLabel="Max 10 characters" maxlength="10" placeholder="Ex. google" appearance="fill">
         <mat-label> Name: </mat-label>
         <input formControlName="name" matInput #input>
-        <mat-hint align="end">{{input.value?.length || 0}}
+        <mat-hint align="end">{{input.value.length}}
         </mat-hint>
     </mat-form-field>
 

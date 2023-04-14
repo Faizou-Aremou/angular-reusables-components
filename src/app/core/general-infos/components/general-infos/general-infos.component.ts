@@ -1,25 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { TabGroup } from "src/app/shared/types/tab-group/tab-group";
-import { filesSizeValidator } from "src/app/shared/validators/files-size.validator";
-import { Company } from "../../../models/general-infos/company.model";
-import { Role } from "../../../models/general-infos/role.model";
-import { UploadFilesService } from "../../../services/upload-files.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { TabGroup } from 'src/app/shared/types/tab-group/tab-group';
+import { filesSizeValidator } from 'src/app/shared/validators/files-size.validator';
+import { Company } from '../../../models/general-infos/company.model';
+import { Role } from '../../../models/general-infos/role.model';
+import { UploadFilesService } from '../../../services/upload-files.service';
 
 @Component({
-  selector: "app-general-infos",
-  templateUrl: "./general-infos.component.html",
-  styleUrls: ["./general-infos.component.scss"],
+  selector: 'app-general-infos',
+  templateUrl: './general-infos.component.html',
+  styleUrls: ['./general-infos.component.scss'],
 })
 export class GeneralInfosComponent implements OnInit {
   tabGroup = new TabGroup<Company | Role>([
     {
-      label: "Companies list",
+      label: 'Companies list',
     },
     {
-      label: "Roles list",
+      label: 'Roles list',
     },
   ]);
   companiesList$: Observable<any> | null = null;
@@ -74,14 +74,17 @@ export class GeneralInfosComponent implements OnInit {
 
   cacheUploadedFile(files: File[]) {
     this.files = [...files];
-    console.log("uploaded files", files);
+    console.log('uploaded files', files);
   }
   uploadFiles(): void {
     if (this.fileForm.valid) {
       this.uploadFilesService.uploadFiles(this.fileForm.value);
     }
   }
-  goToDragDropPage(): void {
-    this.router.navigate(["drag-drop"]);
+  goToDragDropElementPage(): void {
+    this.router.navigate(['drag-drop-element']);
+  }
+  goToDragDropFilePage(): void {
+    this.router.navigate(['drag-drop-file'])
   }
 }

@@ -18,7 +18,8 @@
         </div>
     </ng-template>
 </app-tab-group>
-<button id="general-infos__route-to-general-page" mat-stroked-button (click)="goToDragDropPage()"> drag & drop</button>
+<button id="general-infos__route-to-general-page" mat-stroked-button (click)="goToDragDropElementPage()"> drag & drop element</button>
+<button id="general-infos__route-to-general-page" mat-stroked-button (click)="goToDragDropFilePage()"> drag & drop files</button>
 <form [formGroup]="fileForm" class="general-infos__upload-files">
 
     <app-upload-files formControlName="files" class="general-infos__upload-files__cmp" [multiple]="true" [maxSizeByFile]="5">

@@ -8,18 +8,18 @@ import {
   Optional,
   Output,
   Self,
-} from "@angular/core";
-import { ControlValueAccessor, NgControl } from "@angular/forms";
-import { uniqBy } from "ramda";
-import { ALLOWED_EXTENSIONS } from "../../cons/files/allowed-extensions";
-import { LabelFileInputTriggerDirective } from "../../directives/label-file-input-trigger/label-file-input-trigger.directive";
-import { FileInterface } from "../../interfaces/file.interface";
-import { FileService } from "../../services/file/file.service";
+} from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { uniqBy } from 'ramda';
+import { ALLOWED_EXTENSIONS } from '../../cons/files/allowed-extensions';
+import { LabelFileInputTriggerDirective } from '../../directives/label-file-input-trigger/label-file-input-trigger.directive';
+import { FileInterface } from '../../interfaces/file.interface';
+import { FileService } from '../../services/file/file.service';
 
 @Component({
-  selector: "app-upload-files",
-  templateUrl: "./upload-files.component.html",
-  styleUrls: ["./upload-files.component.scss"],
+  selector: 'app-upload-files',
+  templateUrl: './upload-files.component.html',
+  styleUrls: ['./upload-files.component.scss'],
 })
 export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   @Input() multiple = false;
@@ -95,4 +95,16 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
+
+  dropFileHandler(event: DragEvent): void {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  dragOverHandler(event: DragEvent): void {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  dragLeaveHandler(event: DragEvent): void {}
 }

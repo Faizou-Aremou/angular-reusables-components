@@ -4,6 +4,7 @@
         &__files-container {
             list-style: none;
             padding-inline-start: calc(var(--main-padding) + 16px);
+            min-height: 50px;
         }
     }
 }
