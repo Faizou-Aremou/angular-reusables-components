@@ -1,9 +1,10 @@
-import { Observable } from "rxjs";
-import { FileSize } from "../models/file/file-size.model";
-import { FileUnit } from "../models/file/file-unit";
+import { Observable } from 'rxjs';
+import { FileSize } from '../models/file/file-size.model';
+import { FileUnit } from '../models/file/file-unit';
 
 export abstract class FileInterface {
   abstract selectFiles(event: Event, maxSizeByFile?: number): File[];
+  abstract selectFiles2(event: Event): File[];
 
   abstract filesSizeInByte(files: File[]): number;
 

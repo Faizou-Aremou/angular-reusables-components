@@ -5,33 +5,49 @@ import {
   HttpProgressEvent,
   HttpRequest,
   HttpResponse,
-} from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
-import { FILE_MAX_SIZE } from "../../cons/files/file-max-size.const";
-import { FileInterface } from "../../interfaces/file.interface";
-import { Download } from "../../models/file/dowload";
-import { FileSize } from "../../models/file/file-size.model";
-import { FileUnit } from "../../models/file/file-unit";
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { FILE_MAX_SIZE } from '../../cons/files/file-max-size.const';
+import { FileInterface } from '../../interfaces/file.interface';
+import { Download } from '../../models/file/dowload';
+import { FileSize } from '../../models/file/file-size.model';
+import { FileUnit } from '../../models/file/file-unit';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class FileService implements FileInterface {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   response: any; // TODO: delete this attribute;
 
-  selectFiles(event: Event, maxSizeByFile: number = FILE_MAX_SIZE): File[] {//maxSizeByFile in MB
+  selectFiles(event: Event, maxSizeByFile: number = FILE_MAX_SIZE): File[] {
+    //maxSizeByFile in MB
     const fileList = (event.target as HTMLInputElement).files as FileList;
     let fileSequence: File[] = [];
     for (let index = 0; index < fileList.length; index++) {
-      fileSequence = this.filterInvalidFileSize(fileList, index, maxSizeByFile, fileSequence);
+      fileSequence = this.filterInvalidFileSize(
+        fileList,
+        index,
+        maxSizeByFile,
+        fileSequence
+      );
     }
     return fileSequence;
   }
-
+  selectFiles2(event: DragEvent): File[] {
+    //maxSizeByFile in MB
+    const fileList = event.dataTransfer?.files;
+    let fileSequence: File[] = [];
+    if (fileList === undefined) {
+      return fileSequence;
+    }
+    for (let index = 0; index < fileList.length; index++) {
+      fileSequence = [...fileSequence, fileList[index]];
+    }
+    return fileSequence;
+  }
 
   filesSizeInByte(files: File[]): number {
     return files.reduce((sizeInByte, file) => {
@@ -103,7 +119,7 @@ export class FileService implements FileInterface {
   }
 
   downloadFileFromObjectUrl(url: string, fileName: string): void {
-    const downloadLink = document.createElement("a");
+    const downloadLink = document.createElement('a');
     downloadLink.href = url;
     downloadLink.download = fileName;
     downloadLink.click();
@@ -111,7 +127,7 @@ export class FileService implements FileInterface {
   }
 
   downloadFileFromDataUrl(dataUrl: string, fileName: string): void {
-    const downloadLink = document.createElement("a");
+    const downloadLink = document.createElement('a');
     downloadLink.href = dataUrl;
     downloadLink.download = fileName;
     downloadLink.click();
@@ -123,25 +139,27 @@ export class FileService implements FileInterface {
     request.responseType = 'arraybuffer';
     request.onload = (event: ProgressEvent<EventTarget>) => {
       this.response = request.response;
-    }
+    };
     request.onerror = function (e) {
-      console.log("error downloading file");
-    }
+      console.log('error downloading file');
+    };
   } // TODO: improve this function to return observable
-  
-  getFileWithTrakingProcess(url: string):Observable<Download<Blob>> {
-    return this.http.get(url, {
-      reportProgress: true,
-      observe: 'events',
-      responseType: 'blob'
-    }).pipe(map((event) => this.transfertDownloadData<Blob>(event)))
+
+  getFileWithTrakingProcess(url: string): Observable<Download<Blob>> {
+    return this.http
+      .get(url, {
+        reportProgress: true,
+        observe: 'events',
+        responseType: 'blob',
+      })
+      .pipe(map((event) => this.transfertDownloadData<Blob>(event)));
   }
 
   uploadDataWithTrackingProgress<T>(
     fileData: T,
     url: string
   ): Observable<number> {
-    const req = new HttpRequest<T>("POST", url, fileData, {
+    const req = new HttpRequest<T>('POST', url, fileData, {
       reportProgress: true,
     });
     return this.http
@@ -154,16 +172,16 @@ export class FileService implements FileInterface {
       return {
         progress: this.getDowloadEventPercent(event),
         state: 'IN_PROGRESS',
-        content: null
-      }
+        content: null,
+      };
     } else if (this.isHttpResponse(event)) {
       return {
         progress: 100,
         state: 'DONE',
-        content: event.body
-      }
+        content: event.body,
+      };
     }
-    throw new Error("Get File Error")
+    throw new Error('Get File Error');
   }
 
   private getUploadEventPercent(event: HttpEvent<any>): number {
@@ -202,7 +220,12 @@ export class FileService implements FileInterface {
     }
   }
 
-  private filterInvalidFileSize(fileList: FileList, index: number, maxSizeByFile: number, fileSequence: File[]) {
+  private filterInvalidFileSize(
+    fileList: FileList,
+    index: number,
+    maxSizeByFile: number,
+    fileSequence: File[]
+  ) {
     if (fileList[index].size <= maxSizeByFile * 1024 * 1024) {
       fileSequence = [...fileSequence, fileList[index]];
     }
@@ -210,19 +233,28 @@ export class FileService implements FileInterface {
   }
 
   private isHttpResponse<T>(event: HttpEvent<T>): event is HttpResponse<T> {
-    return event.type === HttpEventType.Response
+    return event.type === HttpEventType.Response;
   }
 
-  private isHttpProgressEvent(event: HttpEvent<unknown>): event is HttpProgressEvent {
-    return event.type === HttpEventType.DownloadProgress
-      || event.type === HttpEventType.UploadProgress
+  private isHttpProgressEvent(
+    event: HttpEvent<unknown>
+  ): event is HttpProgressEvent {
+    return (
+      event.type === HttpEventType.DownloadProgress ||
+      event.type === HttpEventType.UploadProgress
+    );
   }
-  private isHttpUploadProgressEvent(event: HttpEvent<unknown>): event is HttpProgressEvent {
-    return event.type === HttpEventType.DownloadProgress
-      || event.type === HttpEventType.UploadProgress
+  private isHttpUploadProgressEvent(
+    event: HttpEvent<unknown>
+  ): event is HttpProgressEvent {
+    return (
+      event.type === HttpEventType.DownloadProgress ||
+      event.type === HttpEventType.UploadProgress
+    );
   }
-  private isHttpDownloadProgressEvent(event: HttpEvent<unknown>): event is HttpProgressEvent {
+  private isHttpDownloadProgressEvent(
+    event: HttpEvent<unknown>
+  ): event is HttpProgressEvent {
     return event.type === HttpEventType.DownloadProgress;
   }
-
 }

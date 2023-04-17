@@ -99,6 +99,8 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   dropFileHandler(event: DragEvent): void {
     event.stopPropagation();
     event.preventDefault();
+   this.files = this.fileService.selectFiles2(event);
+
   }
 
   dragOverHandler(event: DragEvent): void {
