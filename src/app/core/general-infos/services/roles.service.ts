@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, delay, map, of } from 'rxjs';
 import { PageRequest } from 'src/app/shared/models/page-request.model';
 import { Page } from 'src/app/shared/models/page.model';
 import { Role } from '../../models/general-infos/role.model';
@@ -27,6 +27,14 @@ export class RolesService {
         pageSize:2,
         pageIndex: 0,
       },
-    );
+    ).pipe(delay(500), map((roles)=> this.adaptToRoles(roles)));
+  }
+
+  private adaptToRoles(roles: { data: Role[]; pageIndex: number; pageSize: number; length: number; }): { data: Role[]; pageIndex: number; pageSize: number; length: number; } {
+    const { data, ...rest } = roles
+    const actionnableData = data.map((company) => {
+      return { ...company, actionsButton: "" }
+    });
+    return {...rest, data:actionnableData} 
   }
 }

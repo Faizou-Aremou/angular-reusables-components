@@ -1,15 +1,15 @@
-<section class="table-content" *ngIf="data">
+<ng-container class="table-content" *ngIf="data">
   <!-- TODO handler when dada is empty in coherent way with matTableDataSource -->
   <div class="table-content__table-container">
-    <table mat-table matSort class="mat-elevation-z8" [dataSource]="data">
+    <mat-table matSort [dataSource]="data">
       <ng-container
         *ngFor="let column of tableColumns"
         [matColumnDef]="column.columnDef"
       >
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>
           {{ column.header }}
-        </th>
-        <td mat-cell *matCellDef="let element">
+        </mat-header-cell>
+        <mat-cell  *matCellDef="let element">
           <ng-container
             *ngIf="
               column.columnDef | tableColumn : OverrideTableColumnsDirs;
@@ -26,17 +26,17 @@
           <ng-template #defaultColumn>
             {{ element[column.columnDef] }}
           </ng-template>
-        </td>
+        </mat-cell>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="columnDefs"></tr>
-      <tr
-        mat-row
+      <mat-header-row
+        *matHeaderRowDef="columnDefs"
+      ></mat-header-row>
+      <mat-row
         *matRowDef="let row; columns: columnDefs"
         [ngClass]="{ disabled: row.disabled }"
-      ></tr>
-    </table>
+      ></mat-row>
+    </mat-table>
     <mat-paginator
-      class="mat-elevation-z8"
       [pageSizeOptions]="[10, 20, 50]"
       [hidePageSize]="true"
       showFirstLastButtons
@@ -44,4 +44,4 @@
     >
     </mat-paginator>
   </div>
-</section>
+</ng-container>

@@ -15,9 +15,9 @@ export class RolesComponent implements OnInit {
   @Output() onConfigure = new EventEmitter<Role>();
   @Output() onNotice = new EventEmitter<Role>();
   public tableColumns: TableColumn[] = [
-    { 
-      columnDef: "code", 
-      header: "Id" 
+    {
+      columnDef: "code",
+      header: "Id"
     },
     {
       columnDef: "name",
@@ -27,6 +27,10 @@ export class RolesComponent implements OnInit {
       columnDef: "description",
       header: "Information",
     },
+    {
+      columnDef: "actionsButton",
+      header: ""
+    }
   ];
   public initialSort: Sort<Role> = { active: "code", direction: "desc" };
 
@@ -34,9 +38,9 @@ export class RolesComponent implements OnInit {
     (request, query) => this.roleListService.getRoles(request, query),
     this.initialSort,
   );
-  constructor(private roleListService: RolesService) {}
+  constructor(private roleListService: RolesService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   public edit(role: Role) {
     this.onEdit.emit(role);
   }

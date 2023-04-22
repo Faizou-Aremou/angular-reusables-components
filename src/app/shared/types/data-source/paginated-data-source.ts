@@ -21,7 +21,7 @@ import { Pagination } from "../../models/pagination.model";
 
 export class PaginatedDataSource<T> extends DataSource<T> {
   private _pageIndex = new Subject<number>();
-  private _sort: BehaviorSubject<Sort<T> | MatSortInterface| undefined>;
+  private _sort: BehaviorSubject<Sort<T> | MatSortInterface | undefined>;
   private _page$: Observable<Page<T>>;
   private _matSort: MatSort | null = null;
   private _matPaginator: MatPaginator | null = null;
@@ -32,6 +32,7 @@ export class PaginatedDataSource<T> extends DataSource<T> {
 
   /** Stream that contain displayed page data */
   private _renderData$: Observable<T[]>;
+  pagination?: Pagination;
 
   /** Stream that contains data in current page */
   get data() {
@@ -58,12 +59,12 @@ export class PaginatedDataSource<T> extends DataSource<T> {
         this._matPaginator.initialized
       );
       this._matPaginatorSubscription = pageChange
-        .pipe(withLatestFrom(this.pagination$))
-        .subscribe(([pageEvent, pagination]) => {
+        .pipe()
+        .subscribe((pageEvent) => {
           if (pageEvent) {
             this._pageIndex.next(pageEvent.pageIndex);
-          } else {
-            this._updateMatPaginator(pagination);
+          } else if(this.pagination) {
+            this._updateMatPaginator(this.pagination);
           }
         });
     }
@@ -128,6 +129,10 @@ export class PaginatedDataSource<T> extends DataSource<T> {
         return this._paginationFor(page);
       })
     );
+
+    this.pagination$.subscribe((pagination) => {
+      this.pagination = pagination;
+    })
   }
 
   sortBy(sort: Partial<Sort<T>>): void {
