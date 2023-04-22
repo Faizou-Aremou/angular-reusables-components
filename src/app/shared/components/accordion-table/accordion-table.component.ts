@@ -14,6 +14,7 @@ import { MatSort } from '@angular/material/sort';
 import { OverrideTableColumnDirective } from '../../directives/override-table-column/override-table-column.directive';
 import { TableColumn } from '../../models/table/table-column.model';
 import { PaginatedDataSource } from '../../types/data-source/paginated-data-source';
+import { OverrideTableColumnHeaderDirective } from '../../directives/override-table-column-header/override-table-column-header.directive';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class AccordionTableComponent<T> implements OnInit {
   @Input() data?: T[];
   @Output() matPaginator = new EventEmitter<MatPaginator>();
   @Output() matSort = new EventEmitter<MatSort>();
-  @ContentChildren(OverrideTableColumnDirective) OverrideTableColumnsDirs?: QueryList<OverrideTableColumnDirective>;
+  @ContentChildren(OverrideTableColumnDirective) OverrideTableColumnDirs?: QueryList<OverrideTableColumnDirective>;
+  @ContentChildren(OverrideTableColumnHeaderDirective) OverrideTableColumnHeaderDirs?: QueryList<OverrideTableColumnHeaderDirective>;
   columnDefs: Array<string> = [];
   private _tableColumns: Array<TableColumn> = [];
   constructor() { }

@@ -16,6 +16,8 @@ import { InPipe } from './pipes/in/in.pipe';
 import { FileService } from "./services/file/file.service";
 import { FileInterface } from "./interfaces/file.interface";
 import { AccordionTableComponent } from "./components/accordion-table/accordion-table.component";
+import { TableColumnHeaderPipe } from "./pipes/table-column-header/table-column-header.pipe";
+import { OverrideTableColumnHeaderDirective } from "./directives/override-table-column-header/override-table-column-header.directive";
 
 @NgModule({
   declarations: [
@@ -30,7 +32,10 @@ import { AccordionTableComponent } from "./components/accordion-table/accordion-
     LabelFileInputTriggerDirective,
     ButtonComponent,
     InPipe,
-    AccordionTableComponent
+    AccordionTableComponent,
+    TableColumnHeaderPipe,
+    OverrideTableColumnHeaderDirective
+
   ],
   imports: [CommonModule, AngularMaterialModule, ReactiveFormsModule],
   exports: [
@@ -45,7 +50,9 @@ import { AccordionTableComponent } from "./components/accordion-table/accordion-
     LabelFileInputTriggerDirective,
     ButtonComponent,
     InPipe,
-    AccordionTableComponent
+    AccordionTableComponent,
+    TableColumnHeaderPipe,
+    OverrideTableColumnHeaderDirective
   ],
   providers: [{ provide: FileInterface, useClass: FileService }]
 })

@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class InPipe implements PipeTransform {
 
-  transform<T>(attribute: string, object: T): boolean {
+  transform<T extends Object>(attribute: string, object: T): boolean {
     return attribute in object;
   }
 

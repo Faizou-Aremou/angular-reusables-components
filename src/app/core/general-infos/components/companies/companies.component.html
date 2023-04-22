@@ -40,11 +40,15 @@
 </form>
 <app-accordion-table
   class="companies-table__table"
-  [data]="(dataSource.data | async)?? undefined"
+  [data]="(dataSource.data | async) ?? undefined"
   (matSort)="setMatSort($event)"
   (matPaginator)="setMatPaginator($event)"
   [tableColumns]="tableColumns"
 >
+  <ng-template [overrideTableColumnHeader]="'name'" let-column>
+    <p>{{ column.header }}</p>
+    <span> {{ column?.options.rich }}</span>
+  </ng-template>
   <ng-template [overrideTableColumn]="'actionsButton'" let-element>
     <button
       id="actions-button"

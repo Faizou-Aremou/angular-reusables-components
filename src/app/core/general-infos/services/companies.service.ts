@@ -166,10 +166,10 @@ export class CompaniesService {
   }
   private adaptToCompanies(companies: { data: Company[]; pageIndex: number; pageSize: number; length: number; }): { data: Company[]; pageIndex: number; pageSize: number; length: number; } {
     const { data, ...rest } = companies
-    const actionnableData = data.map((company) => {
+    const actionableData = data.map((company) => {
       return { ...company, actionsButton: "" }
     });
-    return {...rest, data:actionnableData} 
+    return {...rest, data:actionableData} 
   }
 
   private sortCompanies(

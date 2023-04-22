@@ -24,6 +24,9 @@ export class CompaniesComponent implements OnInit {
     {
       columnDef: "name",
       header: "Designation",
+      options: {
+        rich: 4
+      }
     },
     {
       columnDef: "actionsButton",

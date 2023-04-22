@@ -6,13 +6,28 @@
         *ngFor="let column of tableColumns"
         [matColumnDef]="column.columnDef"
       >
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>
-          {{ column.header }}
-        </mat-header-cell>
-        <mat-cell  *matCellDef="let element">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
           <ng-container
             *ngIf="
-              column.columnDef | tableColumn : OverrideTableColumnsDirs;
+              column.columnDef | tableColumnHeader : OverrideTableColumnHeaderDirs;
+              else defaultHeader;
+              let overrideTableHeader
+            "
+            [ngTemplateOutlet]="overrideTableHeader.templateRef"
+            [ngTemplateOutletContext]="{
+              $implicit: column,
+              columnDef: column.columnDef
+            }"
+          >
+          </ng-container>
+          <ng-template #defaultHeader>
+            {{ column.header }}
+          </ng-template>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <ng-container
+            *ngIf="
+              column.columnDef | tableColumn : OverrideTableColumnDirs;
               else defaultColumn;
               let overrideTableColumn
             "
@@ -28,9 +43,7 @@
           </ng-template>
         </mat-cell>
       </ng-container>
-      <mat-header-row
-        *matHeaderRowDef="columnDefs"
-      ></mat-header-row>
+      <mat-header-row *matHeaderRowDef="columnDefs"></mat-header-row>
       <mat-row
         *matRowDef="let row; columns: columnDefs"
         [ngClass]="{ disabled: row.disabled }"
