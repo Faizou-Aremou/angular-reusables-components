@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "strict":true,
+    "strict": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -12,10 +12,7 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "noUnusedParameters": false,
     "noUnusedLocals": false,
     "strictNullChecks": true,

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Sort } from "src/app/shared/models/generic-sort.model";
 import { TableColumn } from "src/app/shared/models/table/table-column.model";
@@ -6,6 +6,8 @@ import { TableRow } from "src/app/shared/models/table/table-row.model";
 import { PaginatedDataSource } from "src/app/shared/types/data-source/paginated-data-source";
 import { Company } from "../../../models/general-infos/company.model";
 import { CompaniesService } from "../../services/companies.service";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 
 @Component({
   selector: "app-companies",
@@ -23,9 +25,13 @@ export class CompaniesComponent implements OnInit {
       columnDef: "name",
       header: "Designation",
     },
+    {
+      columnDef: "actionsButton",
+      header: "",
+    },
   ];
 
-  public tableRows: TableRow[]=[];
+  public tableRows: TableRow[] = [];
   public initialSort: Sort<Company> = { active: "code", direction: "desc" };
 
   public dataSource = new PaginatedDataSource<Company>(
@@ -40,8 +46,13 @@ export class CompaniesComponent implements OnInit {
     this.companiesTableQueryForm = this.initiateFormBuilder();
   }
 
-  ngOnInit() {}
-
+  ngOnInit() { }
+  setMatPaginator(matPaginator: MatPaginator) {
+    this.dataSource.matPaginator = matPaginator;
+  }
+  setMatSort(matSort: MatSort) {
+    this.dataSource.matSort = matSort;
+  };
   public onEditElement(company: Company): void {
     this.company.emit(company);
   }

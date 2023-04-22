@@ -11,11 +11,11 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { UploadFilesComponent } from "./components/upload-files/upload-files.component";
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { LabelFileInputTriggerDirective } from './directives/label-file-input-trigger/label-file-input-trigger.directive';
-import { TableColumnDirective } from './directives/table-column/table-column.directive';
 import { ButtonComponent } from './components/button/button.component';
 import { InPipe } from './pipes/in/in.pipe';
 import { FileService } from "./services/file/file.service";
 import { FileInterface } from "./interfaces/file.interface";
+import { AccordionTableComponent } from "./components/accordion-table/accordion-table.component";
 
 @NgModule({
   declarations: [
@@ -28,9 +28,9 @@ import { FileInterface } from "./interfaces/file.interface";
     UploadFilesComponent,
     SafeUrlPipe,
     LabelFileInputTriggerDirective,
-    TableColumnDirective,
     ButtonComponent,
     InPipe,
+    AccordionTableComponent
   ],
   imports: [CommonModule, AngularMaterialModule, ReactiveFormsModule],
   exports: [
@@ -43,10 +43,10 @@ import { FileInterface } from "./interfaces/file.interface";
     TableColumnPipe,
     UploadFilesComponent,
     LabelFileInputTriggerDirective,
-    TableColumnDirective,
     ButtonComponent,
-    InPipe
+    InPipe,
+    AccordionTableComponent
   ],
-  providers:[{provide:FileInterface, useClass:FileService}]
+  providers: [{ provide: FileInterface, useClass: FileService }]
 })
-export class SharedModule {}
+export class SharedModule { }

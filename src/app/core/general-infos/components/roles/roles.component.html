@@ -1,19 +1,24 @@
-<app-table [dataSource]="dataSource" [tableColumns]="tableColumns">
-    <ng-template [tableColumn]="'actionsButton'" let-element>
-        <button mat-flat-button color="primary" [matMenuTriggerFor]="matMenu" aria-label="actions menu">
+<app-table [data]="(dataSource.data | async)?? undefined" [tableColumns]="tableColumns">
+  <ng-template [overrideTableColumn]="'actionsButton'" let-element>
+    <button
+      mat-flat-button
+      color="primary"
+      [matMenuTriggerFor]="matMenu"
+      aria-label="actions menu"
+    >
       <span> modification </span>
       <mat-icon>arrow_drop_down</mat-icon>
     </button>
-        <mat-menu #matMenu="matMenu">
-            <button mat-menu-item (click)="edit(element)">
+    <mat-menu #matMenu="matMenu">
+      <button mat-menu-item (click)="edit(element)">
         <span>rules</span>
       </button>
-            <button mat-menu-item (click)="configure(element)">
+      <button mat-menu-item (click)="configure(element)">
         <span>configure</span>
       </button>
-            <button mat-menu-item (click)="notice(element)">
+      <button mat-menu-item (click)="notice(element)">
         <span>notifications</span>
       </button>
-        </mat-menu>
-    </ng-template>
+    </mat-menu>
+  </ng-template>
 </app-table>

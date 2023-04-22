@@ -13,15 +13,16 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { OverrideTableColumnDirective } from '../../directives/override-table-column/override-table-column.directive';
 import { TableColumn } from '../../models/table/table-column.model';
+import { PaginatedDataSource } from '../../types/data-source/paginated-data-source';
 
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  selector: 'app-accordion-table',
+  templateUrl: './accordion-table.component.html',
+  styleUrls: ['./accordion-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent<T> implements OnInit {
+export class AccordionTableComponent<T> implements OnInit {
   /**
    * we will not be using the built-in MatTableDataSource because its designed for filtering, sorting and pagination of a client-side data array.
    * In most real app these are happened on server side.

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Sort as MatSortInterface } from "@angular/material/sort";
-import { delay, Observable, of } from "rxjs";
+import { delay, map, Observable, of } from "rxjs";
 import { PageRequest } from "src/app/shared/models/page-request.model";
 import { Page } from "src/app/shared/models/page.model";
 import { Sort } from "../../../shared/models/generic-sort.model";
@@ -127,7 +127,7 @@ const companies: Company[] = [
   providedIn: "root",
 })
 export class CompaniesService {
-  constructor() {}
+  constructor() { }
 
   public getCompanies(
     request: PageRequest<Company>,
@@ -160,7 +160,16 @@ export class CompaniesService {
       pageSize: pageCompanies.length,
       length: sortedCompanies.length,
     };
-    return of(page).pipe(delay(500));
+    return of(page).pipe(delay(500), map((companies) => {
+      return this.adaptToCompanies(companies)
+    }));
+  }
+  private adaptToCompanies(companies: { data: Company[]; pageIndex: number; pageSize: number; length: number; }): { data: Company[]; pageIndex: number; pageSize: number; length: number; } {
+    const { data, ...rest } = companies
+    const actionnableData = data.map((company) => {
+      return { ...company, actionsButton: "" }
+    });
+    return {...rest, data:actionnableData} 
   }
 
   private sortCompanies(
