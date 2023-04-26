@@ -1,0 +1,1 @@
+export type RetrieveFileFromEventFn<T> = (event: T) => FileList | undefined ;

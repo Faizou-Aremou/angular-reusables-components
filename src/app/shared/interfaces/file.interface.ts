@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { FileSize } from '../models/file/file-size.model';
 import { FileUnit } from '../models/file/file-unit';
+import { RetrieveFileFromEventFn } from '../models/file/retrieve-file-from-event';
 
 export abstract class FileInterface {
-  abstract selectFiles(event: Event, maxSizeByFile?: number): File[];
-  abstract selectFiles2(event: Event): File[];
+  abstract selectFiles<T>(maxSizeByFile: number|undefined, retrieveFileFromEventFn: RetrieveFileFromEventFn<T>, event: T): File[];
 
   abstract filesSizeInByte(files: File[]): number;
 
@@ -29,4 +29,8 @@ export abstract class FileInterface {
     fileData: T,
     url: string
   ): Observable<any>;
+
+  abstract retrieveFilesFromInputEvent(event: Event): FileList | undefined;
+  abstract retrieveFilesFromDragEvent(event: DragEvent): FileList | undefined
+
 }

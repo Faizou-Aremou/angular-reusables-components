@@ -7,6 +7,10 @@ import { CompaniesComponent } from "./components/companies/companies.component";
 import { RolesComponent } from "./components/roles/roles.component";
 import { AngularMaterialModule } from "src/material.module";
 import { InformationsComponent } from "./components/informations/informations.component";
+import { DragDropComponent } from "./components/drag-drop/drag-drop.component";
+import { BasicDragDropComponent } from "./components/basic-drag-drop/basic-drag-drop.component";
+import { ImageDragDropComponent } from "./components/image-drag-drop/image-drag-drop.component";
+import { TextDragDropComponent } from "../text-drag-drop/text-drag-drop.component";
 
 @NgModule({
   declarations: [
@@ -14,6 +18,10 @@ import { InformationsComponent } from "./components/informations/informations.co
     CompaniesComponent,
     RolesComponent,
     InformationsComponent,
+    DragDropComponent,
+    BasicDragDropComponent,
+    ImageDragDropComponent,
+    TextDragDropComponent,
   ],
   imports: [
     CommonModule,

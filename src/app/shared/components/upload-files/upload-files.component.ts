@@ -31,8 +31,8 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   @ContentChild(LabelFileInputTriggerDirective)
   labelFileInputTrigger?: LabelFileInputTriggerDirective;
   files: File[] = [];
-  onChange = (files: File[]) => {};
-  onTouched = (files: File[]) => {};
+  onChange = (files: File[]) => { };
+  onTouched = (files: File[]) => { };
   isDisabled: boolean = false;
 
   constructor(
@@ -64,16 +64,16 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   selectFiles(event: Event) {
     this.files = this.maxSizeByFile
       ? uniqBy(
-          (file) => file.name,
-          [
-            ...this.files,
-            ...this.fileService.selectFiles(event, this.maxSizeByFile),
-          ]
-        )
+        (file) => file.name,
+        [
+          ...this.files,
+          ...this.fileService.selectFiles(this.maxSizeByFile, this.fileService.retrieveFilesFromInputEvent, event),
+        ]
+      )
       : uniqBy(
-          (file) => file.name,
-          [...this.files, ...this.fileService.selectFiles(event)]
-        );
+        (file) => file.name,
+        [...this.files, ...this.fileService.selectFiles(this.maxSizeByFile, this.fileService.retrieveFilesFromInputEvent, event)]
+      );
     if (this.files.length > 0) {
       this.uploadedFiles.emit(this.files);
       this.onChange(this.files);
@@ -99,7 +99,7 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   dropFileHandler(event: DragEvent): void {
     event.stopPropagation();
     event.preventDefault();
-   this.files = this.fileService.selectFiles2(event);
+    this.files = this.fileService.selectFiles(undefined, this.fileService.retrieveFilesFromDragEvent, event);
 
   }
 
@@ -108,5 +108,5 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
     event.preventDefault();
   }
 
-  dragLeaveHandler(event: DragEvent): void {}
+  dragLeaveHandler(event: DragEvent): void { }
 }

@@ -13,19 +13,22 @@ import { FileInterface } from '../../interfaces/file.interface';
 import { Download } from '../../models/file/dowload';
 import { FileSize } from '../../models/file/file-size.model';
 import { FileUnit } from '../../models/file/file-unit';
+import { RetrieveFileFromEventFn } from '../../models/file/retrieve-file-from-event';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService implements FileInterface {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   response: any; // TODO: delete this attribute;
 
-  selectFiles(event: Event, maxSizeByFile: number = FILE_MAX_SIZE): File[] {
-    //maxSizeByFile in MB
-    const fileList = (event.target as HTMLInputElement).files as FileList;
+  selectFiles<T>(maxSizeByFile: number = FILE_MAX_SIZE, retrieveFileFromEventFn: RetrieveFileFromEventFn<T>, event: T) {
+    const fileList = retrieveFileFromEventFn(event);
     let fileSequence: File[] = [];
+    if (fileList === undefined) {
+      return fileSequence;
+    }
     for (let index = 0; index < fileList.length; index++) {
       fileSequence = this.filterInvalidFileSize(
         fileList,
@@ -36,17 +39,14 @@ export class FileService implements FileInterface {
     }
     return fileSequence;
   }
-  selectFiles2(event: DragEvent): File[] {
-    //maxSizeByFile in MB
+
+  retrieveFilesFromInputEvent: RetrieveFileFromEventFn<Event> = (event: Event): FileList | undefined => {
+    const fileList = (event.target as HTMLInputElement)?.files;
+    return fileList?? undefined;
+  }
+  retrieveFilesFromDragEvent: RetrieveFileFromEventFn<DragEvent> = (event: DragEvent): FileList | undefined => {
     const fileList = event.dataTransfer?.files;
-    let fileSequence: File[] = [];
-    if (fileList === undefined) {
-      return fileSequence;
-    }
-    for (let index = 0; index < fileList.length; index++) {
-      fileSequence = [...fileSequence, fileList[index]];
-    }
-    return fileSequence;
+    return fileList;
   }
 
   filesSizeInByte(files: File[]): number {
