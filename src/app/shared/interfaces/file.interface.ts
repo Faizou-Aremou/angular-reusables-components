@@ -4,7 +4,7 @@ import { FileUnit } from '../models/file/file-unit';
 import { RetrieveFileFromEventFn } from '../models/file/retrieve-file-from-event';
 
 export abstract class FileInterface {
-  abstract selectFiles<T>(maxSizeByFile: number|undefined, retrieveFileFromEventFn: RetrieveFileFromEventFn<T>, event: T): File[];
+  abstract selectFiles<T>(retrieveFileFromEventFn: RetrieveFileFromEventFn<T>, event: T, maxSizeByFile?: number): File[];
 
   abstract filesSizeInByte(files: File[]): number;
 

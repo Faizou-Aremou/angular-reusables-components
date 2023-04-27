@@ -4,5 +4,5 @@ import { Directive, TemplateRef } from '@angular/core';
   selector: '[labelFileInputTrigger]'
 })
 export class LabelFileInputTriggerDirective {
-  constructor(public templateRef: TemplateRef<any>) { }
+  constructor(public templateRef: TemplateRef<HTMLLabelElement>) { }
 }

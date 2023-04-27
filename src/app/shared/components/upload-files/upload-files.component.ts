@@ -14,7 +14,6 @@ import { uniqBy } from 'ramda';
 import { ALLOWED_EXTENSIONS } from '../../consts/files/allowed-extensions';
 import { LabelFileInputTriggerDirective } from '../../directives/label-file-input-trigger/label-file-input-trigger.directive';
 import { FileInterface } from '../../interfaces/file.interface';
-import { FileService } from '../../services/file/file.service';
 
 @Component({
   selector: 'app-upload-files',
@@ -62,18 +61,13 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
   selectFiles(event: Event) {
-    this.files = this.maxSizeByFile
-      ? uniqBy(
-        (file) => file.name,
-        [
-          ...this.files,
-          ...this.fileService.selectFiles(this.maxSizeByFile, this.fileService.retrieveFilesFromInputEvent, event),
-        ]
-      )
-      : uniqBy(
-        (file) => file.name,
-        [...this.files, ...this.fileService.selectFiles(this.maxSizeByFile, this.fileService.retrieveFilesFromInputEvent, event)]
-      );
+    this.files = uniqBy(
+      (file) => file.name,
+      [
+        ...this.files,
+        ...this.fileService.selectFiles(this.fileService.retrieveFilesFromInputEvent, event, this.maxSizeByFile),
+      ]
+    )
     if (this.files.length > 0) {
       this.uploadedFiles.emit(this.files);
       this.onChange(this.files);
@@ -81,7 +75,7 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   }
 
   downloadFile(index: number): void {
-    //TODO: use case composition
+    //TODO: use case for function composition
     this.fileService.downloadFileFromObjectUrl(
       this.fileService.convertFileToObjectUrl(this.files[index]),
       this.files[index].name
@@ -89,17 +83,17 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
   }
 
   removeFile(index: number): void {
-    this.files = this.files.filter((file, i) => i !== index);
+    this.files = this.files.filter((file, currentIndex) => currentIndex !== index);
   }
 
-  setDisabledState?(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
 
   dropFileHandler(event: DragEvent): void {
     event.stopPropagation();
     event.preventDefault();
-    this.files = this.fileService.selectFiles(undefined, this.fileService.retrieveFilesFromDragEvent, event);
+    this.files = this.fileService.selectFiles(this.fileService.retrieveFilesFromDragEvent, event);
 
   }
 

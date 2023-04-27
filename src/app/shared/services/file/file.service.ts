@@ -23,7 +23,7 @@ export class FileService implements FileInterface {
 
   response: any; // TODO: delete this attribute;
 
-  selectFiles<T>(maxSizeByFile: number = FILE_MAX_SIZE, retrieveFileFromEventFn: RetrieveFileFromEventFn<T>, event: T) {
+  selectFiles<T>(retrieveFileFromEventFn: RetrieveFileFromEventFn<T>, event: T, maxSizeByFile: number = FILE_MAX_SIZE) {
     const fileList = retrieveFileFromEventFn(event);
     let fileSequence: File[] = [];
     if (fileList === undefined) {
