@@ -1,5 +1,7 @@
-    @import '@angular/material/prebuilt-themes/purple-green.css';
-     :root {
-        --main-padding: 15px;
-        --primary-color: #7b1fa2;
-    }
+@use '../../../shared/components/upload-files/upload-files.component.theme.scss';
+@import '@angular/material/prebuilt-themes/purple-green.css';
+
+:root {
+  --main-padding: 15px;
+  --primary-color: #7b1fa2;
+}

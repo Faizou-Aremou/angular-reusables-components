@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { FILE_MAX_SIZE } from '../../consts/files/file-max-size.const';
 import { FileInterface } from '../../interfaces/file.interface';
-import { Download } from '../../models/file/dowload';
+import { Download } from '../../models/file/download';
 import { FileSize } from '../../models/file/file-size.model';
 import { FileUnit } from '../../models/file/file-unit';
 import { RetrieveFileFromEventFn } from '../../models/file/retrieve-file-from-event';
@@ -133,7 +133,7 @@ export class FileService implements FileInterface {
     downloadLink.click();
   }
 
-  getFileWithTrakingProcessInHttpNative<T>(url: string) {
+  getFileWithTrackingProcessInHttpNative<T>(url: string) {
     const request = new XMLHttpRequest();
     request.open('GET', url, true);
     request.responseType = 'arraybuffer';
@@ -145,7 +145,7 @@ export class FileService implements FileInterface {
     };
   } // TODO: improve this function to return observable
 
-  getFileWithTrakingProcess(url: string): Observable<Download<Blob>> {
+  getFileWithTrackingProcess(url: string): Observable<Download<Blob>> {
     return this.http
       .get(url, {
         reportProgress: true,
@@ -170,7 +170,7 @@ export class FileService implements FileInterface {
   private transfertDownloadData<T>(event: HttpEvent<T>): Download<T> {
     if (this.isHttpDownloadProgressEvent(event)) {
       return {
-        progress: this.getDowloadEventPercent(event),
+        progress: this.getDownloadEventPercent(event),
         state: 'IN_PROGRESS',
         content: null,
       };
@@ -203,7 +203,7 @@ export class FileService implements FileInterface {
     }
   }
 
-  private getDowloadEventPercent(event: HttpEvent<any>): number {
+  private getDownloadEventPercent(event: HttpEvent<any>): number {
     switch (event.type) {
       case HttpEventType.Sent:
         return 0;

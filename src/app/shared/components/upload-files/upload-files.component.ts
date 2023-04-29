@@ -94,7 +94,7 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
     event.stopPropagation();
     event.preventDefault();
     this.files = this.fileService.selectFiles(this.fileService.retrieveFilesFromDragEvent, event);
-
+    (event.target as HTMLElement).classList.remove('draggedOver');
   }
 
   dragOverHandler(event: DragEvent): void {
@@ -102,5 +102,15 @@ export class UploadFilesComponent implements OnInit, ControlValueAccessor {
     event.preventDefault();
   }
 
-  dragLeaveHandler(event: DragEvent): void { }
+  dragEnterHandler(event: DragEvent) {
+    (event.target as HTMLElement).classList.add('draggedOver');
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  dragLeaveHandler(event: DragEvent): void {
+    (event.target as HTMLElement).classList.remove('draggedOver');
+    event.stopPropagation();
+    event.preventDefault();
+  }
 }

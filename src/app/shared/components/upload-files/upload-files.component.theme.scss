@@ -1,0 +1,6 @@
+@mixin color($theme) {
+  $background: map.get($config, background);
+  .draggedOver {
+    background: theming.get-color-from-palette($background, 'card');;
+  }
+}
