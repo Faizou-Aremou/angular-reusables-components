@@ -9,7 +9,8 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           <ng-container
             *ngIf="
-              column.columnDef | tableColumnHeader : OverrideTableColumnHeaderDirs;
+              column.columnDef
+                | tableColumnHeader : OverrideTableColumnHeaderDirs;
               else defaultHeader;
               let overrideTableHeader
             "
@@ -48,6 +49,26 @@
         *matRowDef="let row; columns: columnDefs"
         [ngClass]="{ disabled: row.disabled }"
       ></mat-row>
+
+      <ng-container *ngIf="groupColumn">
+        <ng-container [matColumnDef]="groupColumn.columnDef">
+          <mat-cell *matCellDef="let group">
+            <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
+            <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
+            <strong
+              >{{ groupColumn.header }} = {{ group.header }} ({{
+                group.totalCounts
+              }})</strong
+            >
+          </mat-cell>
+        </ng-container>
+
+        <mat-row
+          *matRowDef="let row; columns: [groupColumn]; when: isGroup"
+          (click)="groupHeaderClick(row)"
+        >
+        </mat-row>
+      </ng-container>
     </mat-table>
     <mat-paginator
       [pageSizeOptions]="[10, 20, 50]"
